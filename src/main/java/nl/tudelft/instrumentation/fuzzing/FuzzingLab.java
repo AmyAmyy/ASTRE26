@@ -11,23 +11,42 @@ public class FuzzingLab {
         static int traceLength = 10;
         static boolean isFinished = false;
         static final int K = 1; // small positive constant for branch distance formulas
-        static float totalBranchDistance = 0; // accumulated distance over one trace run
+
+        // --- Branch distance accumulator (reset per trace) ---
+        static float totalBranchDistance = 0;
+
+        // --- Unique branch tracking ---
+        // A unique branch = (line_nr, value): both sides of every if are tracked separately.
+        static Set<String> allUniqueBranches    = new HashSet<>(); // all branches seen across the whole session
+        static Set<String> currentTraceUniqueBranches = new HashSet<>(); // branches seen in the current trace
+
+        // --- Best-trace tracking ---
+        static List<String> bestTrace = null;          // trace that saw the most unique branches in one run
+        static int bestTraceUniqueBranchCount = 0;
+
+        // --- Experiment timing ---
+        static final long TIMEOUT_MS = 5 * 60 * 1000L; // 5 minutes
+        static long startTime;
+        static int totalTraces = 0;
 
         static void initialize(String[] inputSymbols){
-                // Initialise a random trace from the input symbols of the problem.
                 currentTrace = generateRandomTrace(inputSymbols);
+                startTime    = System.currentTimeMillis();
         }
 
         /**
          * Called by DistanceTracker.myIf for every if-statement encountered during a run.
-         * Computes the branch distance for this condition and accumulates it.
+         * Records the branch as visited and accumulates its distance.
          */
         static void encounteredNewBranch(MyVar condition, boolean value, int line_nr) {
+                // Track this (line, side) pair as a unique branch
+                String branchId = line_nr + "_" + value;
+                allUniqueBranches.add(branchId);
+                currentTraceUniqueBranches.add(branchId);
+
+                // Accumulate branch distance for this trace
                 float d = computeBranchDistance(condition);
                 totalBranchDistance += d;
-
-                System.out.println("Condition: " + condition.toString());
-                System.out.println("Value: " + value + " | Line: " + line_nr + " | Distance: " + d);
         }
 
         /**
@@ -38,9 +57,9 @@ public class FuzzingLab {
          * Formulas (from lecture slides):
          *   a           : 0 if true, 1 otherwise
          *   !p1         : 1 - D(p1)
-         *   a == b      : |a - b|
+         *   a == b      : |a - b|         (then normalized)
          *   a != b      : 0 if a != b, 1 otherwise
-         *   a <  b      : 0 if a < b,  a - b + K otherwise
+         *   a <  b      : 0 if a < b,  a - b + K otherwise  (then normalized)
          *   a <= b      : 0 if a <= b, a - b     otherwise
          *   a >  b      : 0 if a > b,  b - a + K otherwise
          *   a >= b      : 0 if a >= b, b - a     otherwise
@@ -72,7 +91,7 @@ public class FuzzingLab {
                         case BINARY: {
                                 String op = condition.operator;
 
-                                // --- Logical operators: combine normalized sub-distances ---
+                                // Logical operators: combine already-normalized sub-distances
                                 if (op.equals("&&")) {
                                         // p1 && p2 : D = D(p1) + D(p2)
                                         return computeBranchDistance(condition.left)
@@ -91,7 +110,7 @@ public class FuzzingLab {
                                         return Math.min(dp1 + (1.0f - dp2), (1.0f - dp1) + dp2);
                                 }
 
-                                // --- Comparison operators: compute raw distance, then normalize ---
+                                // Comparison operators: compute raw distance, then normalize
                                 return normalize(comparisonDistance(condition));
                         }
 
@@ -125,7 +144,7 @@ public class FuzzingLab {
                                 return dist;
                         }
                         if (op.equals("!=")) return ls.equals(rs) ? 1 : 0;
-                        return 0; // <, <=, >, >= not meaningful for strings here
+                        return 0; // <, <=, >, >= not meaningful for arbitrary strings
                 }
 
                 // --- Numeric comparison ---
@@ -189,16 +208,35 @@ public class FuzzingLab {
         static void run() {
                 initialize(DistanceTracker.inputSymbols);
 
-                // Place here your code to guide your fuzzer with its search.
-                while(!isFinished) {
-                        // Reset per-trace accumulator, generate and run a new trace
+                while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
+                        // Reset per-trace state
                         totalBranchDistance = 0;
+                        currentTraceUniqueBranches = new HashSet<>();
+
+                        // Generate and run a new trace
                         currentTrace = fuzz(DistanceTracker.inputSymbols);
                         DistanceTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
+                        totalTraces++;
 
-                        System.out.println("Trace: " + currentTrace);
-                        System.out.println("Total branch distance: " + totalBranchDistance);
+                        // Update best trace (most unique branches seen in a single execution)
+                        if (currentTraceUniqueBranches.size() > bestTraceUniqueBranchCount) {
+                                bestTraceUniqueBranchCount = currentTraceUniqueBranches.size();
+                                bestTrace = new ArrayList<>(currentTrace);
+                                System.out.println("[New best] trace=" + bestTrace
+                                        + " unique_branches=" + bestTraceUniqueBranchCount
+                                        + " total_all=" + allUniqueBranches.size());
+                        }
                 }
+
+                // ── Experiment summary ──────────────────────────────────────────────
+                System.out.println("==================== RESULTS ====================");
+                System.out.println("Total traces run:              " + totalTraces);
+                System.out.println("Total unique branches visited: " + allUniqueBranches.size());
+                System.out.println("Best single-trace branch count: " + bestTraceUniqueBranchCount);
+                System.out.println("Best trace: " + bestTrace);
+                System.out.println("=================================================");
+
+                System.exit(0);
         }
 
         /**
