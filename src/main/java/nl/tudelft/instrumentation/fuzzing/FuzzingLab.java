@@ -198,21 +198,14 @@ public class FuzzingLab {
                         // First mutation: just generate a random trace
                         bestTraceSoFar = generateRandomTrace(inputSymbols);
                         DistanceTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
-
                         bestDistanceSoFar = totalBranchDistance;
                 }
                 
-                String[] bestMutation = currentTrace;
-                float bestMutationDistance = totalBranchDistance;
+                // String[] bestMutation = bestTraceSoFar;
+                // float bestMutationDistance = bestDistanceSoFar;
                 for (int i = 0; i < nrMutations; i++) {
-                        
+                        String[] mutation = Arrays.copyOf(bestTraceSoFar, bestTraceSoFar.length);
                 }
-                        
-
-                
-                
-                
-                
                 
         }
 
