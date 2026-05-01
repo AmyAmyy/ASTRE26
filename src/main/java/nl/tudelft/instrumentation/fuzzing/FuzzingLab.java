@@ -12,6 +12,10 @@ public class FuzzingLab {
         static boolean isFinished = false;
         static final int K = 1; // small positive constant for branch distance formulas
 
+        static int nrMutations = 0; 
+        static String[] bestTraceSoFar = null;
+        static float bestDistanceSoFar = Float.MAX_VALUE;
+
         // --- Branch distance accumulator (reset per trace) ---
         static float totalBranchDistance = 0;
 
@@ -189,7 +193,27 @@ public class FuzzingLab {
                  * more branches. Right now we just generate a complete random sequence
                  * using the given input symbols. Please change it to your own code.
                  */
-                return generateRandomTrace(inputSymbols);
+
+                if (bestTraceSoFar == null) {
+                        // First mutation: just generate a random trace
+                        bestTraceSoFar = generateRandomTrace(inputSymbols);
+                        DistanceTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
+
+                        bestDistanceSoFar = totalBranchDistance;
+                }
+                
+                String[] bestMutation = currentTrace;
+                float bestMutationDistance = totalBranchDistance;
+                for (int i = 0; i < nrMutations; i++) {
+                        
+                }
+                        
+
+                
+                
+                
+                
+                
         }
 
         /**
