@@ -12,8 +12,8 @@ public class FuzzingLab {
         static boolean isFinished = false;
         static final int K = 1; // small positive constant for branch distance formulas
 
-        static int nrMutations = 0; 
-        static String[] bestTraceSoFar = null;
+        static int nrMutations = 1; 
+        static List<String> bestTraceSoFar = null;
         static float bestDistanceSoFar = Float.MAX_VALUE;
 
         // --- Branch distance accumulator (reset per trace) ---
@@ -197,16 +197,41 @@ public class FuzzingLab {
                 if (bestTraceSoFar == null) {
                         // First mutation: just generate a random trace
                         bestTraceSoFar = generateRandomTrace(inputSymbols);
-                        DistanceTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
-                        bestDistanceSoFar = totalBranchDistance;
+                        // DistanceTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
+                        // bestDistanceSoFar = totalBranchDistance;
+                        bestDistanceSoFar = Float.MAX_VALUE;
+                        return new ArrayList<>(bestTraceSoFar);
                 }
                 
-                // String[] bestMutation = bestTraceSoFar;
+                List<String> bestMutation = bestTraceSoFar;
                 // float bestMutationDistance = bestDistanceSoFar;
+                float bestMutationDistance = Float.MAX_VALUE;
                 for (int i = 0; i < nrMutations; i++) {
-                        String[] mutation = Arrays.copyOf(bestTraceSoFar, bestTraceSoFar.length);
+                        List<String> mutation = new ArrayList<>(bestTraceSoFar);
+
+                        // Mutate one random position
+                        int idx = r.nextInt(mutation.size());
+                        mutation.set(idx, inputSymbols[r.nextInt(inputSymbols.length)]);
+
+                        // Evaluate this mutation
+                        totalBranchDistance = 0;
+                        currentTraceUniqueBranches = new HashSet<>();
+                        DistanceTracker.runNextFuzzedSequence(mutation.toArray(new String[0]));
+                        totalTraces++;
+                        float dist = totalBranchDistance;
+
+                        if (dist < bestMutationDistance) {
+                        bestMutationDistance = dist;
+                        bestMutation = mutation;
+                        }
                 }
-                
+
+                // Adopt the best mutation if it improves on the global best
+                if (bestMutationDistance < bestDistanceSoFar) {
+                        bestDistanceSoFar = bestMutationDistance;
+                        bestTraceSoFar = bestMutation;
+                }
+                return new ArrayList<>(bestTraceSoFar);
         }
 
         /**
@@ -245,8 +270,7 @@ public class FuzzingLab {
                         }
                 }
 
-                // ── Experiment summary ──────────────────────────────────────────────
-                System.out.println("==================== RESULTS ====================");
+                System.out.println("RESULTS");
                 System.out.println("Total traces run:              " + totalTraces);
                 System.out.println("Total unique branches visited: " + allUniqueBranches.size());
                 System.out.println("Best single-trace branch count: " + bestTraceUniqueBranchCount);
