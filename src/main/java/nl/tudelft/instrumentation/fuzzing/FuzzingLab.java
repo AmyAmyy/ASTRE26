@@ -276,8 +276,8 @@ public class FuzzingLab {
                 }
         }
 
-        static void logExperimentResults() {
-                System.out.println("RESULTS");
+        static void logExperimentResults(String fuzzerName) {
+                System.out.println("RESULTS " + fuzzerName);
                 System.out.println("Total traces run:              " + totalTraces);
                 System.out.println("Total unique branches visited: " + allUniqueBranches.size());
                 System.out.println("Triggered error codes (" + triggeredErrors.size() + "): " + triggeredErrors);
@@ -287,6 +287,7 @@ public class FuzzingLab {
         }
 
         static void runHillClimber() {
+                initialize(DistanceTracker.inputSymbols);
                 while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
                         if (bestTraceSoFar == null) {
                                 // Base: no guidance yet, just fuzz randomly
@@ -319,20 +320,19 @@ public class FuzzingLab {
                                 bestDistanceSoFar = Float.MAX_VALUE;
                         }
                 }
-                logExperimentResults();
+                logExperimentResults("HillClimber");
         }
 
         static void runSimpleFuzzer() {
+                initialize(DistanceTracker.inputSymbols);
                 while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
                         currentTrace = fuzz(DistanceTracker.inputSymbols, null);
                         executeCurrentTrace();
                 }
-                logExperimentResults();
+                logExperimentResults("SimpleFuzzer");
         }
 
         static void run() {
-                initialize(DistanceTracker.inputSymbols);
-
                 if (runExperiments) {
                         runSimpleFuzzer();
                         
