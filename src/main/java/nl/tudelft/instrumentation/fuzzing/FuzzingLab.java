@@ -12,6 +12,9 @@ public class FuzzingLab {
         static boolean isFinished = false;
         static final int K = 1; // small positive constant for branch distance formulas
 
+        static final boolean useHillClimber = true;
+        static final boolean runExperiments = true;
+
         // --- Hill Climbing ---
         static int nrMutations = 10; 
         static List<String> bestTraceSoFar = null;
@@ -24,6 +27,9 @@ public class FuzzingLab {
         // A unique branch = (line_nr, value): both sides of every if are tracked separately.
         static Set<String> allUniqueBranches    = new HashSet<>(); // all branches seen across the whole session
         static Set<String> currentTraceUniqueBranches = new HashSet<>(); // branches seen in the current trace
+
+        // -- Error code tracking --
+        static Set<String> triggeredErrors = new HashSet<>();
 
         // --- Best-trace tracking ---
         static List<String> bestTrace = null;          // trace that saw the most unique branches in one run
@@ -183,8 +189,39 @@ public class FuzzingLab {
         }
 
         static List<String> mutate(String[] inputSymbols, List<String> trace) {
-                // TODO: implement mutation
-                return trace;
+                List<String> mutated = new ArrayList<>(trace);
+
+                int mutationType = r.nextInt(3);
+                if (mutated.isEmpty()) {
+                        // Can only add to empty trace
+                        mutationType = 1;
+                }
+                if (inputSymbols.length <= 1) {
+                        // Can only add or delete, not change, because too few inputSymbols
+                        mutationType = 1 + r.nextInt(2);
+                }
+
+                switch (mutationType) {
+                        case 0: // Change: replace symbol at a random index with a DIFFERENT symbol
+                                int changeIdx = r.nextInt(mutated.size());
+                                String current = mutated.get(changeIdx);
+                                String newSym = inputSymbols[r.nextInt(inputSymbols.length)];
+                                while (newSym.equals(current)) {
+                                        newSym = inputSymbols[r.nextInt(inputSymbols.length)];
+                                }
+                                mutated.set(changeIdx, newSym);
+                                break;
+                        case 1: // Add: insert a random symbol at a random position
+                                int addIdx = r.nextInt(mutated.size() + 1);
+                                mutated.add(addIdx, inputSymbols[r.nextInt(inputSymbols.length)]);
+                                break;
+
+                        case 2: // Delete: remove symbol at a random index (guard minimum length 1)
+                                mutated.remove(r.nextInt(mutated.size()));
+                                break;
+                }
+
+                return mutated;
         }
 
         /**
@@ -239,9 +276,17 @@ public class FuzzingLab {
                 }
         }
 
-        static void run() {
-                initialize(DistanceTracker.inputSymbols);
+        static void logExperimentResults() {
+                System.out.println("RESULTS");
+                System.out.println("Total traces run:              " + totalTraces);
+                System.out.println("Total unique branches visited: " + allUniqueBranches.size());
+                System.out.println("Triggered error codes (" + triggeredErrors.size() + "): " + triggeredErrors);
+                System.out.println("Best single-trace branch count: " + bestTraceUniqueBranchCount);
+                System.out.println("Best trace: " + bestTrace);
+                System.out.println("=================================================");
+        }
 
+        static void runHillClimber() {
                 while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
                         if (bestTraceSoFar == null) {
                                 // Base: no guidance yet, just fuzz randomly
@@ -274,13 +319,43 @@ public class FuzzingLab {
                                 bestDistanceSoFar = Float.MAX_VALUE;
                         }
                 }
+                logExperimentResults();
+        }
 
-                System.out.println("RESULTS");
-                System.out.println("Total traces run:              " + totalTraces);
-                System.out.println("Total unique branches visited: " + allUniqueBranches.size());
-                System.out.println("Best single-trace branch count: " + bestTraceUniqueBranchCount);
-                System.out.println("Best trace: " + bestTrace);
-                System.out.println("=================================================");
+        static void runSimpleFuzzer() {
+                while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
+                        currentTrace = fuzz(DistanceTracker.inputSymbols, null);
+                        executeCurrentTrace();
+                }
+                logExperimentResults();
+        }
+
+        static void run() {
+                initialize(DistanceTracker.inputSymbols);
+
+                if (runExperiments) {
+                        runSimpleFuzzer();
+                        
+                        // Reset for next experiment
+                        currentTrace = null;
+                        allUniqueBranches.clear();
+                        triggeredErrors.clear();
+                        totalTraces = 0;
+                        bestTrace = null;
+                        bestTraceUniqueBranchCount = 0;
+                        bestTraceSoFar = null;
+                        bestDistanceSoFar = Float.MAX_VALUE;
+
+                        runHillClimber();
+                }
+                else {
+                        if (useHillClimber) {
+                                runHillClimber();
+                        }
+                        else {
+                                runSimpleFuzzer();
+                        }
+                }
 
                 System.exit(0);
         }
@@ -292,5 +367,8 @@ public class FuzzingLab {
          */
         public static void output(String out){
                 System.out.println(out);
+                if (out.contains("error_")) {
+                        triggeredErrors.add(out.trim());
+                }
         }
 }
