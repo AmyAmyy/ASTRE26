@@ -216,7 +216,7 @@ public class FuzzingLab {
                                 mutated.add(addIdx, inputSymbols[r.nextInt(inputSymbols.length)]);
                                 break;
 
-                        case 2: // Delete: remove symbol at a random index (guard minimum length 1)
+                        case 2: // Delete: remove symbol at a random index
                                 mutated.remove(r.nextInt(mutated.size()));
                                 break;
                 }
