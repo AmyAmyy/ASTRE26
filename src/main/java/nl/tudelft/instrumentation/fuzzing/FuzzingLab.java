@@ -22,12 +22,6 @@ public class FuzzingLab {
         static List<String> bestTraceSoFar = null;
         static float bestDistanceSoFar = Float.MAX_VALUE;
 
-        // Target-directed branch selection:
-        // After each trace we pick the uncovered branch with the smallest distance as the
-        // target. The hill climber then minimises distance to that specific branch.
-        static String targetBranch = null;
-        static Map<String, Float> traceBranchDistances = new HashMap<>();
-
         // --- Branch distance accumulator (reset per trace) ---
         static float currentTraceBranchDistance = 0;
 
@@ -55,25 +49,17 @@ public class FuzzingLab {
 
         /**
          * Called by DistanceTracker.myIf for every if-statement encountered during a run.
-         * Records the branch as visited and stores the distance to the uncovered opposite
-         * side in traceBranchDistances, keyed by that opposite branch id.
-         * The minimum distance is kept if the same branch is encountered more than once.
+         * Records the branch as visited and accumulates its distance.
          */
         static void encounteredNewBranch(MyVar condition, boolean value, int line_nr) {
-                String branchId      = line_nr + "_" + value;
-                String otherBranchId = line_nr + "_" + (!value);
-
+                // Track this (line, side) pair as a unique branch
+                String branchId = line_nr + "_" + value;
                 allUniqueBranches.add(branchId);
                 currentTraceUniqueBranches.add(branchId);
 
-                // If the other side is not yet covered, record distance to reach it.
-                if (!allUniqueBranches.contains(otherBranchId)) {
-                        // value=false: condition is false, distance to make it true (proper gradient).
-                        // value=true:  condition is true, no cheap inverse formula available;
-                        //              use 1.0 as a fixed penalty — signals "needs to flip".
-                        float d = !value ? computeBranchDistance(condition) : 1.0f;
-                        traceBranchDistances.merge(otherBranchId, d, Math::min);
-                }
+                // Accumulate branch distance for this trace
+                float d = computeBranchDistance(condition);
+                currentTraceBranchDistance += d;
         }
 
         /**
@@ -284,53 +270,14 @@ public class FuzzingLab {
         }
 
         /**
-         * After a trace has run, decide which uncovered branch to target next and set
-         * currentTraceBranchDistance to the distance toward it.
-         *
-         * Strategy — "minimum of any not-yet-triggered branch encountered by this trace":
-         *   1. Drop entries for branches that were just covered during this trace.
-         *   2. If the current targetBranch is still in the map, keep it and use its distance
-         *      (consistent gradient within a round of mutations).
-         *   3. Otherwise pick the entry with the smallest distance as the new target.
-         *   4. If nothing is left, all encountered branches are fully covered: distance = 0.
-         */
-        static void updateTargetAndDistance() {
-                // Remove any branch that got covered during this trace run.
-                traceBranchDistances.entrySet().removeIf(e -> allUniqueBranches.contains(e.getKey()));
-
-                if (traceBranchDistances.isEmpty()) {
-                        // Every branch encountered this trace is already fully covered.
-                        targetBranch = null;
-                        currentTraceBranchDistance = 0;
-                        return;
-                }
-
-                // If the current target was encountered by this trace, keep it.
-                if (targetBranch != null && traceBranchDistances.containsKey(targetBranch)) {
-                        currentTraceBranchDistance = traceBranchDistances.get(targetBranch);
-                        return;
-                }
-
-                // Target not encountered (trace took a different path), or no target yet:
-                // pick the uncovered branch closest to being flipped.
-                Map.Entry<String, Float> best = traceBranchDistances.entrySet().stream()
-                        .min(Map.Entry.comparingByValue())
-                        .get(); // safe: map is non-empty here
-                targetBranch = best.getKey();
-                currentTraceBranchDistance = best.getValue();
-        }
-
-        /**
          * Execute the current trace and updates the total traces executed and
          * the best trace of unique branch counts
          */
         static void executeCurrentTrace() {
-                traceBranchDistances  = new HashMap<>();
+                currentTraceBranchDistance = 0;
                 currentTraceUniqueBranches = new HashSet<>();
                 DistanceTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
                 totalTraces++;
-
-                updateTargetAndDistance();
 
                 if (currentTraceUniqueBranches.size() > bestTraceUniqueBranchCount) {
                         bestTraceUniqueBranchCount = currentTraceUniqueBranches.size();
@@ -380,15 +327,17 @@ public class FuzzingLab {
                         }
 
                         if (bestMutationDistance < bestDistanceSoFar) {
-                                bestTraceSoFar = new ArrayList<>(bestMutation);
-                                bestDistanceSoFar = bestMutationDistance;
-                        }
-                        else {
-                                // reset to allow random exploration in the next iteration
+                        bestTraceSoFar = new ArrayList<>(bestMutation);
+                        bestDistanceSoFar = bestMutationDistance;
+                        noImprovementCount = 0;
+                        } else {
+                        noImprovementCount++;
+                        // Only reset after N consecutive failures, not immediately
+                        if (noImprovementCount >= 3) {
                                 bestTraceSoFar = null;
                                 bestDistanceSoFar = Float.MAX_VALUE;
-                                targetBranch = null; // fresh target from the next random trace
-                                targetBranch = null;
+                                noImprovementCount = 0;
+                        }
                         }
                 }
                 logExperimentResults("HillClimber");
@@ -416,7 +365,6 @@ public class FuzzingLab {
                         bestTraceUniqueBranchCount = 0;
                         bestTraceSoFar = null;
                         bestDistanceSoFar = Float.MAX_VALUE;
-                        targetBranch = null;
 
                         runHillClimber();
                 }
