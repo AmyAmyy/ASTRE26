@@ -300,36 +300,44 @@ public class FuzzingLab {
 
         static void runHillClimber() {
                 initialize(DistanceTracker.inputSymbols);
+                int noImprovementCount = 0;
+
                 while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
+                        // Reset or start fresh
                         if (bestTraceSoFar == null) {
-                                // Base: no guidance yet, just fuzz randomly
-                                currentTrace = fuzz(DistanceTracker.inputSymbols, null);                        
-                                executeCurrentTrace();
-                                bestTraceSoFar = new ArrayList<>(currentTrace);
-                                bestDistanceSoFar = currentTraceBranchDistance;
+                        currentTrace = generateRandomTrace(DistanceTracker.inputSymbols);
+                        executeCurrentTrace();
+                        bestTraceSoFar = new ArrayList<>(currentTrace);
+                        bestDistanceSoFar = currentTraceBranchDistance;
+                        noImprovementCount = 0;
+                        continue; // start climbing from this base
                         }
 
-                        List<String> bestMutation = bestTraceSoFar;
-                        float bestMutationDistance = bestDistanceSoFar;
-                        for (int i = 0; i < nrMutations; i++) {
-                                // Mutate the best trace so far nrMutations times to find a better trace
-                                currentTrace = fuzz(DistanceTracker.inputSymbols, bestTraceSoFar);
-                                executeCurrentTrace();
+                        List<String> bestMutation = null;
+                        float bestMutationDistance = Float.MAX_VALUE; // <-- key fix: start fresh
 
-                                if (currentTraceBranchDistance < bestMutationDistance) {
-                                        bestMutation = new ArrayList<>(currentTrace);
-                                        bestMutationDistance = currentTraceBranchDistance;
-                                }
+                        for (int i = 0; i < nrMutations; i++) {
+                        currentTrace = fuzz(DistanceTracker.inputSymbols, bestTraceSoFar);
+                        executeCurrentTrace();
+
+                        if (currentTraceBranchDistance < bestMutationDistance) {
+                                bestMutation = new ArrayList<>(currentTrace);
+                                bestMutationDistance = currentTraceBranchDistance;
+                        }
                         }
 
                         if (bestMutationDistance < bestDistanceSoFar) {
-                                bestTraceSoFar = new ArrayList<>(bestMutation);
-                                bestDistanceSoFar = bestMutationDistance;
-                        }
-                        else {
-                                // reset to allow random exploration in the next iteration
+                        bestTraceSoFar = new ArrayList<>(bestMutation);
+                        bestDistanceSoFar = bestMutationDistance;
+                        noImprovementCount = 0;
+                        } else {
+                        noImprovementCount++;
+                        // Only reset after N consecutive failures, not immediately
+                        if (noImprovementCount >= 3) {
                                 bestTraceSoFar = null;
                                 bestDistanceSoFar = Float.MAX_VALUE;
+                                noImprovementCount = 0;
+                        }
                         }
                 }
                 logExperimentResults("HillClimber");
