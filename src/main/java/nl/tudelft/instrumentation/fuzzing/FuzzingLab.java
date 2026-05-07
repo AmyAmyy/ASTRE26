@@ -11,9 +11,11 @@ public class FuzzingLab {
         static int traceLength = 10;
         static boolean isFinished = false;
         static final int K = 1; // small positive constant for branch distance formulas
+        static final int MAX_TRACE_LENGTH = 30;
+        static final int MIN_TRACE_LENGTH = 2;
 
         static final boolean useHillClimber = true;
-        static final boolean runExperiments = true;
+        static final boolean runExperiments = false;
 
         // --- Hill Climbing ---
         static int nrMutations = 10; 
@@ -191,14 +193,23 @@ public class FuzzingLab {
         static List<String> mutate(String[] inputSymbols, List<String> trace) {
                 List<String> mutated = new ArrayList<>(trace);
 
-                int mutationType = r.nextInt(3);
                 if (mutated.isEmpty()) {
-                        // Can only add to empty trace
-                        mutationType = 1;
+                        // If empty somehow, recover with random trace
+                        return generateRandomTrace(inputSymbols);
                 }
-                if (inputSymbols.length <= 1) {
-                        // Can only add or delete, not change, because too few inputSymbols
-                        mutationType = 1 + r.nextInt(2);
+
+                int mutationType = r.nextInt(3);
+
+                if (mutated.size() <= MIN_TRACE_LENGTH) {
+                        mutationType = 1; // add only
+                }
+                if (mutated.size() >= MAX_TRACE_LENGTH) {
+                        mutationType = r.nextInt(2) == 0 ? 0 : 2; // change or delete only
+                }
+
+                // Single-symbol alphabet: can't do a meaningful change
+                if (inputSymbols.length <= 1 && mutationType == 0) {
+                        mutationType = 1;
                 }
 
                 switch (mutationType) {
@@ -211,6 +222,7 @@ public class FuzzingLab {
                                 }
                                 mutated.set(changeIdx, newSym);
                                 break;
+
                         case 1: // Add: insert a random symbol at a random position
                                 int addIdx = r.nextInt(mutated.size() + 1);
                                 mutated.add(addIdx, inputSymbols[r.nextInt(inputSymbols.length)]);
