@@ -11,14 +11,14 @@ public class FuzzingLab {
         static int traceLength = 10;
         static boolean isFinished = false;
         static final int K = 1; // small positive constant for branch distance formulas
-        static final int MAX_TRACE_LENGTH = 30;
-        static final int MIN_TRACE_LENGTH = 2;
+        static final int MAX_TRACE_LENGTH = 10;
+        static final int MIN_TRACE_LENGTH = 5;
 
         static final boolean useHillClimber = true;
         static final boolean runExperiments = false;
 
         // --- Hill Climbing ---
-        static int nrMutations = 10; 
+        static int nrMutations = 50; 
         static List<String> bestTraceSoFar = null;
         static float bestDistanceSoFar = Float.MAX_VALUE;
 
