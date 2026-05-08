@@ -32,6 +32,7 @@ public class FuzzingLab {
 
         // -- Error code tracking --
         static Set<String> triggeredErrors = new HashSet<>();
+        static Map<String, List<String>> errorTraces = new LinkedHashMap<>(); // error_code -> trace that first triggered it
 
         // --- Best-trace tracking ---
         static List<String> bestTrace = null;          // trace that saw the most unique branches in one run
@@ -295,6 +296,12 @@ public class FuzzingLab {
                 System.out.println("Triggered error codes (" + triggeredErrors.size() + "): " + triggeredErrors);
                 System.out.println("Best single-trace branch count: " + bestTraceUniqueBranchCount);
                 System.out.println("Best trace: " + bestTrace);
+                if (!errorTraces.isEmpty()) {
+                        System.out.println("--- Error traces ---");
+                        for (Map.Entry<String, List<String>> entry : errorTraces.entrySet()) {
+                                System.out.println("  " + entry.getKey() + ": " + entry.getValue());
+                        }
+                }
                 System.out.println("=================================================");
         }
 
@@ -360,6 +367,7 @@ public class FuzzingLab {
                         currentTrace = null;
                         allUniqueBranches.clear();
                         triggeredErrors.clear();
+                        errorTraces.clear();
                         totalTraces = 0;
                         bestTrace = null;
                         bestTraceUniqueBranchCount = 0;
@@ -388,7 +396,11 @@ public class FuzzingLab {
         public static void output(String out){
                 System.out.println(out);
                 if (out.contains("error_")) {
-                        triggeredErrors.add(out.trim());
+                        String error = out.trim();
+                        if (triggeredErrors.add(error)) {
+                                // First time seeing this error - save the trace
+                                errorTraces.put(error, new ArrayList<>(currentTrace));
+                        }
                 }
         }
 }

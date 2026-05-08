@@ -1,33 +1,5 @@
-# JavaInstrumentation
-This repository contains an implementation of a Java instrumentation tool to do source-code level instrumentation on the RERS 2020 problems. The instrumentation is done with the help of the JavaParser (https://github.com/javaparser/javaparser).
-
-Byte-code level instrumentation would be more efficient as it does not require recompiling the instrumented code. We opted for source-code level instrumentation since it is easier to understand. Notice that this project is made for educational purposes and is mostly used for courses taught at TU Delft.
-
-Instrumentation is implemented as follows:
-
-* **Line Coverage** is implemented by the following classes:
-  * `LineCoverageVisitor.java` visits the AST (obtained with JavaParsers) of the Java file under analysis and injects new statements for coverage analysis
-  * `LineCoverageTracker.java` updates line coverage data at runtime and generates the coverage report (`coverage.json`)
-* **Branch Coverage** is implemented by the following classes:
-  * `BranchCoverageVisitor.java` visits the AST (obtained with JavaParsers) of the Java file under analysis and injects new statements for coverage analysis
-  * `BranchCoverageTracker.java` updates branch coverage data at runtime and generates the coverage report (`branch-coverage.json`)
-* **Branch Distance Computation** is implemented by the following classes:
-  * `DistanceVisitor.java` visits the AST (obtained with JavaParsers) of the Java file under analysis and injects new statements for branch distance computation.
-  * `DistanceTracker.java` wraps each variable/expression in an object. These objects are then used for the branch distance computation.
-* **Concolic Execution** is implemented by the following classes:
-  * `PathVisitor.java` visits the AST (obtained with JavaParsers) of the Java file under analysis and injects new statements for symbolic execution.
-  * `PathTracker.java` converts the variables and expressions in the Java file to Z3 variables and expressions respectively. These will be used to do symbolic execution with Z3.
-* **Code Patching Using Genetic Algorithms** is implemented by the following classes:
-  * `OperatorVisitor.java` visits the AST (obtained with JavaParsers) of the Java file under analysis and injects new statements for code patching.
-  * `OperatorTracker.java` converts an operator to another operator in order to introduce faults in the original Java file.
-* **Model Inference using L* Algorithm** is implemented by the following classes:
-  * `MembershipVisitor.java` visits the AST (obtained with JavaParsers) of the Java file under analysis and injects new statements for automated model inference.
-  * `LearningTracker.java` makes minimal changes to a RERS problem file as this lab does not need to do a lot of instrumentation. We just need to change the program flow.
-* `Main.java` is the main file and can be used to generate the instrumented Java file
-* `CommandLineParser.java` is used to parse the arguments that were given to this tool in order to generate the corresponding instrumentation.
-
-**NOTE:** This tool instruments only one Java file at a time.
-
+# ASTRE26 - Lab 1: Fuzzing
+Amy van der Meijden (5301513) and Jimmy Oei (6540031)
 
 # Using Dev Containers To Run The Tool
 We have included a `devcontainer.json` file in this repository. This file can be used to run the tool in a Docker container. This is useful if you do not want to install all the dependencies on your machine. To use this file, you need to have the following installed on your machine:
@@ -120,42 +92,61 @@ Found a new branch
 .
 Woohoo, looping!
 ```
-### Compiling and running Reachability Problems
-If you are compiling and running one of the Reachability Problems (Problem 11 - 19), make sure you also compile the Error class **together** with the instrumented file. We have included the `Errors.java` file for you in the root of the repository.
 
-For compilation, you would need the following command:
+### Switching between Random Fuzzer and Hill Climber
 
-`javac -cp target/aistr.jar:. Errors.java instrumented/Problem11.java`
+In `FuzzingLab.java`, toggle the `useHillClimber` flag:
 
-And to run a Reachability problem:
+```java
+static final boolean useHillClimber = true;   // Hill Climber (Task 2)
+static final boolean useHillClimber = false;  // Random Fuzzer (Task 1)
+```
 
-`java -cp target/aistr.jar:./instrumented:. Problem11`
+The fuzzer runs for 5 minutes (300 seconds) per problem and outputs:
+- Unique branches visited
+- Error codes triggered
+- The best input trace (most branches visited)
 
-## Lab 2 - Symbolic Execution
-For Lab 2, it is very similar to the steps that are shown for Lab 1. However, there are a few changes in the commands.
+### AFL
 
-First of all, we need to use the following command to instrument a java file:
+The AFL setup is in the `afl/` directory. Each problem has its own subdirectory:
 
-`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=symbolic --file=Problem1.java > instrumented/Problem1.java`
+```
+afl/
+├── run_afl.sh           # Script to compile, fuzz, and analyze one problem
+├── extract_traces.py    # Extract input traces that triggered each error
+├── 11/
+│   ├── Problem11.c      # C source (modified for AFL)
+│   ├── tests/           # Seed inputs (one file per valid input symbol)
+│   └── findings/        # AFL output (created during fuzzing)
+├── 12/ ...
+├── 13/ ...
+├── 14/ ...
+├── 15/ ...
+└── 17/ ...
+```
 
-Second of all, we need to add the Z3 library to the classpath to be able to do symbolic execution. We would then compile  using the following command:
+### Running AFL on a problem
 
-`javac -cp target/aistr.jar:lib/com.microsoft.z3.jar:. instrumented/Problem1.java `
+```bash
+cd afl/
+./run_afl.sh 11         # Compiles, fuzzes for 5 minutes, then analyzes results for problem 11
+```
 
-Finally, we also need to add the Z3 library to the classpath when running an instrumented Java file for the second lab:
+### Analyzing results
 
-`java -cp target/aistr.jar:lib/com.microsoft.z3.jar:./instrumented:. Problem1`
+The `run_afl.sh` script automatically calls `scripts/analyze_afl.py` after fuzzing.
+To re-analyze without re-fuzzing:
 
-## Lab 3 - Automated Patching with Genetic Algorithms
-For Lab 3, it is almost identical to the steps shown for Lab 1. The only change is to use the `patching` type when instrumenting the file:
+```bash
+python3 scripts/analyze_afl.py afl/11/findings/default afl/11/Problem11
+```
 
-`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=patching --file=Problem1.java > instrumented/Problem1.java`
+### Extracting traces for comparison with Hill Climber
 
+```bash
+python3 afl/extract_traces.py 11
+```
 
-# Setting
-
-The code has been tested with the following configuration:
-
-* Maven 3.5.4
-* Java 8
-* JavaParser 3.18.0
+This outputs the input trace (in both integer and letter format) that triggered each error,
+allowing direct comparison with the Hill Climber traces from Task 2.
