@@ -6,7 +6,10 @@ public class PatchingLab {
         static Random r = new Random();
         static boolean isFinished = false;
 
-        Map<Integer, String> patch = new HashMap<>();
+        // Map from test index to set of operator IDs executed during that test
+        static Map<Integer, Set<Integer>> executedOperators = new HashMap<>();
+
+        // Map<Integer, String> patch = new HashMap<>();
 
         static void initialize(){
                 // initialize the population based on OperatorTracker.operators
@@ -14,7 +17,12 @@ public class PatchingLab {
 
         // encounteredOperator gets called for each operator encountered while running tests
         static boolean encounteredOperator(String operator, int left, int right, int operator_nr){
-                // Do something useful
+                // Add encountered operator to executedOperators map for the current test
+                int current_test = OperatorTracker.current_test;
+                if (!executedOperators.containsKey(current_test)) {
+                        executedOperators.put(current_test, new HashSet<>());
+                }
+                executedOperators.get(current_test).add(operator_nr);
 
                 String replacement = OperatorTracker.operators[operator_nr];
                 if(replacement.equals("!=")) return left != right;
@@ -27,7 +35,12 @@ public class PatchingLab {
         }
 
         static boolean encounteredOperator(String operator, boolean left, boolean right, int operator_nr){
-                // Do something useful
+                // Add encountered operator to executedOperators map for the current test
+                int current_test = OperatorTracker.current_test;
+                if (!executedOperators.containsKey(current_test)) {
+                        executedOperators.put(current_test, new HashSet<>());
+                }
+                executedOperators.get(current_test).add(operator_nr);
 
                 String replacement = OperatorTracker.operators[operator_nr];
                 if(replacement.equals("!=")) return left != right;
@@ -43,7 +56,7 @@ public class PatchingLab {
 
                 List<Boolean> results = OperatorTracker.runAllTests();
                 // compute initial fitness for the current buggy operator set
-                int initialFitness = computeFitness(OperatorTracker.operators, results);
+                int initialFitness = computeFitness(results);
                 System.out.println("Initial fitness = " + initialFitness);
 
                 if (initialFitness == 0) {
@@ -87,16 +100,15 @@ public class PatchingLab {
                 System.out.println(out);
         }
 
-        static double computeFitness(List<Boolean> results) {                               
+        static int computeFitness(List<Boolean> results) {
                 int failCount = 0;
                 for (boolean passed : results) {
                         if (!passed) failCount++;
                 }
-                
-                double fitness = (double) failCount / (double) results.size();
-                System.out.println("Fitness (failing tests): " + fitness);
 
-                return fitness;
+                System.out.println("Fitness (failing tests): " + failCount + "/" + results.size());
+
+                return failCount;
         }
 
         static String randomReplacement(String current) {
@@ -106,5 +118,37 @@ public class PatchingLab {
                         replacement = candidates[r.nextInt(candidates.length)];
                 }
                 return replacement;
+        }
+
+        static Map<Integer, Double> computeTarantulaFitness(List<Boolean> results) {
+                int operatorCount = OperatorTracker.operators.length;
+                
+                int[] failCounts = new int[operatorCount];
+                int[] passCounts = new int[operatorCount];
+                int totalFailing = 0;
+                int totalPassing = 0;
+                
+                for (int i = 0; i < results.size(); i++) {
+                        boolean passed = results.get(i);
+                        Set<Integer> executed = executedOperators.getOrDefault(i, Collections.emptySet());
+                        for (int op : executed) {
+                                if (passed) {
+                                        passCounts[op]++;
+                                } else {
+                                        failCounts[op]++;
+                                }
+                        }
+                        if (passed) totalPassing++;
+                        else totalFailing++;
+                }
+
+                Map<Integer, Double> hue = new HashMap<>();
+                for (int op = 0; op < operatorCount; op++) {
+                        double failRate = (double) failCounts[op] / totalFailing;
+                        double passRate = (double) passCounts[op] / totalPassing;
+                        hue.put(op, failRate / (failRate + passRate));
+                }
+
+                return hue;
         }
 }
