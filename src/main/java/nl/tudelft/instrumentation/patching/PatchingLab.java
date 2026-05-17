@@ -41,8 +41,9 @@ public class PatchingLab {
         static void run() {
                 initialize();
 
+                List<Boolean> results = OperatorTracker.runAllTests();
                 // compute initial fitness for the current buggy operator set
-                int initialFitness = computeFitness(OperatorTracker.operators);
+                int initialFitness = computeFitness(OperatorTracker.operators, results);
                 System.out.println("Initial fitness = " + initialFitness);
 
                 if (initialFitness == 0) {
@@ -51,32 +52,32 @@ public class PatchingLab {
                 }
 
                 // Example search: try a few random one-operator mutations and keep improvements
-                String[] bestOperators = OperatorTracker.operators.clone();
-                int bestFitness = initialFitness;
-                int maxAttempts = 30;
+                // String[] bestOperators = OperatorTracker.operators.clone();
+                // int bestFitness = initialFitness;
+                // int maxAttempts = 30;
 
-                for (int attempt = 1; attempt <= maxAttempts && bestFitness > 0; attempt++) {
-                        String[] candidate = bestOperators.clone();
-                        int operatorIndex = r.nextInt(candidate.length);
-                        candidate[operatorIndex] = randomReplacement(candidate[operatorIndex]);
+                // for (int attempt = 1; attempt <= maxAttempts && bestFitness > 0; attempt++) {
+                //         String[] candidate = bestOperators.clone();
+                //         int operatorIndex = r.nextInt(candidate.length);
+                //         candidate[operatorIndex] = randomReplacement(candidate[operatorIndex]);
 
-                        int fitness = computeFitness(candidate);
-                        System.out.println("Attempt " + attempt + ": operator[" + operatorIndex + "]=" + candidate[operatorIndex] + ", fitness=" + fitness);
+                //         int fitness = computeFitness(candidate);
+                //         System.out.println("Attempt " + attempt + ": operator[" + operatorIndex + "]=" + candidate[operatorIndex] + ", fitness=" + fitness);
 
-                        if (fitness < bestFitness) {
-                                bestFitness = fitness;
-                                bestOperators = candidate;
-                                System.out.println("  New best fitness = " + bestFitness);
-                        }
-                }
+                //         if (fitness < bestFitness) {
+                //                 bestFitness = fitness;
+                //                 bestOperators = candidate;
+                //                 System.out.println("  New best fitness = " + bestFitness);
+                //         }
+                // }
 
-                OperatorTracker.operators = bestOperators;
-                System.out.println("Search finished. Best fitness = " + bestFitness);
-                if (bestFitness == 0) {
-                        System.out.println("Found a candidate that passes all tests.");
-                } else {
-                        System.out.println("No perfect repair found in the example search. Use this fitness function to guide a stronger search.");
-                }
+                // OperatorTracker.operators = bestOperators;
+                // System.out.println("Search finished. Best fitness = " + bestFitness);
+                // if (bestFitness == 0) {
+                //         System.out.println("Found a candidate that passes all tests.");
+                // } else {
+                //         System.out.println("No perfect repair found in the example search. Use this fitness function to guide a stronger search.");
+                // }
         }
 
         public static void output(String out){
@@ -86,8 +87,7 @@ public class PatchingLab {
                 System.out.println(out);
         }
 
-        static double computeFitness() {
-                List<Boolean> results = OperatorTracker.runAllTests();
+        static double computeFitness(List<Boolean> results) {                               
                 int failCount = 0;
                 for (boolean passed : results) {
                         if (!passed) failCount++;
@@ -95,14 +95,7 @@ public class PatchingLab {
                 
                 double fitness = (double) failCount / (double) results.size();
                 System.out.println("Fitness (failing tests): " + fitness);
-                return fitness;
-        }
 
-        static double computeFitness(String[] candidateOperators) {
-                String[] previousOperators = OperatorTracker.operators;
-                OperatorTracker.operators = candidateOperators;
-                double fitness = computeFitness();
-                OperatorTracker.operators = previousOperators;
                 return fitness;
         }
 
