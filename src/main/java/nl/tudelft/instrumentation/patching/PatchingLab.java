@@ -9,10 +9,24 @@ public class PatchingLab {
         // Map from test index to set of operator IDs executed during that test
         static Map<Integer, Set<Integer>> executedOperators = new HashMap<>();
 
+        static int totalPopulationSize = 50;
+        static List<String[]> population = new ArrayList<>();
+        
         // Map<Integer, String> patch = new HashMap<>();
 
         static void initialize(){
                 // initialize the population based on OperatorTracker.operators
+                population.clear();
+                population.add(OperatorTracker.operators.clone()); // include original as first candidate
+
+                for (int i = 1; i < totalPopulationSize; i++) {
+                        String[] candidate = new String[OperatorTracker.operators.length];
+                        for (int j = 0; j < candidate.length; j++) {
+                                candidate[j] = randomReplacement(OperatorTracker.operators[j]); 
+                        }
+                        population.add(candidate);
+                }
+
         }
 
         // encounteredOperator gets called for each operator encountered while running tests
@@ -142,13 +156,19 @@ public class PatchingLab {
                         else totalFailing++;
                 }
 
-                Map<Integer, Double> hue = new HashMap<>();
+                Map<Integer, Double> tarantulaScores = new HashMap<>();
                 for (int op = 0; op < operatorCount; op++) {
                         double failRate = (double) failCounts[op] / totalFailing;
                         double passRate = (double) passCounts[op] / totalPassing;
-                        hue.put(op, failRate / (failRate + passRate));
+                        tarantulaScores.put(op, failRate / (failRate + passRate));
                 }
 
-                return hue;
+                return tarantulaScores;
+        }
+
+        static List<Integer> rankOperatorsByTarantula(Map<Integer, Double> tarantulaScores, int topN) {
+                List<Integer> ranked = new ArrayList<>(tarantulaScores.keySet());
+                ranked.sort((a, b) -> Double.compare(tarantulaScores.get(b), tarantulaScores.get(a)));
+                return ranked.subList(0, Math.min(topN, ranked.size())); // return top N operators
         }
 }
