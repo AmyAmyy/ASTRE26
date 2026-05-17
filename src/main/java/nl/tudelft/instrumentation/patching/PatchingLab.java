@@ -9,22 +9,24 @@ public class PatchingLab {
         // Map from test index to set of operator IDs executed during that test
         static Map<Integer, Set<Integer>> executedOperators = new HashMap<>();
 
-        static int totalPopulationSize = 50;
-        static List<String[]> population = new ArrayList<>();
+        static final int totalPopulationSize = 50;
+        static List<Individual> population = new ArrayList<>();
         
         // Map<Integer, String> patch = new HashMap<>();
+
+        static final int tournamentSize = 5;
 
         static void initialize(){
                 // initialize the population based on OperatorTracker.operators
                 population.clear();
-                population.add(OperatorTracker.operators.clone()); // include original as first candidate
+                population.add(new Individual(OperatorTracker.operators.clone(), Double.MAX_VALUE)); // include original as first candidate
 
                 for (int i = 1; i < totalPopulationSize; i++) {
                         String[] candidate = new String[OperatorTracker.operators.length];
                         for (int j = 0; j < candidate.length; j++) {
                                 candidate[j] = randomReplacement(OperatorTracker.operators[j]); 
                         }
-                        population.add(candidate);
+                        population.add(new Individual(candidate, Double.MAX_VALUE)); // fitness will be computed later
                 }
 
         }
@@ -70,7 +72,7 @@ public class PatchingLab {
 
                 List<Boolean> results = OperatorTracker.runAllTests();
                 // compute initial fitness for the current buggy operator set
-                int initialFitness = computeFitness(results);
+                double initialFitness = computeFitness(results);
                 System.out.println("Initial fitness = " + initialFitness);
 
                 if (initialFitness == 0) {
@@ -111,18 +113,18 @@ public class PatchingLab {
                 // This will get called when the problem code tries to print things,
                 // the prints in the original code have been removed for your convenience
 
-                System.out.println(out);
+                // System.out.println(out);
         }
 
-        static int computeFitness(List<Boolean> results) {
+        static double computeFitness(List<Boolean> results) {
                 int failCount = 0;
                 for (boolean passed : results) {
                         if (!passed) failCount++;
                 }
 
-                System.out.println("Fitness (failing tests): " + failCount + "/" + results.size());
-
-                return failCount;
+                double fitness = (double) failCount / results.size();
+                System.out.println("Fitness (normalized): " + fitness);
+                return fitness;
         }
 
         static String randomReplacement(String current) {
@@ -170,5 +172,23 @@ public class PatchingLab {
                 List<Integer> ranked = new ArrayList<>(tarantulaScores.keySet());
                 ranked.sort((a, b) -> Double.compare(tarantulaScores.get(b), tarantulaScores.get(a)));
                 return ranked.subList(0, Math.min(topN, ranked.size())); // return top N operators
+        }
+
+        static Individual tournamentSelection(List<Individual> population) {
+                List<Individual> tournament = new ArrayList<>();
+                for (int i = 0; i < tournamentSize; i++) {
+                        tournament.add(population.get(r.nextInt(population.size())));
+                }
+                return Collections.min(tournament, Comparator.comparingDouble(ind -> ind.fitness));
+        }
+}
+
+static class Individual {
+        String[] operators;
+        double fitness;
+
+        public Individual(String[] operators, double fitness) {
+                this.operators = operators;
+                this.fitness = fitness;
         }
 }
