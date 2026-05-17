@@ -32,6 +32,7 @@ public class FuzzingLab {
 
         // -- Error code tracking --
         static Set<String> triggeredErrors = new HashSet<>();
+        static Map<String, List<String>> errorTraces = new LinkedHashMap<>(); // error_code -> trace that first triggered it
 
         // --- Best-trace tracking ---
         static List<String> bestTrace = null;          // trace that saw the most unique branches in one run
@@ -295,6 +296,12 @@ public class FuzzingLab {
                 System.out.println("Triggered error codes (" + triggeredErrors.size() + "): " + triggeredErrors);
                 System.out.println("Best single-trace branch count: " + bestTraceUniqueBranchCount);
                 System.out.println("Best trace: " + bestTrace);
+                if (!errorTraces.isEmpty()) {
+                        System.out.println("--- Error traces ---");
+                        for (Map.Entry<String, List<String>> entry : errorTraces.entrySet()) {
+                                System.out.println("  " + entry.getKey() + ": " + entry.getValue());
+                        }
+                }
                 System.out.println("=================================================");
         }
 
@@ -305,39 +312,39 @@ public class FuzzingLab {
                 while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
                         // Reset or start fresh
                         if (bestTraceSoFar == null) {
-                        currentTrace = generateRandomTrace(DistanceTracker.inputSymbols);
-                        executeCurrentTrace();
-                        bestTraceSoFar = new ArrayList<>(currentTrace);
-                        bestDistanceSoFar = currentTraceBranchDistance;
-                        noImprovementCount = 0;
-                        continue; // start climbing from this base
+                                currentTrace = generateRandomTrace(DistanceTracker.inputSymbols);
+                                executeCurrentTrace();
+                                bestTraceSoFar = new ArrayList<>(currentTrace);
+                                bestDistanceSoFar = currentTraceBranchDistance;
+                                noImprovementCount = 0;
+                                continue; // start climbing from this base
                         }
 
                         List<String> bestMutation = null;
                         float bestMutationDistance = Float.MAX_VALUE; // <-- key fix: start fresh
 
                         for (int i = 0; i < nrMutations; i++) {
-                        currentTrace = fuzz(DistanceTracker.inputSymbols, bestTraceSoFar);
-                        executeCurrentTrace();
+                                currentTrace = fuzz(DistanceTracker.inputSymbols, bestTraceSoFar);
+                                executeCurrentTrace();
 
-                        if (currentTraceBranchDistance < bestMutationDistance) {
-                                bestMutation = new ArrayList<>(currentTrace);
-                                bestMutationDistance = currentTraceBranchDistance;
-                        }
+                                if (currentTraceBranchDistance < bestMutationDistance) {
+                                        bestMutation = new ArrayList<>(currentTrace);
+                                        bestMutationDistance = currentTraceBranchDistance;
+                                }
                         }
 
                         if (bestMutationDistance < bestDistanceSoFar) {
-                        bestTraceSoFar = new ArrayList<>(bestMutation);
-                        bestDistanceSoFar = bestMutationDistance;
-                        noImprovementCount = 0;
-                        } else {
-                        noImprovementCount++;
-                        // Only reset after N consecutive failures, not immediately
-                        if (noImprovementCount >= 3) {
-                                bestTraceSoFar = null;
-                                bestDistanceSoFar = Float.MAX_VALUE;
+                                bestTraceSoFar = new ArrayList<>(bestMutation);
+                                bestDistanceSoFar = bestMutationDistance;
                                 noImprovementCount = 0;
-                        }
+                        } else {
+                                noImprovementCount++;
+                                // Only reset after N consecutive failures, not immediately
+                                if (noImprovementCount >= 3) {
+                                        bestTraceSoFar = null;
+                                        bestDistanceSoFar = Float.MAX_VALUE;
+                                        noImprovementCount = 0;
+                                }
                         }
                 }
                 logExperimentResults("HillClimber");
@@ -360,6 +367,7 @@ public class FuzzingLab {
                         currentTrace = null;
                         allUniqueBranches.clear();
                         triggeredErrors.clear();
+                        errorTraces.clear();
                         totalTraces = 0;
                         bestTrace = null;
                         bestTraceUniqueBranchCount = 0;
@@ -388,7 +396,11 @@ public class FuzzingLab {
         public static void output(String out){
                 System.out.println(out);
                 if (out.contains("error_")) {
-                        triggeredErrors.add(out.trim());
+                        String error = out.trim();
+                        if (triggeredErrors.add(error)) {
+                                // First time seeing this error - save the trace
+                                errorTraces.put(error, new ArrayList<>(currentTrace));
+                        }
                 }
         }
 }

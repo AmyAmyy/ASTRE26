@@ -39,3 +39,6 @@ RERS/
 RERS2020Buggy/
 scripts/
 *.dot
+
+afl/**/findings/
+afl/**/*.dSYM/
