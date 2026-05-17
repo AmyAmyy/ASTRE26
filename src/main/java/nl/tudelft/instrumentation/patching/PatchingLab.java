@@ -16,6 +16,18 @@ public class PatchingLab {
 
         static final int tournamentSize = 5;
 
+        static final double mutationRate = 0.01;
+
+        static class Individual {
+                String[] operators;
+                double fitness;
+
+                public Individual(String[] operators, double fitness) {
+                        this.operators = operators;
+                        this.fitness = fitness;
+                }
+        }
+
         static void initialize(){
                 // initialize the population based on OperatorTracker.operators
                 population.clear();
@@ -181,14 +193,15 @@ public class PatchingLab {
                 }
                 return Collections.min(tournament, Comparator.comparingDouble(ind -> ind.fitness));
         }
-}
 
-static class Individual {
-        String[] operators;
-        double fitness;
-
-        public Individual(String[] operators, double fitness) {
-                this.operators = operators;
-                this.fitness = fitness;
+        static Individual mutate(Individual parent) {
+                String[] childOperators = parent.operators.clone();
+                for (int i = 0; i < childOperators.length; i++) {
+                        if (r.nextDouble() < mutationRate) {
+                                childOperators[i] = randomReplacement(childOperators[i]);
+                        }
+                }
+                return new Individual(childOperators, Double.MAX_VALUE); // fitness will be computed later
         }
 }
+
