@@ -6,6 +6,8 @@ public class PatchingLab {
         static Random r = new Random();
         static boolean isFinished = false;
 
+        Map<Integer, String> patch = new HashMap<>();
+
         static void initialize(){
                 // initialize the population based on OperatorTracker.operators
         }
@@ -33,26 +35,47 @@ public class PatchingLab {
                 return false;
         }
 
+        static final String[] NUMERIC_OPERATORS = {"!=", "==", "<", ">", "<=", ">="};
+        static final String[] BOOLEAN_OPERATORS = {"!=", "=="};
+
         static void run() {
                 initialize();
 
-                // Place the code here you want to run once:
-                // You want to change this of course, this is just an example
-                // Tests are loaded from resources/rers2020_test_cases. If you are you are using
-                // your own tests, make sure you put them in the same folder with the same
-                // naming convention.
-                OperatorTracker.runAllTests();
-                System.out.println("Entered run");
+                // compute initial fitness for the current buggy operator set
+                int initialFitness = computeFitness(OperatorTracker.operators);
+                System.out.println("Initial fitness = " + initialFitness);
 
-                // Loop here, running your genetic algorithm until you think it is done
-                while (!isFinished) {
-                        // Do things!
-                        try {
-                                System.out.println("Woohoo, looping!");
-                                Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                                e.printStackTrace();
+                if (initialFitness == 0) {
+                        System.out.println("All tests already pass. No faulty operator detected.");
+                        return;
+                }
+
+                // Example search: try a few random one-operator mutations and keep improvements
+                String[] bestOperators = OperatorTracker.operators.clone();
+                int bestFitness = initialFitness;
+                int maxAttempts = 30;
+
+                for (int attempt = 1; attempt <= maxAttempts && bestFitness > 0; attempt++) {
+                        String[] candidate = bestOperators.clone();
+                        int operatorIndex = r.nextInt(candidate.length);
+                        candidate[operatorIndex] = randomReplacement(candidate[operatorIndex]);
+
+                        int fitness = computeFitness(candidate);
+                        System.out.println("Attempt " + attempt + ": operator[" + operatorIndex + "]=" + candidate[operatorIndex] + ", fitness=" + fitness);
+
+                        if (fitness < bestFitness) {
+                                bestFitness = fitness;
+                                bestOperators = candidate;
+                                System.out.println("  New best fitness = " + bestFitness);
                         }
+                }
+
+                OperatorTracker.operators = bestOperators;
+                System.out.println("Search finished. Best fitness = " + bestFitness);
+                if (bestFitness == 0) {
+                        System.out.println("Found a candidate that passes all tests.");
+                } else {
+                        System.out.println("No perfect repair found in the example search. Use this fitness function to guide a stronger search.");
                 }
         }
 
@@ -60,6 +83,35 @@ public class PatchingLab {
                 // This will get called when the problem code tries to print things,
                 // the prints in the original code have been removed for your convenience
 
-                // System.out.println(out);
+                System.out.println(out);
+        }
+
+        static double computeFitness() {
+                List<Boolean> results = OperatorTracker.runAllTests();
+                int failCount = 0;
+                for (boolean passed : results) {
+                        if (!passed) failCount++;
+                }
+                
+                double fitness = (double) failCount / (double) results.size();
+                System.out.println("Fitness (failing tests): " + fitness);
+                return fitness;
+        }
+
+        static double computeFitness(String[] candidateOperators) {
+                String[] previousOperators = OperatorTracker.operators;
+                OperatorTracker.operators = candidateOperators;
+                double fitness = computeFitness();
+                OperatorTracker.operators = previousOperators;
+                return fitness;
+        }
+
+        static String randomReplacement(String current) {
+                String[] candidates = current.equals("==") || current.equals("!=") ? NUMERIC_OPERATORS : NUMERIC_OPERATORS;
+                String replacement = current;
+                while (replacement.equals(current)) {
+                        replacement = candidates[r.nextInt(candidates.length)];
+                }
+                return replacement;
         }
 }
