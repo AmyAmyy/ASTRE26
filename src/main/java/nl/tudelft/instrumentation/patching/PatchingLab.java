@@ -39,6 +39,9 @@ public class PatchingLab {
         // Directory where best-patch files are written. Created on first save.
         static final Path patchDir = Paths.get("patches");
 
+        // Directory where convergence CSV logs are written.
+        static final Path logDir = Paths.get("logs");
+
         static class Individual {
                 String[] operators;
                 double fitness;
@@ -124,6 +127,9 @@ public class PatchingLab {
                 // Persist the baseline so a killed run still has *something* on disk.
                 writePatch(problemName, initialBuggyProgram, bestIndividual, 0);
 
+                Path convergenceLog = openConvergenceLog(problemName);
+                appendConvergence(convergenceLog, 0, bestIndividual.fitness, medianFitness(population));
+
                 for (int generation = 1; generation <= maxGenerations && bestIndividual.fitness > 0.0; generation++) {
                         // Re-run tests with best known operators to get fresh coverage data
                         executedOperators.clear();
@@ -156,6 +162,9 @@ public class PatchingLab {
                         }
                         population = newPopulation;
                         System.out.println("Generation " + generation + ": best fitness = " + bestIndividual.fitness);
+                        // Reuse the already-sorted list to read the median cheaply.
+                        appendConvergence(convergenceLog, generation,
+                                bestIndividual.fitness, sorted.get(sorted.size() / 2).fitness);
                 }
 
                 writePatch(problemName, initialBuggyProgram, bestIndividual, maxGenerations);
@@ -192,9 +201,38 @@ public class PatchingLab {
                         lines.add("diff_count=" + diffs.size());
                         lines.addAll(diffs);
 
-                        Files.write(file, lines);
+                Files.write(file, lines);
                 } catch (IOException e) {
                         System.err.println("WARN: failed to write patch for " + problemName + ": " + e.getMessage());
+                }
+        }
+
+        static Path openConvergenceLog(String problemName) {
+                try {
+                        Files.createDirectories(logDir);
+                        String name = String.format(Locale.ROOT,
+                                "%s_mut%.2f_off%.2f_top%d.csv",
+                                problemName, mutationRate, offListMutationRate, mutateOperatorCount);
+                        Path file = logDir.resolve(name);
+                        Files.write(file, Collections.singletonList(
+                                "generation,best_fitness,median_fitness"));
+                        return file;
+                } catch (IOException e) {
+                        System.err.println("WARN: failed to open convergence log for "
+                                + problemName + ": " + e.getMessage());
+                        return null;
+                }
+        }
+
+        static void appendConvergence(Path file, int generation, double bestFitness, double medianFitness) {
+                if (file == null) return;
+                try {
+                        String row = String.format(Locale.ROOT,
+                                "%d,%.6f,%.6f%n", generation, bestFitness, medianFitness);
+                        Files.write(file, row.getBytes(),
+                                java.nio.file.StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                        System.err.println("WARN: failed to append convergence row: " + e.getMessage());
                 }
         }
 
@@ -280,6 +318,12 @@ public class PatchingLab {
                         tournament.add(population.get(r.nextInt(population.size())));
                 }
                 return Collections.min(tournament, Comparator.comparingDouble(ind -> ind.fitness));
+        }
+
+        static double medianFitness(List<Individual> pop) {
+                List<Individual> copy = new ArrayList<>(pop);
+                copy.sort(Comparator.comparingDouble(ind -> ind.fitness));
+                return copy.get(copy.size() / 2).fitness;
         }
 
         static Individual mutate(Individual parent, List<Integer> mutableOperators) {
