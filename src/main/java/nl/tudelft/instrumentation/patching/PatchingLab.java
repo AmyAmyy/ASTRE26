@@ -22,13 +22,16 @@ public class PatchingLab {
 
         static final int maxGenerations = 200;
 
+        // Wall-clock budget for a single run, in milliseconds.
+        static final long maxRuntimeMillis = 30L * 60L * 1000L; // 30 minutes
+
         static final int mutateOperatorCount = 15;
 
         // Number of best individuals copied unchanged into the next generation.
         static final int eliteCount = 5;
 
         // Probability that a child receives a flip outside the tarantula topN
-        static final double offListMutationRate = 0.10;
+        static final double extraMutationRate = 0.10;
 
         static final String[] NUMERIC_OPERATORS = new String[] {"==", "!=", "<", ">", "<=", ">="};
         static final String[] BOOLEAN_OPERATORS = new String[] {"==", "!="};
@@ -106,6 +109,8 @@ public class PatchingLab {
         }
 
         static void run() {
+                final long runStartMillis = System.currentTimeMillis();
+
                 String[] initialBuggyProgram = OperatorTracker.operators.clone();
                 String problemName = OperatorTracker.problem.getClass().getSimpleName();
 
@@ -130,7 +135,12 @@ public class PatchingLab {
                 Path convergenceLog = openConvergenceLog(problemName);
                 appendConvergence(convergenceLog, 0, bestIndividual.fitness, medianFitness(population));
 
-                for (int generation = 1; generation <= maxGenerations && bestIndividual.fitness > 0.0; generation++) {
+                int generation = 1;
+                for (generation = 1;
+                                generation <= maxGenerations
+                                        && bestIndividual.fitness > 0.0
+                                        && (System.currentTimeMillis() - runStartMillis) < maxRuntimeMillis;
+                                generation++) {
                         // Re-run tests with best known operators to get fresh coverage data
                         executedOperators.clear();
                         OperatorTracker.operators = bestIndividual.operators;
@@ -167,7 +177,21 @@ public class PatchingLab {
                                 bestIndividual.fitness, sorted.get(sorted.size() / 2).fitness);
                 }
 
-                writePatch(problemName, initialBuggyProgram, bestIndividual, maxGenerations);
+                long elapsedMillis = System.currentTimeMillis() - runStartMillis;
+                String stopReason;
+                if (bestIndividual.fitness == 0.0) {
+                        stopReason = "all tests pass";
+                } else if (elapsedMillis >= maxRuntimeMillis) {
+                        stopReason = "wall-clock budget exhausted";
+                } else {
+                        stopReason = "max generations reached";
+                }
+                System.out.println("Run finished: reason=" + stopReason
+                        + " elapsed ms=" + elapsedMillis
+                        + " best fitness=" + bestIndividual.fitness
+                        + " total generations ran=" + generation);
+
+		writePatch(problemName, initialBuggyProgram, bestIndividual, generation);
         }
 
         public static void output(String out){
@@ -177,10 +201,8 @@ public class PatchingLab {
                 // System.out.println(out);
         }
 
-        /**
-         * Persist the current best patch to {@code patches/<problemName>.patch}.
-         * This file is overwritten on every strict improvement, so it always contians best patch so far
-         */
+        // Persist the current best patch to {@code patches/<problemName>.patch}.
+        // This file is overwritten on every strict improvement, so it always contians best patch so far
         static void writePatch(String problemName, String[] originalBuggy, Individual best, int generation) {
                 try {
                         Files.createDirectories(patchDir);
@@ -211,8 +233,8 @@ public class PatchingLab {
                 try {
                         Files.createDirectories(logDir);
                         String name = String.format(Locale.ROOT,
-                                "%s_mut%.2f_off%.2f_top%d.csv",
-                                problemName, mutationRate, offListMutationRate, mutateOperatorCount);
+                                "%s_mut%.2f_extra%.2f_top%d.csv",
+                                problemName, mutationRate, extraMutationRate, mutateOperatorCount);
                         Path file = logDir.resolve(name);
                         Files.write(file, Collections.singletonList(
                                 "generation,best_fitness,median_fitness"));
@@ -338,12 +360,11 @@ public class PatchingLab {
                         }
                 }
 
-                // Exploratory mutation
-                if (r.nextDouble() < offListMutationRate) {
-                        // Randomly flip an operator
-                        int idx = r.nextInt(childOperators.length);
-                        childOperators[idx] = randomReplacement(isBooleanOp[idx], childOperators[idx]);
-                }
+		// Exploratory mutation: flip a random operator anywhere in the program
+		if (r.nextDouble() < extraMutationRate) {
+			int idx = r.nextInt(childOperators.length);
+			childOperators[idx] = randomReplacement(isBooleanOp[idx], childOperators[idx]);
+		}
 
                 // Force at least one flip so we make progress
                 if (flips == 0 && !mutableOperators.isEmpty()) {
