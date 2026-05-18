@@ -1,4 +1,8 @@
 package nl.tudelft.instrumentation.patching;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class PatchingLab {
@@ -31,6 +35,9 @@ public class PatchingLab {
 
         // Array to track whether each operator slot is a boolean operator (true) or numeric operator (false)
         static boolean[] isBooleanOp;
+
+        // Directory where best-patch files are written. Created on first save.
+        static final Path patchDir = Paths.get("patches");
 
         static class Individual {
                 String[] operators;
@@ -97,6 +104,8 @@ public class PatchingLab {
 
         static void run() {
                 String[] initialBuggyProgram = OperatorTracker.operators.clone();
+                String problemName = OperatorTracker.problem.getClass().getSimpleName();
+
                 List<Boolean> results = OperatorTracker.runAllTests();
                 Map<Integer, Double> initialTarantulaScores = computeTarantulaFitness(results);
                 List<Integer> initialMutableOperators = localizeTarantula(initialTarantulaScores, mutateOperatorCount);
@@ -110,8 +119,10 @@ public class PatchingLab {
                         System.out.println("All tests already pass. No faulty operator detected.");
                         return;
                 }
-                
+
                 Individual bestIndividual = new Individual(initialBuggyProgram, initialFitness);
+                // Persist the baseline so a killed run still has *something* on disk.
+                writePatch(problemName, initialBuggyProgram, bestIndividual, 0);
 
                 for (int generation = 1; generation <= maxGenerations && bestIndividual.fitness > 0.0; generation++) {
                         // Re-run tests with best known operators to get fresh coverage data
@@ -139,13 +150,15 @@ public class PatchingLab {
                                 Individual offspring = mutate(parent, mutableOperators);
                                 if (offspring.fitness < bestIndividual.fitness) {
                                         bestIndividual = offspring;
+                                        writePatch(problemName, initialBuggyProgram, bestIndividual, generation);
                                 }
                                 newPopulation.add(offspring);
                         }
                         population = newPopulation;
                         System.out.println("Generation " + generation + ": best fitness = " + bestIndividual.fitness);
                 }
-                
+
+                writePatch(problemName, initialBuggyProgram, bestIndividual, maxGenerations);
         }
 
         public static void output(String out){
@@ -153,6 +166,36 @@ public class PatchingLab {
                 // the prints in the original code have been removed for your convenience
 
                 // System.out.println(out);
+        }
+
+        /**
+         * Persist the current best patch to {@code patches/<problemName>.patch}.
+         * This file is overwritten on every strict improvement, so it always contians best patch so far
+         */
+        static void writePatch(String problemName, String[] originalBuggy, Individual best, int generation) {
+                try {
+                        Files.createDirectories(patchDir);
+                        Path file = patchDir.resolve(problemName + ".patch");
+
+                        List<String> diffs = new ArrayList<>();
+                        for (int i = 0; i < originalBuggy.length; i++) {
+                                if (!originalBuggy[i].equals(best.operators[i])) {
+                                        diffs.add(i + ":" + originalBuggy[i] + "->" + best.operators[i]);
+                                }
+                        }
+
+                        List<String> lines = new ArrayList<>();
+                        lines.add("problem=" + problemName);
+                        lines.add("generation=" + generation);
+                        lines.add("fitness=" + best.fitness);
+                        lines.add("operators=" + originalBuggy.length);
+                        lines.add("diff_count=" + diffs.size());
+                        lines.addAll(diffs);
+
+                        Files.write(file, lines);
+                } catch (IOException e) {
+                        System.err.println("WARN: failed to write patch for " + problemName + ": " + e.getMessage());
+                }
         }
 
         static double computeFitness(String[] candidateOperators) {
@@ -165,7 +208,6 @@ public class PatchingLab {
                 }
 
                 double fitness = (double) failCount / results.size();
-                // System.out.println("Fitness (normalized): " + fitness);
                 return fitness;                
         }
 

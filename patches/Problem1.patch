@@ -1,0 +1,12 @@
+problem=Problem1
+generation=200
+fitness=0.0
+operators=339
+diff_count=7
+22:!=->>=
+23:==-><=
+31:!=-><=
+33:==->>=
+39:==-><=
+179:==-><=
+314:==->>=
