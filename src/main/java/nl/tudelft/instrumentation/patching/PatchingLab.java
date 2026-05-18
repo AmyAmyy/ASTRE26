@@ -21,6 +21,10 @@ public class PatchingLab {
         static final int mutateOperatorCount = 15;
 
         static final String[] NUMERIC_OPERATORS = new String[] {"==", "!=", "<", ">", "<=", ">="};
+        static final String[] BOOLEAN_OPERATORS = new String[] {"==", "!="};
+
+        // Array to track whether each operator slot is a boolean operator (true) or numeric operator (false)
+        static boolean[] isBooleanOp;
 
         static class Individual {
                 String[] operators;
@@ -43,6 +47,11 @@ public class PatchingLab {
 
         // encounteredOperator gets called for each operator encountered while running tests
         static boolean encounteredOperator(String operator, int left, int right, int operator_nr){
+                if (isBooleanOp == null) {
+                        isBooleanOp = new boolean[OperatorTracker.operators.length];
+                }
+                isBooleanOp[operator_nr] = false;
+
                 // Add encountered operator to executedOperators map for the current test
                 int current_test = OperatorTracker.current_test;
                 if (!executedOperators.containsKey(current_test)) {
@@ -61,6 +70,11 @@ public class PatchingLab {
         }
 
         static boolean encounteredOperator(String operator, boolean left, boolean right, int operator_nr){
+                if (isBooleanOp == null) {
+                        isBooleanOp = new boolean[OperatorTracker.operators.length];
+                }
+                isBooleanOp[operator_nr] = true;
+
                 // Add encountered operator to executedOperators map for the current test
                 int current_test = OperatorTracker.current_test;
                 if (!executedOperators.containsKey(current_test)) {
@@ -138,9 +152,13 @@ public class PatchingLab {
                 return fitness;                
         }
 
-        static String randomReplacement(String current) {
-                String[] candidates = NUMERIC_OPERATORS;
-                String replacement = current;
+        static String randomReplacement(boolean isBooleanOp, String current) {
+                String[] candidates =
+                        isBooleanOp
+                                ? BOOLEAN_OPERATORS
+                                : NUMERIC_OPERATORS;
+
+                                String replacement = current;
                 while (replacement.equals(current)) {
                         replacement = candidates[r.nextInt(candidates.length)];
                 }
@@ -209,7 +227,8 @@ public class PatchingLab {
                 String[] childOperators = parent.operators.clone();
                 for (int i = 0; i < mutableOperators.size(); i++) {
                         if (r.nextDouble() < mutationRate) {
-                                childOperators[mutableOperators.get(i)] = randomReplacement(childOperators[mutableOperators.get(i)]);
+                                int idx = mutableOperators.get(i);
+                                childOperators[idx] = randomReplacement(isBooleanOp[idx], childOperators[idx]);
                         }
                 }
                 return new Individual(childOperators, computeFitness(childOperators));
