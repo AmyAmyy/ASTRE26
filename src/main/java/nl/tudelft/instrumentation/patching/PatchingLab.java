@@ -20,6 +20,12 @@ public class PatchingLab {
 
         static final int mutateOperatorCount = 15;
 
+        // Number of best individuals copied unchanged into the next generation.
+        static final int eliteCount = 5;
+
+        // Probability that a child receives a flip outside the tarantula topN
+        static final double offListMutationRate = 0.10;
+
         static final String[] NUMERIC_OPERATORS = new String[] {"==", "!=", "<", ">", "<=", ">="};
         static final String[] BOOLEAN_OPERATORS = new String[] {"==", "!="};
 
@@ -40,7 +46,8 @@ public class PatchingLab {
                 // initialize the population based on OperatorTracker.operators
                 population.clear();
 
-                for (int i = 0; i < totalPopulationSize; i++) {
+                population.add(initial);
+                for (int i = 1; i < totalPopulationSize; i++) {
                         population.add(mutate(initial, mutableOperators));
                 }
         }
@@ -111,19 +118,29 @@ public class PatchingLab {
                         executedOperators.clear();
                         OperatorTracker.operators = bestIndividual.operators;
                         List<Boolean> currentResults = OperatorTracker.runAllTests();
-                        
+
                         // Recompute Tarantula based on current best
                         Map<Integer, Double> tarantulaScores = computeTarantulaFitness(currentResults);
                         List<Integer> mutableOperators = localizeTarantula(tarantulaScores, mutateOperatorCount);
 
                         List<Individual> newPopulation = new ArrayList<>();
-                        for (int i = 0; i < totalPopulationSize; i++) {
+
+                        // Carry the top eliteCount individuals unchanged
+                        List<Individual> sorted = new ArrayList<>(population);
+                        sorted.sort(Comparator.comparingDouble(ind -> ind.fitness));
+                        int elites = Math.min(eliteCount, sorted.size());
+                        for (int i = 0; i < elites; i++) {
+                                newPopulation.add(sorted.get(i));
+                        }
+
+                        // Fill the rest with offspring.
+                        while (newPopulation.size() < totalPopulationSize) {
                                 Individual parent = tournamentSelection(population);
-                                Individual child = mutate(parent, mutableOperators);
-                                if (child.fitness < bestIndividual.fitness) {
-                                bestIndividual = child;
+                                Individual offspring = mutate(parent, mutableOperators);
+                                if (offspring.fitness < bestIndividual.fitness) {
+                                        bestIndividual = offspring;
                                 }
-                                newPopulation.add(child);
+                                newPopulation.add(offspring);
                         }
                         population = newPopulation;
                         System.out.println("Generation " + generation + ": best fitness = " + bestIndividual.fitness);
@@ -225,12 +242,29 @@ public class PatchingLab {
 
         static Individual mutate(Individual parent, List<Integer> mutableOperators) {
                 String[] childOperators = parent.operators.clone();
+
+                int flips = 0;
                 for (int i = 0; i < mutableOperators.size(); i++) {
                         if (r.nextDouble() < mutationRate) {
                                 int idx = mutableOperators.get(i);
                                 childOperators[idx] = randomReplacement(isBooleanOp[idx], childOperators[idx]);
+                                flips++;
                         }
                 }
+
+                // Exploratory mutation
+                if (r.nextDouble() < offListMutationRate) {
+                        // Randomly flip an operator
+                        int idx = r.nextInt(childOperators.length);
+                        childOperators[idx] = randomReplacement(isBooleanOp[idx], childOperators[idx]);
+                }
+
+                // Force at least one flip so we make progress
+                if (flips == 0 && !mutableOperators.isEmpty()) {
+                        int idx = mutableOperators.get(r.nextInt(mutableOperators.size()));
+                        childOperators[idx] = randomReplacement(isBooleanOp[idx], childOperators[idx]);
+                }
+
                 return new Individual(childOperators, computeFitness(childOperators));
         }
 }
