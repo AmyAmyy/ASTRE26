@@ -16,11 +16,13 @@ public class PatchingLab {
 
         static final int tournamentSize = 5;
 
-        static final double mutationRate = 0.01;
+        static final double mutationRate = 0.2;
 
         static final int maxGenerations = 200;
 
-        static final int mutateOperatorCount = 5;
+        static final int mutateOperatorCount = 15;
+
+        static final String[] NUMERIC_OPERATORS = new String[] {"==", "!=", "<", ">", "<=", ">="};
 
         static class Individual {
                 String[] operators;
@@ -83,7 +85,7 @@ public class PatchingLab {
 
                 List<Boolean> results = OperatorTracker.runAllTests();
                 // compute initial fitness for the current buggy operator set
-                double initialFitness = computeFitness(results);
+                double initialFitness = computeFitness(OperatorTracker.operators);
                 System.out.println("Initial fitness = " + initialFitness);
 
                 if (initialFitness == 0) {
@@ -91,26 +93,49 @@ public class PatchingLab {
                         return;
                 }
 
-                Map<Integer, Double> tarantulaScores = computeTarantulaFitness(results);
-                List<Integer> mutableOperators = localizeTarantula(tarantulaScores, mutateOperatorCount);
+                // Map<Integer, Double> tarantulaScores = computeTarantulaFitness(results);
+                // List<Integer> mutableOperators = localizeTarantula(tarantulaScores, mutateOperatorCount);
                 
                 Individual bestIndividual = new Individual(OperatorTracker.operators.clone(), initialFitness);
 
+                // for (int generation = 1; generation <= maxGenerations && bestIndividual.fitness > 0.0; generation++) {
+                //         List<Individual> newPopulation = new ArrayList<>();
+                //         for (int i = 0; i < totalPopulationSize; i++) {
+                //                 Individual parent = tournamentSelection(population);
+                                
+                //                 Individual child = mutate(parent, mutableOperators);
+                //                 if (child.fitness < bestIndividual.fitness) {
+                //                         bestIndividual = child;
+                                        
+                //                 }
+                //                 newPopulation.add(child);
+                //         }
+                //         population = newPopulation;
+                //         System.out.println("Generation " + generation + ": New best fitness = " + bestIndividual.fitness);
+                // }
                 for (int generation = 1; generation <= maxGenerations && bestIndividual.fitness > 0.0; generation++) {
+                        // Re-run tests with best known operators to get fresh coverage data
+                        executedOperators.clear();
+                        OperatorTracker.operators = bestIndividual.operators;
+                        List<Boolean> currentResults = OperatorTracker.runAllTests();
+                        
+                        // Recompute Tarantula based on current best
+                        Map<Integer, Double> tarantulaScores = computeTarantulaFitness(currentResults);
+                        List<Integer> mutableOperators = localizeTarantula(tarantulaScores, mutateOperatorCount);
+
                         List<Individual> newPopulation = new ArrayList<>();
                         for (int i = 0; i < totalPopulationSize; i++) {
                                 Individual parent = tournamentSelection(population);
-                                
                                 Individual child = mutate(parent, mutableOperators);
                                 if (child.fitness < bestIndividual.fitness) {
-                                        bestIndividual = child;
-                                        System.out.println("Generation " + generation + ": New best fitness = " + bestIndividual.fitness);
+                                bestIndividual = child;
                                 }
                                 newPopulation.add(child);
                         }
                         population = newPopulation;
-                }
-
+                        System.out.println("Generation " + generation + ": best fitness = " + bestIndividual.fitness);
+                        }
+                
         }
 
         public static void output(String out){
@@ -122,7 +147,7 @@ public class PatchingLab {
 
         static double computeFitness(String[] candidateOperators) {
                 OperatorTracker.operators = candidateOperators;
-                List<Boolean> results = OperatorTracker.runAllTestsWithOperators(candidateOperators);
+                List<Boolean> results = OperatorTracker.runAllTests();
 
                 int failCount = 0;
                 for (boolean passed : results) {
@@ -130,12 +155,12 @@ public class PatchingLab {
                 }
 
                 double fitness = (double) failCount / results.size();
-                System.out.println("Fitness (normalized): " + fitness);
+                // System.out.println("Fitness (normalized): " + fitness);
                 return fitness;                
         }
 
         static String randomReplacement(String current) {
-                String[] candidates = current.equals("==") || current.equals("!=") ? NUMERIC_OPERATORS : NUMERIC_OPERATORS;
+                String[] candidates = NUMERIC_OPERATORS;
                 String replacement = current;
                 while (replacement.equals(current)) {
                         replacement = candidates[r.nextInt(candidates.length)];
