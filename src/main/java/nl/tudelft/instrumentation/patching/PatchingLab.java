@@ -18,7 +18,7 @@ public class PatchingLab {
         
         static final int tournamentSize = 5;
 
-        static final double mutationRate = 0.2;
+        static final double mutationRate = 0.05;
 
         static final int maxGenerations = 200;
 

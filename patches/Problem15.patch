@@ -1,0 +1,9 @@
+problem=Problem15
+generation=8
+fitness=0.0021291696238466998
+operators=6034
+diff_count=4
+285:>=-><=
+632:!=-><=
+1060:<=->>
+2789:>=->>
