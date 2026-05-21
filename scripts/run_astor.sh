@@ -16,7 +16,7 @@
 # Outputs:
 #     astor_runs/<Problem>/stdout.log     full ASTOR stdout
 #     astor_runs/<Problem>/stderr.log     full ASTOR stderr
-#     astor_runs/<Problem>/output-astor/  ASTOR's patch output (copied)
+#     astor_runs/<Problem>/output_astor/  ASTOR's patch output (copied)
 #     astor_runs/results.csv              problem,wallclock_seconds,patches_found,astor_reported_time_s,astor_status
 
 set -u
@@ -145,40 +145,43 @@ run_astor_for() {
     local t1=$(date +%s)
     local wall=$((t1 - t0))
 
-    # Copy ASTOR's output-astor (it's written under ASTOR_DIR by default).
-    if [[ -d "$ASTOR_DIR/output-astor" ]]; then
-        rm -rf "$rundir/output-astor"
-        cp -R "$ASTOR_DIR/output-astor" "$rundir/output-astor"
+    # ASTOR writes to $ASTOR_DIR/output_astor/AstorMain-<problem>/.
+    # Copy that subtree into the run dir so each problem's artifacts are
+    # self-contained alongside the logs.
+    local astor_out="$ASTOR_DIR/output_astor/AstorMain-$p"
+    if [[ -d "$astor_out" ]]; then
+        rm -rf "$rundir/output_astor"
+        mkdir -p "$rundir/output_astor"
+        cp -R "$astor_out" "$rundir/output_astor/"
     fi
 
-    # Best-effort parsing of stdout. ASTOR prints lines like
-    #   "Time(s):  12.3"
-    #   "Number of solutions: 1"
-    # Patterns may differ across versions; adjust the regexes if your run
-    # writes different keys.
-    local patches
-    patches=$(grep -Eio 'Number of solutions:[[:space:]]*[0-9]+' "$rundir/stdout.log" \
-              | tail -n1 | grep -Eo '[0-9]+' || true)
-    if [[ -z "${patches:-}" ]]; then
-        patches=$(grep -Eio 'solutions found:[[:space:]]*[0-9]+' "$rundir/stdout.log" \
-                  | tail -n1 | grep -Eo '[0-9]+' || true)
+    # Parse the structured astor_output.json (much more reliable than stdout
+    # regex). Falls back to stdout/file scans if the JSON is missing.
+    local json="$rundir/output_astor/AstorMain-$p/astor_output.json"
+    local patches="" astor_time="" astor_status=""
+    if [[ -f "$json" ]]; then
+        read -r patches astor_time astor_status < <(python3 -c '
+import json, sys
+with open(sys.argv[1]) as f:
+    d = json.load(f)
+g = d.get("general", {})
+print(len(d.get("patches", [])), g.get("TOTAL_TIME", "NA"), g.get("OUTPUT_STATUS", "NA"))
+' "$json" 2>/dev/null) || true
     fi
     if [[ -z "${patches:-}" ]]; then
-        # Fallback: count solution-x.txt files in the patch dir, if any.
-        if [[ -d "$rundir/output-astor" ]]; then
-            patches=$(find "$rundir/output-astor" -type f -name 'patch_*' | wc -l | tr -d ' ')
+        # Fallback: count variant-*_f folders (final/validated solutions).
+        if [[ -d "$rundir/output_astor" ]]; then
+            patches=$(find "$rundir/output_astor" -type d -name 'variant-*_f' | wc -l | tr -d ' ')
         else
             patches=0
         fi
     fi
-
-    local astor_time
-    astor_time=$(grep -Eio 'Time\(s\):[[:space:]]*[0-9.]+' "$rundir/stdout.log" \
-                 | tail -n1 | grep -Eo '[0-9.]+' || true)
-    [[ -z "$astor_time" ]] && astor_time="NA"
+    [[ -z "${astor_time:-}" ]] && astor_time="NA"
+    [[ -z "${astor_status:-}" ]] && astor_status=""
 
     local status="ok"
     if [[ $rc -ne 0 ]]; then status="exit_$rc"; fi
+    [[ -n "$astor_status" ]] && status="$status:$astor_status"
 
     echo "$p,$wall,$patches,$astor_time,$status" >> "$RESULTS_CSV"
     echo "  -> wallclock=${wall}s patches=$patches astor_time=${astor_time}s status=$status"

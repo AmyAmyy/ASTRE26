@@ -1,0 +1,36 @@
+{
+  "general": {
+    "NR_RIGHT_COMPILATIONS": 2,
+    "EXECUTION_IDENTIFIER": "",
+    "FAULT_LOCALIZATION": "fr.inria.astor.core.faultlocalization.flacoco.FlacocoFaultLocalization",
+    "OUTPUT_STATUS": "STOP_BY_PATCH_FOUND",
+    "NR_GENERATIONS": 1,
+    "TOTAL_TIME": 1.924
+  },
+  "patches": [
+    {
+      "VARIANT_ID": "10",
+      "VALIDATION": "|true|0|142|[]|",
+      "patchhunks": [
+        {
+          "LOCATION": "nl.tudelft.mutated_rers.Problem12",
+          "PATH": "\\/Users\\/jimmy\\/study\\/ASTRE26\\/Buggy_RERS-ASTOR\\/Problem12_buggy\\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem12.java",
+          "INGREDIENT_SCOPE": "-",
+          "ORIGINAL_CODE": "((a7711982 \u003c 5) \u0026\u0026 ((a1129073644 \u003d\u003d 11) \u0026\u0026 a2034787802.equals(\\\"g\\\"))) \u0026\u0026 ((a1537202397 \u003d\u003d 5) \u0026\u0026 (a1812297667.equals(\\\"g\\\") \u0026\u0026 (((15 \u003c a1234479259) \u0026\u0026 (173 \u003e\u003d a1234479259)) \u0026\u0026 (cf \u0026\u0026 input.equals(\\\"J\\\")))))",
+          "BUGGY_CODE_TYPE": "CtBinaryOperatorImpl|CtIfImpl",
+          "OPERATOR": "IfExpresionMutOp",
+          "MODIFIED_FILE_PATH": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem12_buggy\\/\\/src\\/\\/variant-10\\/nl\\/tudelft\\/mutated_rers\\/Problem12.java",
+          "LINE": "1112",
+          "SUSPICIOUNESS": "0,535",
+          "MP_RANKING": "1",
+          "PATCH_HUNK_CODE": "((\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\na7711982 \u003c\u003d 5) \u0026\u0026 ((a1129073644 \u003d\u003d 11) \u0026\u0026 a2034787802.equals(\\\"g\\\"))) \u0026\u0026 ((a1537202397 \u003d\u003d 5) \u0026\u0026 (a1812297667.equals(\\\"g\\\") \u0026\u0026 (((15 \u003c a1234479259) \u0026\u0026 (173 \u003e\u003d a1234479259)) \u0026\u0026 (cf \u0026\u0026 input.equals(\\\"J\\\")))))",
+          "PATCH_HUNK_TYPE": "CtBinaryOperatorImpl|CtIfImpl"
+        }
+      ],
+      "TIME": "1",
+      "GENERATION": "1",
+      "FOLDER_SOLUTION_CODE": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem12_buggy\\/\\/src\\/\\/variant-10",
+      "PATCH_DIFF_ORIG": "--- \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem12.java\\n+++ \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem12.java\\n@@ -1112 +1112 @@\\n-\\t\\t} \\t\\tif (((a7711982 \u003c 5) \u0026\u0026 ((a1129073644 \u003d\u003d 11) \u0026\u0026 a2034787802.equals(\\\"g\\\"))) \u0026\u0026 ((a1537202397 \u003d\u003d 5) \u0026\u0026 (a1812297667.equals(\\\"g\\\") \u0026\u0026 (((15 \u003c a1234479259) \u0026\u0026 (173 \u003e\u003d a1234479259)) \u0026\u0026 (cf \u0026\u0026 input.equals(\\\"J\\\")))))) {\\n+\\t\\t} \\t\\tif (((a7711982 \u003c\u003d 5) \u0026\u0026 ((a1129073644 \u003d\u003d 11) \u0026\u0026 a2034787802.equals(\\\"g\\\"))) \u0026\u0026 ((a1537202397 \u003d\u003d 5) \u0026\u0026 (a1812297667.equals(\\\"g\\\") \u0026\u0026 (((15 \u003c a1234479259) \u0026\u0026 (173 \u003e\u003d a1234479259)) \u0026\u0026 (cf \u0026\u0026 input.equals(\\\"J\\\")))))) {\\n\\n"
+    }
+  ]
+}

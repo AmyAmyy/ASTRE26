@@ -1,0 +1,6 @@
+--- /src/main/java/nl/tudelft/mutated_rers/Problem12.java
++++ /src/main/java/nl/tudelft/mutated_rers/Problem12.java
+@@ -1220 +1220 @@
+-		if (((a7711982 < 5) && ((a1129073644 == 11) && a2034787802.equals("g"))) && ((a1537202397 == 5) && (a1812297667.equals("g") && (((15 < a1234479259) && (173 >= a1234479259)) && (cf && input.equals("J")))))) {
++		if (((a7711982 <= 5) && ((a1129073644 == 11) && a2034787802.equals("g"))) && ((a1537202397 == 5) && (a1812297667.equals("g") && (((15 < a1234479259) && (173 >= a1234479259)) && (cf && input.equals("J")))))) {
+

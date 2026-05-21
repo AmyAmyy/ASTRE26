@@ -1,0 +1,6 @@
+--- /src/main/java/nl/tudelft/mutated_rers/Problem1.java
++++ /src/main/java/nl/tudelft/mutated_rers/Problem1.java
+@@ -30 +30 @@
+-		} 		if (((a691849188 != 4) && (input.equals("iB") && cf)) && a547336540.equals("e")) {
++		} 		if (((a691849188 != 4) || (input.equals("iB") && cf)) && a547336540.equals("e")) {
+

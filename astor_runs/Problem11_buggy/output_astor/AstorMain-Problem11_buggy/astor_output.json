@@ -1,0 +1,36 @@
+{
+  "general": {
+    "NR_RIGHT_COMPILATIONS": 27,
+    "EXECUTION_IDENTIFIER": "",
+    "FAULT_LOCALIZATION": "fr.inria.astor.core.faultlocalization.flacoco.FlacocoFaultLocalization",
+    "OUTPUT_STATUS": "STOP_BY_PATCH_FOUND",
+    "NR_GENERATIONS": 4,
+    "TOTAL_TIME": 15.981
+  },
+  "patches": [
+    {
+      "VARIANT_ID": "38",
+      "VALIDATION": "|true|0|124|[]|",
+      "patchhunks": [
+        {
+          "LOCATION": "nl.tudelft.mutated_rers.Problem11",
+          "PATH": "\\/Users\\/jimmy\\/study\\/ASTRE26\\/Buggy_RERS-ASTOR\\/Problem11_buggy\\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem11.java",
+          "INGREDIENT_SCOPE": "-",
+          "ORIGINAL_CODE": "(a1537379265 \u003c 9) \u0026\u0026 (((cf \u0026\u0026 a2007907442.equals(\\\"g\\\")) \u0026\u0026 input.equals(\\\"C\\\")) \u0026\u0026 (a919251806 \u003d\u003d 11))",
+          "BUGGY_CODE_TYPE": "CtBinaryOperatorImpl|CtIfImpl",
+          "OPERATOR": "IfExpresionMutOp",
+          "MODIFIED_FILE_PATH": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem11_buggy\\/\\/src\\/\\/variant-38\\/nl\\/tudelft\\/mutated_rers\\/Problem11.java",
+          "LINE": "576",
+          "SUSPICIOUNESS": "0,577",
+          "MP_RANKING": "1",
+          "PATCH_HUNK_CODE": "(!\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n(a1537379265 \u003c 9)) \u0026\u0026 (((cf \u0026\u0026 a2007907442.equals(\\\"g\\\")) \u0026\u0026 input.equals(\\\"C\\\")) \u0026\u0026 (a919251806 \u003d\u003d 11))",
+          "PATCH_HUNK_TYPE": "CtBinaryOperatorImpl|CtIfImpl"
+        }
+      ],
+      "TIME": "15",
+      "GENERATION": "4",
+      "FOLDER_SOLUTION_CODE": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem11_buggy\\/\\/src\\/\\/variant-38",
+      "PATCH_DIFF_ORIG": "--- \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem11.java\\n+++ \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem11.java\\n@@ -576 +576 @@\\n-\\t\\t} \\t\\tif ((a1537379265 \u003c 9) \u0026\u0026 (((cf \u0026\u0026 a2007907442.equals(\\\"g\\\")) \u0026\u0026 input.equals(\\\"C\\\")) \u0026\u0026 (a919251806 \u003d\u003d 11))) {\\n+\\t\\t} \\t\\tif ((!(a1537379265 \u003c 9)) \u0026\u0026 (((cf \u0026\u0026 a2007907442.equals(\\\"g\\\")) \u0026\u0026 input.equals(\\\"C\\\")) \u0026\u0026 (a919251806 \u003d\u003d 11))) {\\n\\n"
+    }
+  ]
+}
