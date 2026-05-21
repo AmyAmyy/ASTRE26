@@ -1,152 +1,116 @@
-# ASTRE26 - Lab 1: Fuzzing
+# ASTRE26 - Lab 3: Automated Code Patching
+
 Amy van der Meijden (5301513) and Jimmy Oei (6540031)
 
-# Using Dev Containers To Run The Tool
-We have included a `devcontainer.json` file in this repository. This file can be used to run the tool in a Docker container. This is useful if you do not want to install all the dependencies on your machine. To use this file, you need to have the following installed on your machine:
-- Docker
-- Visual Studio Code
-- Remote Extension Pack for Visual Studio Code
+This archive contains our deliverables for Lab 3:
 
-Once you have installed these dependencies, you can open this repository in VS Code and start a Dev Container. This will automatically install all the dependencies and build the project. You can then use the pre-configured tasks to instrument a Java file and run it. 
+- our implementation of the EA-based patcher (`PatchingLab.java`),
+- helper scripts for running the experiments and post-processing results,
 
-
-# Manually build and run the tool 
-To build the project, make sure you have navigated to the root of this project and run the following Maven command:
-
-`mvn clean package`
-
-To instrument a given Java file, use the following command:
-
-`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=*TypeOfInstrumentation* --file=*PathToJavaFile* > *OutputPath*`
-
-Where `*PathToJavaFile*` is the path to the Java file to instrument, `*OutputPath*` is the file (file name and path) where you want to save the instrumented Java file. The `*TypeOfInstrumentation*` is the type of instrumentation that you want to do. You can choose between the following options: `line`, `branch`, `fuzzing`, `concolic`, `patching`, and `learning`.
-Note that the flags `--file` and `--type` are required for instrumenting a Java file.
-
-# Examples illustrating how to compile and run the instrumented files
-In this section, we present you an example for each lab on how to instrument RERS problem and how to run the instrumented Java file. For the sake of simplicity, we will use the directory structure of this repository to how a RERS problem is instrumented. These examples do assume that the project has already been built using Maven.
-
-## Lab 1 - Fuzzing
-Say we want to instrument `Problem1.java` of the RERS 2020 problem. We move the `Problem1.java` to the root directory to get the following structure:
+## Contents
 ```
-JavaInstrumentation
-  |- docs
-  |- lib
-  |- src
-  |- .gitignore
-  |- libz3java.dylib
-  |- pom.xml
-  |- Problem1.java
-  |- README.md
+src/main/java/nl/tudelft/instrumentation/patching/
+    PatchingLab.java         our EA implementation (Tasks 2 and 3)
+    OperatorTracker.java     framework, unmodified
+    OperatorVisitor.java     framework, unmodified
+scripts/
+    run_astor.sh             driver for Task 4 (ASTOR experiments)
+    diff_astor_patches.sh    post-run diff helper for Task 4
+    merge_astor_results.sh   merges results when two collaborators run halves
+report/
+    task4_astor.md           Task 4 write-up
+patches/                     best patch per RERS problem (one file each)
+logs/                        per-run convergence CSVs (generation, best, median)
+astor_runs/                  per-run ASTOR output (Task 4)
 ```
 
-We then create a new directory in which we want to store the instrumented Java file, let's call it `instrumented`. Let's now instrument the file by running the following command at the **root** directory: 
+`PatchingLab.java` is the only file we modified inside the framework
+sources.
 
-`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=fuzzing --file=Problem1.java > instrumented/Problem1.java`
+## Prerequisites
 
-We should now have the following structure:
-```
-JavaInstrumentation
-  |- docs
-  |- instrumented
-    |- Problem1.java
-  |- lib
-  |- src
-  |- .gitignore
-  |- libz3java.dylib
-  |- pom.xml
-  |- Problem1.java
-  |- README.md
-```
+- JDK 11 or later, Maven 3.6+.
+- The RERS 2020 buggy problems already instrumented under `instrumented/`
+  (the framework's `scripts/instrument.sh` produces these).
+- For Task 4 only: the Dev Container with ASTOR cloned at `/home/str/astor`
+  (or any environment where ASTOR is built) and the Buggy_RERS-ASTOR
+  problems extracted somewhere accessible.
 
-Let's now compile the instrumented file using the following command:
-
-`javac -cp target/aistr.jar:. instrumented/Problem1.java`
-
-Let's now run the instrumented Java file using the following command:
-
-`java -cp target/aistr.jar:./instrumented:. Problem1 `
-
-Because the file is in a folder, we need to add this to the classpath so that Java knows where to look for the class.
-
-You should see the following output in the terminal:
-
-```
-Found a new branch
-(((e) == (g)) && (true))
-Found a new branch
-(((f) == (g)) && (true))
-Found a new branch
-(((g) == (g)) && (true))
-Found a new branch
-(((8) == (4)) && (true))
-Found a new branch
-((true) && ((8) == (5)))
-Found a new branch
-(((8) == (6)) && (true))
-Found a new branch
-(((8) == (7)) && (true))
-Found a new branch
-(((8) == (8)) && (true))
-.
-.
-.
-Woohoo, looping!
-```
-
-### Switching between Random Fuzzer and Hill Climber
-
-In `FuzzingLab.java`, toggle the `useHillClimber` flag:
-
-```java
-static final boolean useHillClimber = true;   // Hill Climber (Task 2)
-static final boolean useHillClimber = false;  // Random Fuzzer (Task 1)
-```
-
-The fuzzer runs for 5 minutes (300 seconds) per problem and outputs:
-- Unique branches visited
-- Error codes triggered
-- The best input trace (most branches visited)
-
-### AFL
-
-The AFL setup is in the `afl/` directory. Each problem has its own subdirectory:
-
-```
-afl/
-├── run_afl.sh           # Script to compile, fuzz, and analyze one problem
-├── extract_traces.py    # Extract input traces that triggered each error
-├── 11/
-│   ├── Problem11.c      # C source (modified for AFL)
-│   ├── tests/           # Seed inputs (one file per valid input symbol)
-│   └── findings/        # AFL output (created during fuzzing)
-├── 12/ ...
-├── 13/ ...
-├── 14/ ...
-├── 15/ ...
-└── 17/ ...
-```
-
-### Running AFL on a problem
+## Building
 
 ```bash
-cd afl/
-./run_afl.sh 11         # Compiles, fuzzes for 5 minutes, then analyzes results for problem 11
+mvn -DskipTests package
 ```
 
-### Analyzing results
+This produces `target/aistr.jar`, which contains our `PatchingLab` and is
+referenced at runtime by every instrumented problem.
 
-The `run_afl.sh` script automatically calls `scripts/analyze_afl.py` after fuzzing.
-To re-analyze without re-fuzzing:
+## Tasks 2 and 3 - Running the EA patcher
 
+To run:
 ```bash
-python3 scripts/analyze_afl.py afl/11/findings/default afl/11/Problem11
+# Example for Problem1; adjust for Problem4, 7, 11, 12, 15.
+java -cp target/aistr.jar:instrumented Problem1
 ```
 
-### Extracting traces for comparison with Hill Climber
+The run prints the initial fitness, then a per-generation line with the best
+fitness, and at the end a single line giving the stop reason
+(`all tests pass`, `wall-clock budget exhausted`, `max generations reached`),
+the elapsed wall-clock, and the final best fitness.
 
+### Wall-clock and stopping criteria
+- maximum 200 generations,
+- maximum 30 minutes wall-clock,
+- early termination on fitness 0.
+These are constants in `PatchingLab.java` (`maxGenerations`,
+`maxRuntimeMillis`).
+
+### Outputs produced per run
+- `patches/<ProblemName>.patch`
+  Best patch found, written on every strict fitness improvement and once
+  more at termination. Format:
+  ```
+  problem=Problem1
+  generation=37
+  fitness=0.083
+  <operator-index>:<original>-><patched>
+  ...
+  ```
+- `logs/<ProblemName>_mut<rate>_extra<rate>_top<N>.csv`
+  Per-generation convergence log with columns
+  `generation,best_fitness,median_fitness`. One row per generation
+  including the baseline (generation 0). Used to plot the convergence
+  curves in the report.
+
+### Reproducing our experiments
+We ran each of the six problems (1, 4, 7, 11, 12, 15) at three mutation
+rates by editing the constants in `PatchingLab.java`, rebuilding with
+`mvn -DskipTests package`, and re-running. 
+
+## Task 4 - Running ASTOR
+Use `scripts/run_astor.sh` from the JavaInstrumentation root inside the
+Dev Container. The script builds each buggy problem, runs ASTOR with the
+parameters from the lab brief, captures stdout/stderr, copies
+`output-astor/` into `astor_runs/<problem>/`, and writes a CSV summary.
 ```bash
-python3 afl/extract_traces.py 11
+# one-time, in /home/str/astor
+mvn install -DskipTests=true
+mvn dependency:build-classpath -B \
+  | egrep -v "(^\[INFO\]|^\[WARNING\])" \
+  | tee /tmp/astor-classpath.txt
+# from the JavaInstrumentation root
+BUGGY_ROOT=/home/str/Buggy_RERS-ASTOR bash scripts/run_astor.sh
 ```
 
-This outputs the input trace (in both integer and letter format) that triggered each error,
-allowing direct comparison with the Hill Climber traces from Task 2.
+To split the work between two machines (to save time_:
+```bash
+HALF=A bash scripts/run_astor.sh   # first three problems
+HALF=B bash scripts/run_astor.sh   # last three problems
+# afterwards, copy both astor_runs/ trees together and merge:
+bash scripts/merge_astor_results.sh
+```
+To produce diffs for the meaningfulness analysis:
+```bash
+ORIGINALS_DIR=/path/to/original/RERS bash scripts/diff_astor_patches.sh \
+    > astor_runs/diffs.txt
+```

@@ -79,11 +79,20 @@ if [[ ! -d "$ASTOR_DIR" ]]; then
 fi
 if [[ ! -f "$CLASSPATH_FILE" ]]; then
     echo "Classpath file missing; generating $CLASSPATH_FILE..." >&2
+    echo "  (this runs 'mvn dependency:build-classpath' in $ASTOR_DIR" >&2
+    echo "   and may take 1-5 minutes on first run while deps download.)" >&2
+    # Stream maven output to stderr so the user sees progress; capture only
+    # the classpath line(s) into the file.
     ( cd "$ASTOR_DIR" && \
-      mvn dependency:build-classpath -B \
-      | egrep -v "(^\[INFO\]|^\[WARNING\])" \
-      | tee "$CLASSPATH_FILE" >/dev/null ) \
+      mvn dependency:build-classpath -B 2>&1 \
+      | tee /dev/stderr \
+      | egrep -v "(^\[INFO\]|^\[WARNING\]|^\[ERROR\])" \
+      > "$CLASSPATH_FILE" ) \
       || { echo "ERROR: failed to build classpath" >&2; exit 1; }
+    if [[ ! -s "$CLASSPATH_FILE" ]]; then
+        echo "ERROR: classpath file is empty after generation; check $ASTOR_DIR build state" >&2
+        exit 1
+    fi
 fi
 if [[ ! -d "$BUGGY_ROOT" ]]; then
     echo "ERROR: BUGGY_ROOT not found: $BUGGY_ROOT" >&2
