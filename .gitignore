@@ -37,7 +37,6 @@ RERS/
 .settings/
 # .vscode/
 RERS2020Buggy/
-scripts/
 *.dot
 
 afl/**/findings/
