@@ -35,11 +35,15 @@ SCOPE="${SCOPE:-local}"
 OPERATORSPACE="${OPERATORSPACE:-relational-Logical-op}"
 MODE="${MODE:-jgenprog}"
 
-# Six problems for the experiment. Default selection: the four problems
-# that overlap with our Task 3 set (Problem1, Problem7, Problem11, Problem12)
-# plus two extras for breadth.
+# Six problems for the experiment. Problem2/3/5_buggy were dropped after
+# they repeatedly hung during ASTOR's modification-point enumeration on our
+# native macOS run (file sizes >5k LOC; -maxtime only checks between
+# generations, so the initial enumeration blows past the budget).
+# Problem14_buggy (3.9k LOC) is the largest remaining safe candidate.
+# Problem7_buggy (10k LOC) is kept on a best-effort basis; if it hangs,
+# Ctrl-C and proceed with five problems instead of six.
 # Buggy_RERS-ASTOR available: 1, 2, 3, 5, 6, 7, 8, 11, 12, 13, 14, 17.
-DEFAULT_PROBLEMS=(Problem1_buggy Problem2_buggy Problem7_buggy Problem11_buggy Problem12_buggy Problem13_buggy)
+DEFAULT_PROBLEMS=(Problem1_buggy Problem14_buggy Problem7_buggy Problem11_buggy Problem12_buggy Problem13_buggy)
 
 # Selecting which problems to run. Three ways, in order of precedence:
 #

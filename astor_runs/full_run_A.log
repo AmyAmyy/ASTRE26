@@ -1,0 +1,29 @@
+ASTOR experiment driver
+  ASTOR_DIR     = /Users/jimmy/tools/astor
+  BUGGY_ROOT    = /Users/jimmy/study/ASTRE26/Buggy_RERS-ASTOR
+  OUT_DIR       = /Users/jimmy/study/ASTRE26/astor_runs
+  problems      = Problem1_buggy Problem14_buggy Problem7_buggy
+  results CSV   = /Users/jimmy/study/ASTRE26/astor_runs/results_A.csv
+  HALF          = A
+  MAXTIME (min) = 5
+  MAXGEN        = 3000
+  POPULATION    = 8
+
+>>> Problem1_buggy
+  mvn clean + install for Problem1_buggy ...
+  running ASTOR on Problem1_buggy (maxtime=5m, maxgen=3000, pop=8) ...
+  -> wallclock=54s patches=1 astor_time=23.607s status=ok:STOP_BY_PATCH_FOUND
+>>> Problem14_buggy
+  mvn clean + install for Problem14_buggy ...
+  running ASTOR on Problem14_buggy (maxtime=5m, maxgen=3000, pop=8) ...
+  -> wallclock=1496s patches=1 astor_time=57.636s status=ok:STOP_BY_PATCH_FOUND
+>>> Problem7_buggy
+  mvn clean + install for Problem7_buggy ...
+  running ASTOR on Problem7_buggy (maxtime=5m, maxgen=3000, pop=8) ...
+  -> wallclock=9712s patches=0 astor_time=301.014s status=ok:TIME_OUT
+
+Done. Results written to /Users/jimmy/study/ASTRE26/astor_runs/results_A.csv
+problem          wallclock_seconds  patches_found  astor_reported_time_s  astor_status
+Problem1_buggy   54                 1              23.607                 ok:STOP_BY_PATCH_FOUND
+Problem14_buggy  1496               1              57.636                 ok:STOP_BY_PATCH_FOUND
+Problem7_buggy   9712               0              301.014                ok:TIME_OUT

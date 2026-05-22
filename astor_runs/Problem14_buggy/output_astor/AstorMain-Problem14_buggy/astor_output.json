@@ -1,0 +1,36 @@
+{
+  "general": {
+    "NR_RIGHT_COMPILATIONS": 80,
+    "EXECUTION_IDENTIFIER": "",
+    "FAULT_LOCALIZATION": "fr.inria.astor.core.faultlocalization.flacoco.FlacocoFaultLocalization",
+    "OUTPUT_STATUS": "STOP_BY_PATCH_FOUND",
+    "NR_GENERATIONS": 10,
+    "TOTAL_TIME": 57.636
+  },
+  "patches": [
+    {
+      "VARIANT_ID": "97",
+      "VALIDATION": "|true|0|138|[]|",
+      "patchhunks": [
+        {
+          "LOCATION": "nl.tudelft.mutated_rers.Problem14",
+          "PATH": "\\/Users\\/jimmy\\/study\\/ASTRE26\\/Buggy_RERS-ASTOR\\/Problem14_buggy\\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem14.java",
+          "INGREDIENT_SCOPE": "-",
+          "ORIGINAL_CODE": "cf \u0026\u0026 (a1410369705 \u003c 1)",
+          "BUGGY_CODE_TYPE": "CtBinaryOperatorImpl|CtIfImpl",
+          "OPERATOR": "IfExpresionMutOp",
+          "MODIFIED_FILE_PATH": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem14_buggy\\/\\/src\\/\\/variant-97\\/nl\\/tudelft\\/mutated_rers\\/Problem14.java",
+          "LINE": "2282",
+          "SUSPICIOUNESS": "0,2",
+          "MP_RANKING": "3",
+          "PATCH_HUNK_CODE": "cf \u0026\u0026 (a1410369705 \u003e\u003d 1)",
+          "PATCH_HUNK_TYPE": "CtBinaryOperatorImpl|CtIfImpl"
+        }
+      ],
+      "TIME": "57",
+      "GENERATION": "10",
+      "FOLDER_SOLUTION_CODE": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem14_buggy\\/\\/src\\/\\/variant-97",
+      "PATCH_DIFF_ORIG": "--- \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem14.java\\n+++ \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem14.java\\n@@ -2282 +2282 @@\\n-\\t\\tif (cf \u0026\u0026 (a1410369705 \u003c 1)) {\\n+\\t\\tif (cf \u0026\u0026 (a1410369705 \u003e\u003d 1)) {\\n\\n"
+    }
+  ]
+}

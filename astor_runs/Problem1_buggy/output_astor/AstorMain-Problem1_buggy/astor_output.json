@@ -5,7 +5,7 @@
     "FAULT_LOCALIZATION": "fr.inria.astor.core.faultlocalization.flacoco.FlacocoFaultLocalization",
     "OUTPUT_STATUS": "STOP_BY_PATCH_FOUND",
     "NR_GENERATIONS": 7,
-    "TOTAL_TIME": 46.673
+    "TOTAL_TIME": 23.607
   },
   "patches": [
     {
@@ -27,7 +27,7 @@
           "PATCH_HUNK_TYPE": "CtBinaryOperatorImpl|CtIfImpl"
         }
       ],
-      "TIME": "46",
+      "TIME": "23",
       "GENERATION": "7",
       "FOLDER_SOLUTION_CODE": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem1_buggy\\/\\/src\\/\\/variant-70",
       "PATCH_DIFF_ORIG": "--- \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem1.java\\n+++ \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem1.java\\n@@ -30 +30 @@\\n-\\t\\t} \\t\\tif (((a691849188 !\u003d 4) \u0026\u0026 (input.equals(\\\"iB\\\") \u0026\u0026 cf)) \u0026\u0026 a547336540.equals(\\\"e\\\")) {\\n+\\t\\t} \\t\\tif (((a691849188 !\u003d 4) || (input.equals(\\\"iB\\\") \u0026\u0026 cf)) \u0026\u0026 a547336540.equals(\\\"e\\\")) {\\n\\n"

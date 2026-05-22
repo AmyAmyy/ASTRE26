@@ -1,0 +1,6 @@
+--- /src/main/java/nl/tudelft/mutated_rers/Problem14.java
++++ /src/main/java/nl/tudelft/mutated_rers/Problem14.java
+@@ -2570 +2570 @@
+-		if (cf && (a1410369705 < 1)) {
++		if (cf && (a1410369705 >= 1)) {
+
