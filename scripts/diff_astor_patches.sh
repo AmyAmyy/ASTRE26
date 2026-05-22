@@ -75,10 +75,16 @@ for rundir in "$OUT_DIR"/Problem*_buggy; do
 
     # ASTOR puts validated solutions under output_astor/AstorMain-<p>/src/variant-*_f/.
     # Prefer those (final/validated); fall back to any variant-* if none found.
-    mapfile -t patched_files < <(find "$patched_dir" -type d -name 'variant-*_f' \
-                                  -exec find {} -type f -name 'Problem*.java' \; 2>/dev/null)
+    # NOTE: macOS ships bash 3.2, so we avoid `mapfile` (bash 4+) here.
+    patched_files=()
+    while IFS= read -r line; do
+        [[ -n "$line" ]] && patched_files+=("$line")
+    done < <(find "$patched_dir" -type d -name 'variant-*_f' \
+                  -exec find {} -type f -name 'Problem*.java' \; 2>/dev/null)
     if [[ ${#patched_files[@]} -eq 0 ]]; then
-        mapfile -t patched_files < <(find "$patched_dir" -type f -name 'Problem*.java')
+        while IFS= read -r line; do
+            [[ -n "$line" ]] && patched_files+=("$line")
+        done < <(find "$patched_dir" -type f -name 'Problem*.java')
     fi
     if [[ ${#patched_files[@]} -eq 0 ]]; then
         echo

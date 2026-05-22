@@ -1,2 +1,7 @@
 problem,wallclock_seconds,patches_found,astor_reported_time_s,astor_status
-Problem1_buggy,75,1,46.673,ok:STOP_BY_PATCH_FOUND
+Problem1_buggy,54,1,23.607,ok:STOP_BY_PATCH_FOUND
+Problem14_buggy,1496,1,57.636,ok:STOP_BY_PATCH_FOUND
+Problem7_buggy,9712,0,301.014,ok:TIME_OUT
+Problem11_buggy,31,1,15.981,ok:STOP_BY_PATCH_FOUND
+Problem12_buggy,1113,1,1.924,ok:STOP_BY_PATCH_FOUND
+Problem13_buggy,276,1,151.793,ok:STOP_BY_PATCH_FOUND
