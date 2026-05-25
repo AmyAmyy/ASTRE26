@@ -223,7 +223,7 @@ public class ConcolicExecutionLab {
             currentTrace = fuzz(PathTracker.inputSymbols);
             PathTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
 
-            if (iterations % 25 == 0) {
+            if (iterations % 200 == 0) {
                 System.out.printf("[concolic] iter=%d branches=%d sat=%d unsat=%d queued=%d errors=%d%n",
                         iterations, visitedBranches.size(),
                         satBranches.size(), unsatBranches.size(),
@@ -253,13 +253,16 @@ public class ConcolicExecutionLab {
     }
 
     public static void output(String out){
-        System.out.println(out);
-        if (out.contains("error_")) {
-            String err = out.trim();
-            if (triggeredErrors.add(err)) {
-                long t = System.currentTimeMillis() - startTime;
-                errorTimeline.add(new long[]{t, triggeredErrors.size()});
-            }
+        int idx = out.indexOf("error_");
+        if (idx < 0) return;
+        int end = idx;
+        while (end < out.length() && (Character.isLetterOrDigit(out.charAt(end)) || out.charAt(end) == '_')) end++;
+        String err = out.substring(idx, end);
+        if (triggeredErrors.add(err)) {
+            long t = System.currentTimeMillis() - startTime;
+            errorTimeline.add(new long[]{t, triggeredErrors.size()});
+            System.out.printf("[%.1fs] %s (total %d)%n", t/1000.0, err, triggeredErrors.size());
+            writeLog();
         }
     }
 
