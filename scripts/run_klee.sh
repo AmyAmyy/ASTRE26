@@ -51,7 +51,7 @@ for N in $PROBLEMS; do
     echo "[run] $KLEE_BIN --output-dir=$OUT --max-time=${DURATION} $BC"
     # Pipe stderr (where KLEE prints error_NN) through the analyzer so we get a
     # per-error timestamp summary.  Also keep the full log.
-    "$KLEE_BIN" --output-dir="$OUT" --max-time="${DURATION}" "$BC" 2>&1 \
+    "$KLEE_BIN" --output-dir="$OUT" --max-time="${DURATION}" --max-memory=500 "$BC" 2>&1 \
         | tee "$DIR/klee_full.log" \
         | python3 "$ANALYZE" > "$SUMMARY"
 

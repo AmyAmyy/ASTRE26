@@ -1,0 +1,7 @@
+problem,wallclock_seconds,patches_found,astor_reported_time_s,astor_status
+Problem1_buggy,383,0,NA,ok
+Problem2_buggy,2912,0,NA,exit_130
+Problem7_buggy,0,0,NA,build_failed
+Problem11_buggy,0,0,NA,build_failed
+Problem12_buggy,0,0,NA,build_failed
+Problem13_buggy,0,0,NA,build_failed

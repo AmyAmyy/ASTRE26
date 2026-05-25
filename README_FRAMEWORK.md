@@ -136,7 +136,7 @@ For Lab 2, it is very similar to the steps that are shown for Lab 1. However, th
 
 First of all, we need to use the following command to instrument a java file:
 
-`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=symbolic --file=Problem1.java > instrumented/Problem1.java`
+`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=symbolic --file=Problem11.java > instrumented/Problem11.java`
 
 Second of all, we need to add the Z3 library to the classpath to be able to do symbolic execution. We would then compile  using the following command:
 

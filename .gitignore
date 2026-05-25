@@ -41,3 +41,6 @@ RERS2020Buggy/
 
 afl/**/findings/
 afl/**/*.dSYM/
+
+*.log
+klee/*/klee-out/
