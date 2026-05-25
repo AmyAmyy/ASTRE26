@@ -3,540 +3,193 @@ WARNING: java.lang.System::loadLibrary has been called by com.microsoft.z3.Nativ
 WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
 WARNING: Restricted methods will be blocked in a future release unless native access is enabled
 
-R
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: error_41
+[0,1s] error_41 (total 1)
 Wrote logs/Problem14_concolic.csv (1 unique errors)
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-Invalid input: Current state has no transition for this input!
-R
-P
-U
-Invalid input: error_77
+[0,1s] error_18 (total 2)
 Wrote logs/Problem14_concolic.csv (2 unique errors)
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-R
-P
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-Invalid input: error_41
-R
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Q
-R
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: Current state has no transition for this input!
-R
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: error_41
-Invalid input: error_41
-R
-P
-Q
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Q
-Invalid input: error_18
+[0,1s] error_77 (total 3)
 Wrote logs/Problem14_concolic.csv (3 unique errors)
-Invalid input: error_18
-Invalid input: error_18
-Invalid input: error_18
-Invalid input: error_18
-R
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-U
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-Invalid input: error_77
-R
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-U
-Invalid input: error_77
-R
-P
-Q
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Q
-Invalid input: error_28
+[0,2s] error_60 (total 4)
 Wrote logs/Problem14_concolic.csv (4 unique errors)
-Invalid input: error_28
-Invalid input: error_28
-R
-P
-Q
-Q
-Invalid input: error_18
-Invalid input: error_18
-Invalid input: error_18
-Invalid input: error_18
-Invalid input: error_18
-Invalid input: error_18
-Invalid input: error_18
-R
-P
-Q
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: Current state has no transition for this input!
-Z
-R
-P
-Q
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Q
-Invalid input: error_18
-Invalid input: error_18
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-V
-Invalid input: Current state has no transition for this input!
-T
-R
-P
-Q
-P
-T
-T
-Q
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Q
-Invalid input: error_28
-Invalid input: error_28
-Invalid input: error_28
-Invalid input: error_28
-Invalid input: error_28
-Invalid input: error_28
-R
-P
-Q
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-Q
-R
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-T
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Z
-Invalid input: error_15
+[0,3s] error_28 (total 5)
 Wrote logs/Problem14_concolic.csv (5 unique errors)
-R
-P
-Q
-P
-Z
-Invalid input: Current state has no transition for this input!
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-V
-Z
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-V
-Y
-Invalid input: Current state has no transition for this input!
-W
-Invalid input: error_97
+[0,4s] error_73 (total 6)
 Wrote logs/Problem14_concolic.csv (6 unique errors)
-Invalid input: error_97
-[concolic] iter=25 branches=340 sat=60 unsat=280 queued=35 errors=6
-R
-P
-Q
-P
-Z
-V
-V
-V
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-V
-U
-Invalid input: error_36
+[0,5s] error_27 (total 7)
 Wrote logs/Problem14_concolic.csv (7 unique errors)
-Invalid input: error_36
-Invalid input: error_36
-Invalid input: error_36
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-U
-Invalid input: error_36
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-V
-V
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-V
-Y
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-V
-T
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-V
-W
-U
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-V
-Q
-Invalid input: error_4
+[0,6s] error_15 (total 8)
 Wrote logs/Problem14_concolic.csv (8 unique errors)
-Invalid input: error_4
-R
-P
-Q
-P
-Z
-V
-Invalid input: Current state has no transition for this input!
-V
-Invalid input: Current state has no transition for this input!
-Q
-Invalid input: error_4
-R
-P
-Q
-P
-Invalid input: Current state has no transition for this input!
-T
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-V
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-T
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-T
-T
-W
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-T
-T
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-T
-T
-Q
-Z
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-P
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-Q
-Q
-Invalid input: error_27
+[0,6s] error_25 (total 9)
 Wrote logs/Problem14_concolic.csv (9 unique errors)
-Invalid input: error_27
-Invalid input: error_27
-Invalid input: error_27
-R
-P
-Q
-P
-Z
-Q
-R
-Q
-W
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-Q
-R
-Q
-Invalid input: Current state has no transition for this input!
-W
-R
-P
-Q
-P
-Z
-Q
-R
-S
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-T
-Z
-Invalid input: error_15
-Invalid input: error_15
-Invalid input: error_15
-Invalid input: error_15
-R
-P
-Q
-P
-Z
-P
-Q
-Invalid input: Current state has no transition for this input!
-R
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-P
-T
-Invalid input: error_90
+[0,7s] error_76 (total 10)
 Wrote logs/Problem14_concolic.csv (10 unique errors)
-Invalid input: error_90
-Invalid input: error_90
-Invalid input: error_90
-R
-P
-Q
-P
-Z
-Invalid input: Current state has no transition for this input!
-T
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-T
-Y
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-Invalid input: Current state has no transition for this input!
-R
-P
-Q
-P
-Z
-T
+[concolic] iter=200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=1000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=1200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=1400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=1600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=1800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=2000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=2200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=2400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=2600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=2800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=3000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=3200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=3400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=3600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=3800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=4000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=4200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=4400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=4600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=4800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=5000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=5200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=5400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=5600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=5800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=6000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=6200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=6400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=6600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=6800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=7000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=7200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=7400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=7600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=7800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=8000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=8200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=8400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=8600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=8800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=9000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=9200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=9400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=9600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=9800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=10000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=10200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=10400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=10600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=10800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=11000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=11200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=11400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=11600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=11800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=12000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=12200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=12400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=12600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=12800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=13000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=13200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=13400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=13600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=13800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=14000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=14200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=14400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=14600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=14800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=15000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=15200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=15400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=15600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=15800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=16000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=16200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=16400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=16600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=16800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=17000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=17200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=17400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=17600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=17800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=18000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=18200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=18400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=18600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=18800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=19000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=19200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=19400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=19600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=19800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=20000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=20200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=20400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=20600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=20800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=21000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=21200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=21400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=21600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=21800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=22000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=22200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=22400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=22600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=22800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=23000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=23200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=23400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=23600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=23800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=24000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=24200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=24400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=24600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=24800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=25000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=25200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=25400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=25600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=25800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=26000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=26200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=26400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=26600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=26800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=27000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=27200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=27400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=27600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=27800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=28000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=28200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=28400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=28600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=28800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=29000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=29200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=29400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=29600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=29800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=30000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=30200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=30400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=30600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=30800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=31000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=31200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=31400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=31600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=31800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=32000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=32200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=32400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=32600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=32800 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=33000 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=33200 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=33400 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=33600 branches=381 sat=90 unsat=291 queued=0 errors=10
+[concolic] iter=33800 branches=381 sat=90 unsat=291 queued=0 errors=10
+Wrote logs/Problem14_concolic.csv (10 unique errors)
