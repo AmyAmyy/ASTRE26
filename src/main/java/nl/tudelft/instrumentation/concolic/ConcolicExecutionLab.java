@@ -2,6 +2,7 @@ package nl.tudelft.instrumentation.concolic;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.*;
 
 import com.microsoft.z3.*;
 
@@ -24,11 +25,16 @@ public class ConcolicExecutionLab {
     private static String currentBranchKey = null;
     private static boolean sat = false;
     private static int iterations = 0;
-    private static final int MAX_ITERATIONS = 2000;
+
+    private static Set<String> triggeredErrors = new HashSet<>();
+    private static List<long[]> errorTimeline = new ArrayList<>(); // {time_ms, unique_error_count}
+    private static long startTime;
+    private static final long TIMEOUT_MS = 5 * 60 * 1000L;
 
     static void initialize(String[] inputSymbols){
         // Initialise a random trace from the input symbols of the problem.
         currentTrace = generateRandomTrace(inputSymbols);
+        startTime = System.currentTimeMillis();
     }
 
     static MyVar createVar(String name, Expr value, Sort s){
@@ -211,22 +217,50 @@ public class ConcolicExecutionLab {
         initialize(PathTracker.inputSymbols);
         PathTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
         // Place here your code to guide your fuzzer with its search using Concolic Execution.
-        while(!isFinished && iterations < MAX_ITERATIONS) {
+        while(!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
             iterations++;
             PathTracker.reset();
             currentTrace = fuzz(PathTracker.inputSymbols);
             PathTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
 
             if (iterations % 25 == 0) {
-                System.out.printf("[concolic] iter=%d branches=%d sat=%d unsat=%d queued=%d%n",
+                System.out.printf("[concolic] iter=%d branches=%d sat=%d unsat=%d queued=%d errors=%d%n",
                         iterations, visitedBranches.size(),
-                        satBranches.size(), unsatBranches.size(), traceQueue.size());
+                        satBranches.size(), unsatBranches.size(),
+                        traceQueue.size(), triggeredErrors.size());
             }
         }
+        writeLog();
+    }
+
+    static void writeLog() {
+        String name = PathTracker.problem != null
+                ? PathTracker.problem.getClass().getSimpleName() : "unknown";
+        File dir = new File("logs");
+        if (!dir.exists()) dir.mkdirs();
+        File f = new File(dir, name + "_concolic.csv");
+        try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
+            pw.println("time_ms,unique_errors");
+            pw.println("0,0");
+            for (long[] row : errorTimeline) {
+                pw.println(row[0] + "," + row[1]);
+            }
+            pw.println((System.currentTimeMillis() - startTime) + "," + triggeredErrors.size());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Wrote " + f.getPath() + " (" + triggeredErrors.size() + " unique errors)");
     }
 
     public static void output(String out){
         System.out.println(out);
+        if (out.contains("error_")) {
+            String err = out.trim();
+            if (triggeredErrors.add(err)) {
+                long t = System.currentTimeMillis() - startTime;
+                errorTimeline.add(new long[]{t, triggeredErrors.size()});
+            }
+        }
     }
 
 }
