@@ -231,6 +231,7 @@ public class ConcolicExecutionLab {
             }
         }
         writeLog();
+        System.exit(0);
     }
 
     static void writeLog() {

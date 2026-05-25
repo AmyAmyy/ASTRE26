@@ -15,7 +15,7 @@
 
 set -u
 
-PROBLEMS=${PROBLEMS:-"11 12 13 14 15 17"}
+PROBLEMS=${PROBLEMS:-"12 13 14 15 17"}
 DATASET=${DATASET:-"./RERS2020Buggy"}
 Z3_LIB=${Z3_LIB:-"."}     # folder containing libz3java.dylib (and libz3.dylib on macOS)
 CP="target/aistr.jar:lib/com.microsoft.z3.jar:."
