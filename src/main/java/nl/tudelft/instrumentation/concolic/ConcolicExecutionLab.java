@@ -18,7 +18,11 @@ public class ConcolicExecutionLab {
     static int traceLength = 10;
 
     private static Set<String> visitedBranches = new HashSet<>();
+    private static Set<String> satBranches = new HashSet<>();
+    private static Set<String> unsatBranches = new HashSet<>();
     private static Deque<List<String>> traceQueue = new ArrayDeque<>();
+    private static String currentBranchKey = null;
+    private static boolean sat = false;
     private static int iterations = 0;
     private static final int MAX_ITERATIONS = 2000;
 
@@ -134,7 +138,15 @@ public class ConcolicExecutionLab {
         String key = line_nr + ":" + value;
         if (!visitedBranches.contains(key)) {
             visitedBranches.add(key);
+            currentBranchKey = line_nr + ":" + (!value);
+            sat = false;
             PathTracker.solve(opposite, false);
+            if (sat) {
+                satBranches.add(currentBranchKey);
+            } else {
+                unsatBranches.add(currentBranchKey);
+            }
+            currentBranchKey = null;
         }
 
         PathTracker.addToBranches(taken);
@@ -146,6 +158,16 @@ public class ConcolicExecutionLab {
         List<String> trimmed_new_inputs = new_inputs.stream()
                 .map(s -> s.replaceAll("\"", ""))
                 .collect(Collectors.toList());
+
+        sat = true;
+        Set<String> legal = new HashSet<>(Arrays.asList(PathTracker.inputSymbols));
+        for (String s : trimmed_new_inputs) {
+            if (!legal.contains(s)) return;
+        }
+
+        if (!trimmed_new_inputs.isEmpty()) {
+            traceQueue.addLast(trimmed_new_inputs);
+        }
     }
 
     /**
@@ -161,6 +183,13 @@ public class ConcolicExecutionLab {
          * a complete random sequence using the given input symbols. Please
          * change it to your own code.
          */
+        if (!traceQueue.isEmpty()) {
+            List<String> t = new ArrayList<>(traceQueue.pollFirst());
+            while (t.size() < traceLength) {
+                t.add(inputSymbols[r.nextInt(inputSymbols.length)]);
+            }
+            return t;
+        }
         
         return generateRandomTrace(inputSymbols);
     }
@@ -189,8 +218,9 @@ public class ConcolicExecutionLab {
             PathTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
 
             if (iterations % 25 == 0) {
-                System.out.printf("[concolic] iter=%d branches=%d queued=%d%n",
-                        iterations, visitedBranches.size(), traceQueue.size());
+                System.out.printf("[concolic] iter=%d branches=%d sat=%d unsat=%d queued=%d%n",
+                        iterations, visitedBranches.size(),
+                        satBranches.size(), unsatBranches.size(), traceQueue.size());
             }
         }
     }
