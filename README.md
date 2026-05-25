@@ -1,116 +1,70 @@
-# ASTRE26 - Lab 3: Automated Code Patching
-
+# ASTRE26 - Lab 2: Concolic Execution
 Amy van der Meijden (5301513) and Jimmy Oei (6540031)
 
-This archive contains our deliverables for Lab 3:
+# Manually build and run the tool 
+To build the project, make sure you have navigated to the root of this project and run the following Maven command:
 
-- our implementation of the EA-based patcher (`PatchingLab.java`),
-- helper scripts for running the experiments and post-processing results,
+`mvn clean package`
 
-## Contents
-```
-src/main/java/nl/tudelft/instrumentation/patching/
-    PatchingLab.java         our EA implementation (Tasks 2 and 3)
-    OperatorTracker.java     framework, unmodified
-    OperatorVisitor.java     framework, unmodified
-scripts/
-    run_astor.sh             driver for Task 4 (ASTOR experiments)
-    diff_astor_patches.sh    post-run diff helper for Task 4
-    merge_astor_results.sh   merges results when two collaborators run halves
-report/
-    task4_astor.md           Task 4 write-up
-patches/                     best patch per RERS problem (one file each)
-logs/                        per-run convergence CSVs (generation, best, median)
-astor_runs/                  per-run ASTOR output (Task 4)
-```
+To instrument a given Java file, use the following command:
 
-`PatchingLab.java` is the only file we modified inside the framework
-sources.
+`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=*TypeOfInstrumentation* --file=*PathToJavaFile* > *OutputPath*`
 
-## Prerequisites
+Where `*PathToJavaFile*` is the path to the Java file to instrument, `*OutputPath*` is the file (file name and path) where you want to save the instrumented Java file. The `*TypeOfInstrumentation*` is the type of instrumentation that you want to do. You can choose between the following options: `line`, `branch`, `fuzzing`, `concolic`, `patching`, and `learning`.
+Note that the flags `--file` and `--type` are required for instrumenting a Java file.
 
-- JDK 11 or later, Maven 3.6+.
-- The RERS 2020 buggy problems already instrumented under `instrumented/`
-  (the framework's `scripts/instrument.sh` produces these).
-- For Task 4 only: the Dev Container with ASTOR cloned at `/home/str/astor`
-  (or any environment where ASTOR is built) and the Buggy_RERS-ASTOR
-  problems extracted somewhere accessible.
+## Task 1 - Run the concolic execution
 
-## Building
+The script to run the experiments for the concolic execution is:
 
 ```bash
-mvn -DskipTests package
+# all six problems, 5 minutes per problem (default)
+bash scripts/run_concolic.sh
+
+# subset
+PROBLEMS="11 17" bash scripts/run_concolic.sh
+
+# custom Z3 location (folder containing libz3java.{so,dylib})
+Z3_LIB=/path/to/z3/bin bash scripts/run_concolic.sh
 ```
 
-This produces `target/aistr.jar`, which contains our `PatchingLab` and is
-referenced at runtime by every instrumented problem.
+For every problem the script will:
+1. Instrument `RERS2020Buggy/Problem<N>.java` with `--type=concolic`
+   into `instrumented/Problem<N>.java`.
+2. Compile the instrumented file against the Z3 jar.
+3. Run it. `ConcolicExecutionLab.run()` enforces a 5-minute budget and
+   exits cleanly, writing:
+   - `logs/Problem<N>_concolic.csv` (`time_ms,unique_errors`)
+   - `logs/Problem<N>_concolic.log` (full stdout/stderr)
 
-## Tasks 2 and 3 - Running the EA patcher
+## Convergence graphs (concolic vs AFL)
 
-To run:
+The Lab 1 AFL output already includes a `crashes/` directory per
+problem. We turn it into a convergence timeline by replaying every
+crash file through the corresponding AFL binary, using the `time:<ms>`
+field embedded in each crash filename as the relative timestamp.
+
 ```bash
-# Example for Problem1; adjust for Problem4, 7, 11, 12, 15.
-java -cp target/aistr.jar:instrumented Problem1
+# 1. build AFL convergence CSVs from the existing afl/<N>/findings/default
+python3 scripts/build_afl_timelines.py
+
+# 2. produce the comparison plots
+python3 scripts/plot_convergence.py
 ```
 
-The run prints the initial fitness, then a per-generation line with the best
-fitness, and at the end a single line giving the stop reason
-(`all tests pass`, `wall-clock budget exhausted`, `max generations reached`),
-the elapsed wall-clock, and the final best fitness.
+Outputs in `report/`:
+- `Problem<N>_convergence.png` - one plot per problem with both curves.
+- `concolic_vs_afl_convergence.png` - 2x3 grid (used in the report).
+- `concolic_vs_afl_bar.png` - final-count bar chart (used in the report).
 
-### Wall-clock and stopping criteria
-- maximum 200 generations,
-- maximum 30 minutes wall-clock,
-- early termination on fitness 0.
-These are constants in `PatchingLab.java` (`maxGenerations`,
-`maxRuntimeMillis`).
+## Task 2 - KLEE
 
-### Outputs produced per run
-- `patches/<ProblemName>.patch`
-  Best patch found, written on every strict fitness improvement and once
-  more at termination. Format:
-  ```
-  problem=Problem1
-  generation=37
-  fitness=0.083
-  <operator-index>:<original>-><patched>
-  ...
-  ```
-- `logs/<ProblemName>_mut<rate>_extra<rate>_top<N>.csv`
-  Per-generation convergence log with columns
-  `generation,best_fitness,median_fitness`. One row per generation
-  including the baseline (generation 0). Used to plot the convergence
-  curves in the report.
+`scripts/run_klee.sh` then compiles each file to LLVM bitcode
+with `clang -emit-llvm` and runs KLEE on it.
 
-### Reproducing our experiments
-We ran each of the six problems (1, 4, 7, 11, 12, 15) at three mutation
-rates by editing the constants in `PatchingLab.java`, rebuilding with
-`mvn -DskipTests package`, and re-running. 
-
-## Task 4 - Running ASTOR
-Use `scripts/run_astor.sh` from the JavaInstrumentation root inside the
-Dev Container. The script builds each buggy problem, runs ASTOR with the
-parameters from the lab brief, captures stdout/stderr, copies
-`output-astor/` into `astor_runs/<problem>/`, and writes a CSV summary.
 ```bash
-# one-time, in /home/str/astor
-mvn install -DskipTests=true
-mvn dependency:build-classpath -B \
-  | egrep -v "(^\[INFO\]|^\[WARNING\])" \
-  | tee /tmp/astor-classpath.txt
-# from the JavaInstrumentation root
-BUGGY_ROOT=/home/str/Buggy_RERS-ASTOR bash scripts/run_astor.sh
+bash scripts/run_klee.sh
 ```
 
-To split the work between two machines (to save time_:
-```bash
-HALF=A bash scripts/run_astor.sh   # first three problems
-HALF=B bash scripts/run_astor.sh   # last three problems
-# afterwards, copy both astor_runs/ trees together and merge:
-bash scripts/merge_astor_results.sh
-```
-To produce diffs for the meaningfulness analysis:
-```bash
-ORIGINALS_DIR=/path/to/original/RERS bash scripts/diff_astor_patches.sh \
-    > astor_runs/diffs.txt
-```
+Per-problem outputs land in `klee/<N>/`:
+`Problem<N>.bc`, `klee-out/`, `klee_full.log`, `klee_summary.txt`.
