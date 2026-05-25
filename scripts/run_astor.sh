@@ -16,7 +16,7 @@
 # Outputs:
 #     astor_runs/<Problem>/stdout.log     full ASTOR stdout
 #     astor_runs/<Problem>/stderr.log     full ASTOR stderr
-#     astor_runs/<Problem>/output-astor/  ASTOR's patch output (copied)
+#     astor_runs/<Problem>/output_astor/  ASTOR's patch output (copied)
 #     astor_runs/results.csv              problem,wallclock_seconds,patches_found,astor_reported_time_s,astor_status
 
 set -u
@@ -35,11 +35,15 @@ SCOPE="${SCOPE:-local}"
 OPERATORSPACE="${OPERATORSPACE:-relational-Logical-op}"
 MODE="${MODE:-jgenprog}"
 
-# Six problems for the experiment. Default selection: the four problems
-# that overlap with our Task 3 set (Problem1, Problem7, Problem11, Problem12)
-# plus two extras for breadth.
+# Six problems for the experiment. Problem2/3/5_buggy were dropped after
+# they repeatedly hung during ASTOR's modification-point enumeration on our
+# native macOS run (file sizes >5k LOC; -maxtime only checks between
+# generations, so the initial enumeration blows past the budget).
+# Problem14_buggy (3.9k LOC) is the largest remaining safe candidate.
+# Problem7_buggy (10k LOC) is kept on a best-effort basis; if it hangs,
+# Ctrl-C and proceed with five problems instead of six.
 # Buggy_RERS-ASTOR available: 1, 2, 3, 5, 6, 7, 8, 11, 12, 13, 14, 17.
-DEFAULT_PROBLEMS=(Problem1_buggy Problem2_buggy Problem7_buggy Problem11_buggy Problem12_buggy Problem13_buggy)
+DEFAULT_PROBLEMS=(Problem1_buggy Problem14_buggy Problem7_buggy Problem11_buggy Problem12_buggy Problem13_buggy)
 
 # Selecting which problems to run. Three ways, in order of precedence:
 #
@@ -79,11 +83,20 @@ if [[ ! -d "$ASTOR_DIR" ]]; then
 fi
 if [[ ! -f "$CLASSPATH_FILE" ]]; then
     echo "Classpath file missing; generating $CLASSPATH_FILE..." >&2
+    echo "  (this runs 'mvn dependency:build-classpath' in $ASTOR_DIR" >&2
+    echo "   and may take 1-5 minutes on first run while deps download.)" >&2
+    # Stream maven output to stderr so the user sees progress; capture only
+    # the classpath line(s) into the file.
     ( cd "$ASTOR_DIR" && \
-      mvn dependency:build-classpath -B \
-      | egrep -v "(^\[INFO\]|^\[WARNING\])" \
-      | tee "$CLASSPATH_FILE" >/dev/null ) \
+      mvn dependency:build-classpath -B 2>&1 \
+      | tee /dev/stderr \
+      | egrep -v "(^\[INFO\]|^\[WARNING\]|^\[ERROR\])" \
+      > "$CLASSPATH_FILE" ) \
       || { echo "ERROR: failed to build classpath" >&2; exit 1; }
+    if [[ ! -s "$CLASSPATH_FILE" ]]; then
+        echo "ERROR: classpath file is empty after generation; check $ASTOR_DIR build state" >&2
+        exit 1
+    fi
 fi
 if [[ ! -d "$BUGGY_ROOT" ]]; then
     echo "ERROR: BUGGY_ROOT not found: $BUGGY_ROOT" >&2
@@ -136,40 +149,43 @@ run_astor_for() {
     local t1=$(date +%s)
     local wall=$((t1 - t0))
 
-    # Copy ASTOR's output-astor (it's written under ASTOR_DIR by default).
-    if [[ -d "$ASTOR_DIR/output-astor" ]]; then
-        rm -rf "$rundir/output-astor"
-        cp -R "$ASTOR_DIR/output-astor" "$rundir/output-astor"
+    # ASTOR writes to $ASTOR_DIR/output_astor/AstorMain-<problem>/.
+    # Copy that subtree into the run dir so each problem's artifacts are
+    # self-contained alongside the logs.
+    local astor_out="$ASTOR_DIR/output_astor/AstorMain-$p"
+    if [[ -d "$astor_out" ]]; then
+        rm -rf "$rundir/output_astor"
+        mkdir -p "$rundir/output_astor"
+        cp -R "$astor_out" "$rundir/output_astor/"
     fi
 
-    # Best-effort parsing of stdout. ASTOR prints lines like
-    #   "Time(s):  12.3"
-    #   "Number of solutions: 1"
-    # Patterns may differ across versions; adjust the regexes if your run
-    # writes different keys.
-    local patches
-    patches=$(grep -Eio 'Number of solutions:[[:space:]]*[0-9]+' "$rundir/stdout.log" \
-              | tail -n1 | grep -Eo '[0-9]+' || true)
-    if [[ -z "${patches:-}" ]]; then
-        patches=$(grep -Eio 'solutions found:[[:space:]]*[0-9]+' "$rundir/stdout.log" \
-                  | tail -n1 | grep -Eo '[0-9]+' || true)
+    # Parse the structured astor_output.json (much more reliable than stdout
+    # regex). Falls back to stdout/file scans if the JSON is missing.
+    local json="$rundir/output_astor/AstorMain-$p/astor_output.json"
+    local patches="" astor_time="" astor_status=""
+    if [[ -f "$json" ]]; then
+        read -r patches astor_time astor_status < <(python3 -c '
+import json, sys
+with open(sys.argv[1]) as f:
+    d = json.load(f)
+g = d.get("general", {})
+print(len(d.get("patches", [])), g.get("TOTAL_TIME", "NA"), g.get("OUTPUT_STATUS", "NA"))
+' "$json" 2>/dev/null) || true
     fi
     if [[ -z "${patches:-}" ]]; then
-        # Fallback: count solution-x.txt files in the patch dir, if any.
-        if [[ -d "$rundir/output-astor" ]]; then
-            patches=$(find "$rundir/output-astor" -type f -name 'patch_*' | wc -l | tr -d ' ')
+        # Fallback: count variant-*_f folders (final/validated solutions).
+        if [[ -d "$rundir/output_astor" ]]; then
+            patches=$(find "$rundir/output_astor" -type d -name 'variant-*_f' | wc -l | tr -d ' ')
         else
             patches=0
         fi
     fi
-
-    local astor_time
-    astor_time=$(grep -Eio 'Time\(s\):[[:space:]]*[0-9.]+' "$rundir/stdout.log" \
-                 | tail -n1 | grep -Eo '[0-9.]+' || true)
-    [[ -z "$astor_time" ]] && astor_time="NA"
+    [[ -z "${astor_time:-}" ]] && astor_time="NA"
+    [[ -z "${astor_status:-}" ]] && astor_status=""
 
     local status="ok"
     if [[ $rc -ne 0 ]]; then status="exit_$rc"; fi
+    [[ -n "$astor_status" ]] && status="$status:$astor_status"
 
     echo "$p,$wall,$patches,$astor_time,$status" >> "$RESULTS_CSV"
     echo "  -> wallclock=${wall}s patches=$patches astor_time=${astor_time}s status=$status"

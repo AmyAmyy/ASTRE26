@@ -1,0 +1,6 @@
+--- /src/main/java/nl/tudelft/mutated_rers/Problem11.java
++++ /src/main/java/nl/tudelft/mutated_rers/Problem11.java
+@@ -631 +631 @@
+-		if ((a1537379265 < 9) && (((cf && a2007907442.equals("g")) && input.equals("C")) && (a919251806 == 11))) {
++		if ((!(a1537379265 < 9)) && (((cf && a2007907442.equals("g")) && input.equals("C")) && (a919251806 == 11))) {
+

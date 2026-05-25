@@ -1,0 +1,36 @@
+{
+  "general": {
+    "NR_RIGHT_COMPILATIONS": 270,
+    "EXECUTION_IDENTIFIER": "",
+    "FAULT_LOCALIZATION": "fr.inria.astor.core.faultlocalization.flacoco.FlacocoFaultLocalization",
+    "OUTPUT_STATUS": "STOP_BY_PATCH_FOUND",
+    "NR_GENERATIONS": 34,
+    "TOTAL_TIME": 151.793
+  },
+  "patches": [
+    {
+      "VARIANT_ID": "311",
+      "VALIDATION": "|true|0|172|[]|",
+      "patchhunks": [
+        {
+          "LOCATION": "nl.tudelft.mutated_rers.Problem13",
+          "PATH": "\\/Users\\/jimmy\\/study\\/ASTRE26\\/Buggy_RERS-ASTOR\\/Problem13_buggy\\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem13.java",
+          "INGREDIENT_SCOPE": "-",
+          "ORIGINAL_CODE": "((84 \u003c a505937283[5]) \u0026\u0026 ((a421304736.equals(\\\"e\\\") \u0026\u0026 a1525279227.equals(\\\"e\\\")) \u0026\u0026 (a1127751596 \u003d\u003d a1314340093[0]))) \u0026\u0026 (((a1039246420 \u003c\u003d 189) \u0026\u0026 (((a439993392 \u003d\u003d 5) \u0026\u0026 (input.equals(inputs[2]) \u0026\u0026 ((a1290874579 \u003d\u003d 7) \u0026\u0026 cf))) \u0026\u0026 a839337571.equals(\\\"e\\\"))) \u0026\u0026 (a1534261430 \u003c\u003d (-184)))",
+          "BUGGY_CODE_TYPE": "CtBinaryOperatorImpl|CtIfImpl",
+          "OPERATOR": "IfExpresionMutOp",
+          "MODIFIED_FILE_PATH": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem13_buggy\\/\\/src\\/\\/variant-311\\/nl\\/tudelft\\/mutated_rers\\/Problem13.java",
+          "LINE": "705",
+          "SUSPICIOUNESS": "0,447",
+          "MP_RANKING": "1",
+          "PATCH_HUNK_CODE": "((\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n84 \u003c\u003d a505937283[5]) \u0026\u0026 ((a421304736.equals(\\\"e\\\") \u0026\u0026 a1525279227.equals(\\\"e\\\")) \u0026\u0026 (a1127751596 \u003d\u003d a1314340093[0]))) \u0026\u0026 (((a1039246420 \u003c\u003d 189) \u0026\u0026 (((a439993392 \u003d\u003d 5) \u0026\u0026 (input.equals(inputs[2]) \u0026\u0026 ((a1290874579 \u003d\u003d 7) \u0026\u0026 cf))) \u0026\u0026 a839337571.equals(\\\"e\\\"))) \u0026\u0026 (a1534261430 \u003c\u003d (-184)))",
+          "PATCH_HUNK_TYPE": "CtBinaryOperatorImpl|CtIfImpl"
+        }
+      ],
+      "TIME": "151",
+      "GENERATION": "34",
+      "FOLDER_SOLUTION_CODE": "\\/Users\\/jimmy\\/tools\\/astor\\/.\\/output_astor\\/AstorMain-Problem13_buggy\\/\\/src\\/\\/variant-311",
+      "PATCH_DIFF_ORIG": "--- \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem13.java\\n+++ \\/src\\/main\\/java\\/nl\\/tudelft\\/mutated_rers\\/Problem13.java\\n@@ -705 +705 @@\\n-\\t\\t} \\t\\tif (((84 \u003c a505937283[5]) \u0026\u0026 ((a421304736.equals(\\\"e\\\") \u0026\u0026 a1525279227.equals(\\\"e\\\")) \u0026\u0026 (a1127751596 \u003d\u003d a1314340093[0]))) \u0026\u0026 (((a1039246420 \u003c\u003d 189) \u0026\u0026 (((a439993392 \u003d\u003d 5) \u0026\u0026 (input.equals(inputs[2]) \u0026\u0026 ((a1290874579 \u003d\u003d 7) \u0026\u0026 cf))) \u0026\u0026 a839337571.equals(\\\"e\\\"))) \u0026\u0026 (a1534261430 \u003c\u003d (-184)))) {\\n+\\t\\t} \\t\\tif (((84 \u003c\u003d a505937283[5]) \u0026\u0026 ((a421304736.equals(\\\"e\\\") \u0026\u0026 a1525279227.equals(\\\"e\\\")) \u0026\u0026 (a1127751596 \u003d\u003d a1314340093[0]))) \u0026\u0026 (((a1039246420 \u003c\u003d 189) \u0026\u0026 (((a439993392 \u003d\u003d 5) \u0026\u0026 (input.equals(inputs[2]) \u0026\u0026 ((a1290874579 \u003d\u003d 7) \u0026\u0026 cf))) \u0026\u0026 a839337571.equals(\\\"e\\\"))) \u0026\u0026 (a1534261430 \u003c\u003d (-184)))) {\\n\\n"
+    }
+  ]
+}

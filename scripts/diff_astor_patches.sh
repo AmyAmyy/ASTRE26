@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # diff_astor_patches.sh
 #
-# Walks every astor_runs/<Problem>_buggy/output-astor/ directory produced by
+# Walks every astor_runs/<Problem>_buggy/output_astor/ directory produced by
 # run_astor.sh and prints a diff between:
 #   - the buggy source ASTOR was given,
 #   - each patched variant ASTOR produced.
@@ -66,15 +66,26 @@ for rundir in "$OUT_DIR"/Problem*_buggy; do
         diff -u "$orig_src" "$buggy_src" || true
     fi
 
-    patched_dir="$rundir/output-astor"
+    patched_dir="$rundir/output_astor"
     if [[ ! -d "$patched_dir" ]]; then
         echo
-        echo "  no output-astor for $pname (no patches found, or run failed)"
+        echo "  no output_astor for $pname (no patches found, or run failed)"
         continue
     fi
 
-    # ASTOR usually puts solutions under output-astor/<mode>/<id>/...
-    mapfile -t patched_files < <(find "$patched_dir" -type f -name 'Problem*.java')
+    # ASTOR puts validated solutions under output_astor/AstorMain-<p>/src/variant-*_f/.
+    # Prefer those (final/validated); fall back to any variant-* if none found.
+    # NOTE: macOS ships bash 3.2, so we avoid `mapfile` (bash 4+) here.
+    patched_files=()
+    while IFS= read -r line; do
+        [[ -n "$line" ]] && patched_files+=("$line")
+    done < <(find "$patched_dir" -type d -name 'variant-*_f' \
+                  -exec find {} -type f -name 'Problem*.java' \; 2>/dev/null)
+    if [[ ${#patched_files[@]} -eq 0 ]]; then
+        while IFS= read -r line; do
+            [[ -n "$line" ]] && patched_files+=("$line")
+        done < <(find "$patched_dir" -type f -name 'Problem*.java')
+    fi
     if [[ ${#patched_files[@]} -eq 0 ]]; then
         echo
         echo "  no patched Problem*.java found under $patched_dir"
