@@ -3,6 +3,7 @@ package nl.tudelft.instrumentation.learning;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Arrays;
 
 public class WMethodEquivalenceChecker extends EquivalenceChecker{
 
@@ -25,20 +26,16 @@ public class WMethodEquivalenceChecker extends EquivalenceChecker{
         // Generate all middle parts X of length 0 to w
         List<Word<String>> middleParts = generateMiddleParts();
 
-        // Test all combinations: A · X · W
+        // Test all combinations: A X W
         for (Word<String> a : accessSequences) {
             for (Word<String> x : middleParts) {
                 for (Word<String> d : distinguishingSequences) {
-                    // Build the full test word: a · x · d
+                    // Build the full test word: a x d
                     Word<String> testWord = a.append(x).append(d);
 
-                    // Compare SUL output with hypothesis output
-                    String sulOutput = sul.getLastOutput(testWord);
-                    String hypothesisOutput = hypothesis.getLastOutput(testWord);
-
-                    if (!sulOutput.equals(hypothesisOutput)) {
-                        // Found a counterexample — return the shortest prefix that shows the difference
-                        // We need to find the actual divergence point
+                    String[] sulOutputs = sul.getOutput(testWord);
+                    String[] hypothesisOutputs = hypothesis.getOutput(testWord);
+                    if (!Arrays.equals(sulOutputs, hypothesisOutputs)) {
                         return Optional.of(findCounterexample(testWord, hypothesis));
                     }
                 }
