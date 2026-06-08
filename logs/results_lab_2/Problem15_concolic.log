@@ -1,0 +1,101 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by com.microsoft.z3.Native in an unnamed module (file:/Users/jimmy/study/ASTRE26/lib/com.microsoft.z3.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+[1,8s] error_80 (total 1)
+Wrote logs/Problem15_concolic.csv (1 unique errors)
+[4,4s] error_74 (total 2)
+Wrote logs/Problem15_concolic.csv (2 unique errors)
+[4,6s] error_72 (total 3)
+Wrote logs/Problem15_concolic.csv (3 unique errors)
+[5,0s] error_95 (total 4)
+Wrote logs/Problem15_concolic.csv (4 unique errors)
+[concolic] iter=200 branches=1040 sat=316 unsat=724 queued=116 errors=4
+[7,0s] error_31 (total 5)
+Wrote logs/Problem15_concolic.csv (5 unique errors)
+[7,1s] error_16 (total 6)
+Wrote logs/Problem15_concolic.csv (6 unique errors)
+[7,2s] error_90 (total 7)
+Wrote logs/Problem15_concolic.csv (7 unique errors)
+[7,5s] error_54 (total 8)
+Wrote logs/Problem15_concolic.csv (8 unique errors)
+[7,8s] error_24 (total 9)
+Wrote logs/Problem15_concolic.csv (9 unique errors)
+[7,9s] error_20 (total 10)
+Wrote logs/Problem15_concolic.csv (10 unique errors)
+[concolic] iter=400 branches=1215 sat=417 unsat=798 queued=17 errors=10
+[concolic] iter=600 branches=1404 sat=510 unsat=894 queued=7 errors=10
+[18,3s] error_46 (total 11)
+Wrote logs/Problem15_concolic.csv (11 unique errors)
+[concolic] iter=800 branches=1484 sat=554 unsat=930 queued=0 errors=11
+[concolic] iter=1000 branches=1500 sat=554 unsat=946 queued=0 errors=11
+[concolic] iter=1200 branches=1507 sat=554 unsat=953 queued=0 errors=11
+[concolic] iter=1400 branches=1523 sat=554 unsat=969 queued=0 errors=11
+[concolic] iter=1600 branches=1548 sat=558 unsat=990 queued=0 errors=11
+[concolic] iter=1800 branches=1579 sat=579 unsat=1000 queued=0 errors=11
+[concolic] iter=2000 branches=1586 sat=580 unsat=1006 queued=0 errors=11
+[concolic] iter=2200 branches=1587 sat=580 unsat=1007 queued=0 errors=11
+[concolic] iter=2400 branches=1588 sat=580 unsat=1008 queued=0 errors=11
+[concolic] iter=2600 branches=1605 sat=580 unsat=1025 queued=0 errors=11
+[concolic] iter=2800 branches=1619 sat=584 unsat=1035 queued=0 errors=11
+[concolic] iter=3000 branches=1619 sat=584 unsat=1035 queued=0 errors=11
+[concolic] iter=3200 branches=1619 sat=584 unsat=1035 queued=0 errors=11
+[concolic] iter=3400 branches=1626 sat=584 unsat=1042 queued=0 errors=11
+[concolic] iter=3600 branches=1630 sat=584 unsat=1046 queued=0 errors=11
+[75,7s] error_84 (total 12)
+Wrote logs/Problem15_concolic.csv (12 unique errors)
+[concolic] iter=3800 branches=1652 sat=590 unsat=1062 queued=0 errors=12
+[concolic] iter=4000 branches=1652 sat=590 unsat=1062 queued=0 errors=12
+[concolic] iter=4200 branches=1661 sat=590 unsat=1071 queued=0 errors=12
+[concolic] iter=4400 branches=1662 sat=590 unsat=1072 queued=0 errors=12
+[concolic] iter=4600 branches=1676 sat=594 unsat=1082 queued=0 errors=12
+[concolic] iter=4800 branches=1683 sat=594 unsat=1089 queued=0 errors=12
+[concolic] iter=5000 branches=1687 sat=594 unsat=1093 queued=0 errors=12
+[concolic] iter=5200 branches=1687 sat=594 unsat=1093 queued=0 errors=12
+[concolic] iter=5400 branches=1688 sat=594 unsat=1094 queued=0 errors=12
+[concolic] iter=5600 branches=1693 sat=594 unsat=1099 queued=0 errors=12
+[concolic] iter=5800 branches=1698 sat=594 unsat=1104 queued=0 errors=12
+[concolic] iter=6000 branches=1700 sat=594 unsat=1106 queued=0 errors=12
+[concolic] iter=6200 branches=1700 sat=594 unsat=1106 queued=0 errors=12
+[concolic] iter=6400 branches=1707 sat=594 unsat=1113 queued=0 errors=12
+[concolic] iter=6600 branches=1707 sat=594 unsat=1113 queued=0 errors=12
+[concolic] iter=6800 branches=1707 sat=594 unsat=1113 queued=0 errors=12
+[concolic] iter=7000 branches=1715 sat=594 unsat=1121 queued=0 errors=12
+[concolic] iter=7200 branches=1715 sat=594 unsat=1121 queued=0 errors=12
+[concolic] iter=7400 branches=1715 sat=594 unsat=1121 queued=0 errors=12
+[concolic] iter=7600 branches=1715 sat=594 unsat=1121 queued=0 errors=12
+[concolic] iter=7800 branches=1715 sat=594 unsat=1121 queued=0 errors=12
+[concolic] iter=8000 branches=1716 sat=594 unsat=1122 queued=0 errors=12
+[concolic] iter=8200 branches=1723 sat=594 unsat=1129 queued=0 errors=12
+[concolic] iter=8400 branches=1730 sat=594 unsat=1136 queued=0 errors=12
+[concolic] iter=8600 branches=1730 sat=594 unsat=1136 queued=0 errors=12
+[concolic] iter=8800 branches=1731 sat=594 unsat=1137 queued=0 errors=12
+[194,3s] error_71 (total 13)
+Wrote logs/Problem15_concolic.csv (13 unique errors)
+[concolic] iter=9000 branches=1734 sat=594 unsat=1140 queued=0 errors=13
+[concolic] iter=9200 branches=1739 sat=594 unsat=1145 queued=0 errors=13
+[concolic] iter=9400 branches=1739 sat=594 unsat=1145 queued=0 errors=13
+[concolic] iter=9600 branches=1740 sat=595 unsat=1145 queued=0 errors=13
+[concolic] iter=9800 branches=1745 sat=595 unsat=1150 queued=0 errors=13
+[concolic] iter=10000 branches=1745 sat=595 unsat=1150 queued=0 errors=13
+[concolic] iter=10200 branches=1758 sat=595 unsat=1163 queued=0 errors=13
+[concolic] iter=10400 branches=1762 sat=595 unsat=1167 queued=0 errors=13
+[concolic] iter=10600 branches=1763 sat=595 unsat=1168 queued=0 errors=13
+[concolic] iter=10800 branches=1763 sat=595 unsat=1168 queued=0 errors=13
+[concolic] iter=11000 branches=1763 sat=595 unsat=1168 queued=0 errors=13
+[concolic] iter=11200 branches=1769 sat=595 unsat=1174 queued=0 errors=13
+[concolic] iter=11400 branches=1769 sat=595 unsat=1174 queued=0 errors=13
+[concolic] iter=11600 branches=1769 sat=595 unsat=1174 queued=0 errors=13
+[concolic] iter=11800 branches=1771 sat=595 unsat=1176 queued=0 errors=13
+[concolic] iter=12000 branches=1772 sat=595 unsat=1177 queued=0 errors=13
+[concolic] iter=12200 branches=1773 sat=595 unsat=1178 queued=0 errors=13
+[concolic] iter=12400 branches=1780 sat=595 unsat=1185 queued=0 errors=13
+[concolic] iter=12600 branches=1783 sat=595 unsat=1188 queued=0 errors=13
+[concolic] iter=12800 branches=1783 sat=595 unsat=1188 queued=0 errors=13
+[concolic] iter=13000 branches=1783 sat=595 unsat=1188 queued=0 errors=13
+[concolic] iter=13200 branches=1784 sat=595 unsat=1189 queued=0 errors=13
+[concolic] iter=13400 branches=1788 sat=595 unsat=1193 queued=0 errors=13
+[concolic] iter=13600 branches=1789 sat=595 unsat=1194 queued=0 errors=13
+[concolic] iter=13800 branches=1795 sat=595 unsat=1200 queued=0 errors=13
+Wrote logs/Problem15_concolic.csv (13 unique errors)
