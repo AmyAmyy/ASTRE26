@@ -9,6 +9,7 @@ public class LearningLab {
     static Random r = new Random();
     static int traceLength = 10;
     static boolean isFinished = false;
+    static int wMethodDepth = 4;
 
     static ObservationTable observationTable;
     static EquivalenceChecker equivalenceChecker;
@@ -17,7 +18,7 @@ public class LearningLab {
 
         SystemUnderLearn sul = new RersSUL();
         observationTable = new ObservationTable(LearningTracker.inputSymbols, sul);
-        equivalenceChecker = new WMethodEquivalenceChecker(sul, LearningTracker.inputSymbols, 3, observationTable, observationTable);
+        equivalenceChecker = new WMethodEquivalenceChecker(sul, LearningTracker.inputSymbols, wMethodDepth, observationTable, observationTable);
         // equivalenceChecker = new RandomWalkEquivalenceChecker(sul, LearningTracker.inputSymbols, 100, 1000);
 
         int iteration = 1;
