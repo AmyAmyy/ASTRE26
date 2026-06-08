@@ -24,44 +24,38 @@ public class LearningLab {
 
         // L* main learning loop
         while (!isFinished) {
-            System.out.printf("\n=== Learning iteration %d ===\n", iteration);
 
             // Step 1: Make the observation table closed and consistent
             Optional<Word<String>> unclosed = observationTable.checkForClosed();
             while (unclosed.isPresent()) {
-                System.out.printf("Adding prefix to S for closure: %s\n", unclosed.get());
                 observationTable.addToS(unclosed.get());
                 unclosed = observationTable.checkForClosed();
             }
 
             Optional<Word<String>> inconsistency = observationTable.checkForConsistent();
             while (inconsistency.isPresent()) {
-                System.out.printf("Adding suffix to E for consistency: %s\n", inconsistency.get());
                 observationTable.addToE(inconsistency.get());
                 // After adding to E, table might become not closed again
                 unclosed = observationTable.checkForClosed();
                 while (unclosed.isPresent()) {
-                    System.out.printf("Adding prefix to S for closure: %s\n", unclosed.get());
                     observationTable.addToS(unclosed.get());
                     unclosed = observationTable.checkForClosed();
                 }
                 inconsistency = observationTable.checkForConsistent();
             }
 
-            // Step 2: Generate hypothesis and print it
-            observationTable.print();
+            // Step 2: Generate hypothesis and write DOT (only a single output line per iteration)
             MealyMachine hypothesis = observationTable.generateHypothesis();
             int stateCount = hypothesis.getStates().length;
             String dotFile = String.format("hypothesis-iter-%02d.dot", iteration);
             hypothesis.writeToDot(dotFile);
-            System.out.printf("Generated hypothesis iteration %d with %d states (%s)\n", iteration, stateCount, dotFile);
+            System.out.printf("%% Generated hypothesis iteration %d with %d states (%s)\n", iteration, stateCount, dotFile);
 
             // Step 3: Check equivalence
             Optional<Word<String>> counterexample = equivalenceChecker.verify(hypothesis);
 
             if (counterexample.isPresent()) {
-                // Step 4: Process counterexample - add all prefixes to S
-                System.out.printf("Counterexample found: %s\n", counterexample.get());
+                // Step 4: Process counterexample - add all prefixes to S (no extra printing)
                 Word<String> ce = counterexample.get();
                 List<String> symbols = ce.asList();
                 Word<String> prefix = new Word<>();
@@ -72,7 +66,7 @@ public class LearningLab {
                 iteration++;
             } else {
                 // No counterexample found - learning is done
-                System.out.println("No counterexample found. Learning complete.");
+                System.out.printf("%% No counterexample found. Learning complete.\n");
                 isFinished = true;
             }
         }
