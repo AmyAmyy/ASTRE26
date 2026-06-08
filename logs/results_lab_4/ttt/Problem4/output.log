@@ -1,0 +1,381 @@
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 1
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iA iB
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 2
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iB
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 3
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iJ
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 4
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iB iB
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 5
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iE iB iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 6
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 7
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iA iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 8
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iB iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 9
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iG iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 10
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iE iD iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 11
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iB iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 12
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iG iD iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 13
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iG iE iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 14
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iG iA iB
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 15
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iG iA iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 16
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iA iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 17
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iA iJ iE
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 18
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iD iB iA
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 19
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iD iA iE
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 20
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iA iD iA iE
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 21
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iD iJ iA iE
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 22
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iA iD iA iE
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 23
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iJ iG iD iD iA iB
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 24
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iB iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 25
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iD iB iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 26
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iC iB iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 27
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iG iB iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 28
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iD iC iA iE
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 29
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iD iE iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 30
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iD iC iC iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 31
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iD iC iE iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 32
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iG iB iB iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 33
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iG iD iD iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 34
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iD iG iD iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 35
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iD iG iE iD iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 36
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iD iE iD iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 37
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iG iJ iB iB
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 38
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iG iD iB iD iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 39
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iG iH
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 40
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iC iC iD iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 41
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iC iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 42
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iB iB iB iB
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 43
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iG iJ iB iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 44
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iG iB iC iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 45
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iG iD iH
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 46
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iG iH iC iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 47
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iC iC iC iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 48
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iG iJ iD iH
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 49
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iG iJ iJ iH
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 50
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iG iB iA iH
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 51
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iG iB iB iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 52
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iJ iG iD iA iH
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 53
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iC iC iD iC iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 54
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iC iD iC iC iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 55
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iC iD iC iE iH
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 56
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iG iF
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 57
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iC iD iC iA iF
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 58
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iC iD iC iB iF
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 59
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iG iB iJ
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 60
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iD iB iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 61
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iC iJ iB iG
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 62
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iD iG iC iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 63
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iC iD iB iA
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 64
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iG iC iJ
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 65
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iD iJ iD iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 66
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iB iJ iD iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 67
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iD iJ iD iD iD
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 68
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iJ iG iB iD iA
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 69
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iG iJ iA iD iA
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 70
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iB iB iG iJ iH iD iA
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 71
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iA iJ iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 72
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iA iD iA iJ iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 73
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE iC iA iD iJ iC
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 74
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+Done running
+-------------------------------------------------------
+Learning [ms]: 134, (0.134 s)
+Searching for counterexample [ms]: 272941, (272.941 s)
+
+learning rounds [#]: 74
+membership queries [queries]: 22985351
+States: 87
+Sigma: 10
+
+Model: 
+-------------------------------------------------------

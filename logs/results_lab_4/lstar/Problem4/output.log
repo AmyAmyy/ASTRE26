@@ -1,0 +1,15 @@
+ITERATION 1 | states=35 | queries=3510 | time_ms=102
+ITERATION 2 | states=40 | queries=5047 | time_ms=139
+ITERATION 3 | states=51 | queries=7838 | time_ms=202
+ITERATION 4 | states=56 | queries=11838 | time_ms=264
+ITERATION 5 | states=62 | queries=17657 | time_ms=349
+ITERATION 6 | states=65 | queries=23942 | time_ms=436
+ITERATION 7 | states=71 | queries=31997 | time_ms=568
+ITERATION 8 | states=72 | queries=41613 | time_ms=680
+ITERATION 9 | states=76 | queries=63450 | time_ms=929
+ITERATION 10 | states=77 | queries=86442 | time_ms=1182
+ITERATION 11 | states=81 | queries=170016 | time_ms=2053
+ITERATION 12 | states=82 | queries=183562 | time_ms=2209
+ITERATION 13 | states=83 | queries=300189 | time_ms=3237
+ITERATION 14 | states=87 | queries=431992 | time_ms=4573
+DONE | final_states=87 | total_queries=3609452 | total_time_ms=36630

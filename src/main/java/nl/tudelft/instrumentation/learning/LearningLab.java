@@ -24,7 +24,7 @@ public class LearningLab {
         if (System.getProperty("learnlib") != null) {
             LearnLibRunner llr = new LearnLibRunner();
             llr.start(wMethodDepth);
-            return;
+            System.exit(0);
         }
 
         // Ensure output directory exists
@@ -86,6 +86,7 @@ public class LearningLab {
                 // Write final hypothesis
                 hypothesis.writeToDot(outputDir + "/hypothesis-final.dot");
                 isFinished = true;
+                System.exit(0);
             }
         }
     }

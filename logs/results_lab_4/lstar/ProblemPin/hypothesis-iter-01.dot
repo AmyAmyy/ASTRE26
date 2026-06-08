@@ -1,0 +1,14 @@
+digraph {
+rankdir=LR
+	s0 [color="black"]
+	s0 -> s0 [ label="R/N" color="black"]
+	s0 -> s0 [ label="C/invalid" color="black"]
+	s0 -> s0 [ label="T/N" color="black"]
+	s0 -> s0 [ label="D/N" color="black"]
+	s0 -> s0 [ label="E/N" color="black"]
+	s0 -> s0 [ label="W/N" color="black"]
+	s0 -> s0 [ label="ENTER/X" color="black"]
+	s0 -> s0 [ label="Z/N" color="black"]
+	s0 -> s0 [ label="N/N" color="black"]
+	s0 -> s0 [ label="O/N" color="black"]
+}
