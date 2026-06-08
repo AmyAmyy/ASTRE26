@@ -120,8 +120,13 @@ public class ObservationTable implements DistinguishingSequenceGenerator, Access
                         String sjaKey = rowToKey(sjaRow);
                         
                         // If extensions don't match, table is inconsistent
-                        // Add the distinguishing suffix to E
+                        // Find a distinguishing suffix from E and add it to E.
                         if (!siaKey.equals(sjaKey)) {
+                            for (int k = 0; k < E.size(); k++) {
+                                if (!siaRow.get(k).equals(sjaRow.get(k))) {
+                                    return Optional.of(new Word<>(symbol).append(E.get(k)));
+                                }
+                            }
                             return Optional.of(new Word<>(symbol));
                         }
                     }
@@ -145,7 +150,7 @@ public class ObservationTable implements DistinguishingSequenceGenerator, Access
      *               alphabet
      */
     public void addToS(Word<String> prefix) {
-        System.out.printf("Adding %s to S\n", prefix);
+        // System.out.printf("Adding %s to S\n", prefix);
         if (!S.contains(prefix)) {
             S.add(prefix);
             addRow(prefix);
@@ -162,7 +167,7 @@ public class ObservationTable implements DistinguishingSequenceGenerator, Access
      *               alphabet
      */
     public void addToE(Word<String> suffix) {
-        System.out.printf("Adding %s to E\n", suffix);
+        // System.out.printf("Adding %s to E\n", suffix);
         if (!E.contains(suffix)) {
             E.add(suffix);
             for (Entry<Word<String>, ArrayList<String>> entry : table.entrySet()) {
