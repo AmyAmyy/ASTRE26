@@ -19,6 +19,7 @@ public class LearningTracker {
     static List<String> outputs = new ArrayList<>();
     static ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
     static CallableTraceRunner<Void> problem;
+    static long membershipQueries = 0;
 
     // Longest a single testcase is allowed to run
     static final int timeoutMS = 1000;
@@ -73,6 +74,7 @@ public class LearningTracker {
      * @param sequence the fuzzed sequence that needs top be run.
      */
     public static String[] runNextTrace(String[] sequence) {
+        membershipQueries++;
         reset();
         problem.setSequence(sequence);
         currentInput = sequence;
