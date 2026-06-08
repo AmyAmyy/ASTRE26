@@ -1,0 +1,119 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by com.microsoft.z3.Native in an unnamed module (file:/Users/jimmy/study/ASTRE26/lib/com.microsoft.z3.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+[0,0s] error_74 (total 1)
+Wrote logs/Problem12_concolic.csv (1 unique errors)
+[0,1s] error_67 (total 2)
+Wrote logs/Problem12_concolic.csv (2 unique errors)
+[0,4s] error_65 (total 3)
+Wrote logs/Problem12_concolic.csv (3 unique errors)
+[concolic] iter=200 branches=234 sat=40 unsat=194 queued=0 errors=3
+[concolic] iter=400 branches=238 sat=42 unsat=196 queued=0 errors=3
+[concolic] iter=600 branches=238 sat=42 unsat=196 queued=0 errors=3
+[7,3s] error_87 (total 4)
+Wrote logs/Problem12_concolic.csv (4 unique errors)
+[concolic] iter=800 branches=240 sat=42 unsat=198 queued=0 errors=4
+[concolic] iter=1000 branches=240 sat=42 unsat=198 queued=0 errors=4
+[concolic] iter=1200 branches=241 sat=43 unsat=198 queued=0 errors=4
+[concolic] iter=1400 branches=241 sat=43 unsat=198 queued=0 errors=4
+[concolic] iter=1600 branches=241 sat=43 unsat=198 queued=0 errors=4
+[concolic] iter=1800 branches=246 sat=46 unsat=200 queued=0 errors=4
+[concolic] iter=2000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=2200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=2400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=2600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=2800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=3000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=3200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=3400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=3600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=3800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=4000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=4200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=4400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=4600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=4800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=5000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=5200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=5400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=5600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=5800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=6000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=6200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=6400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=6600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=6800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=7000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=7200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=7400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=7600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=7800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=8000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=8200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=8400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=8600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=8800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=9000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=9200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=9400 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=9600 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=9800 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=10000 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=10200 branches=251 sat=48 unsat=203 queued=0 errors=4
+[concolic] iter=10400 branches=267 sat=53 unsat=214 queued=1 errors=4
+[concolic] iter=10600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=10800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=11000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=11200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=11400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=11600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=11800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=12000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=12200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=12400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=12600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=12800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=13000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=13200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=13400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=13600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=13800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=14000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=14200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=14400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=14600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=14800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=15000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=15200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=15400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=15600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=15800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=16000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=16200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=16400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=16600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=16800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=17000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=17200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=17400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=17600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=17800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=18000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=18200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=18400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=18600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=18800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=19000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=19200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=19400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=19600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=19800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=20000 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=20200 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=20400 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=20600 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=20800 branches=269 sat=55 unsat=214 queued=0 errors=4
+[concolic] iter=21000 branches=269 sat=55 unsat=214 queued=0 errors=4
+Wrote logs/Problem12_concolic.csv (4 unique errors)
