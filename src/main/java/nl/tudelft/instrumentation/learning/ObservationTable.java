@@ -53,7 +53,35 @@ public class ObservationTable implements DistinguishingSequenceGenerator, Access
      *         with something usefull to extend the observation table with.
      */
     public Optional<Word<String>> checkForClosed() {
-        // TODO implement the check for closedness of the observation table.
+        // For each row in S*A, check if there's a matching row in S
+        // For each prefix s in S and each symbol a, check if (s.a) has a match in S
+        for (Word<String> s : S) {
+            for (String symbol : inputSymbols) {
+                Word<String> sa = s.append(symbol);
+                
+                // Get the row signature for s.a
+                ArrayList<String> saRow = table.get(sa);
+                String saKey = rowToKey(saRow);
+                
+                // Check if any row in S has the same signature
+                boolean found = false;
+                for (Word<String> sPrime : S) {
+                    ArrayList<String> sPrimeRow = table.get(sPrime);
+                    String sPrimeKey = rowToKey(sPrimeRow);
+                    if (saKey.equals(sPrimeKey)) {
+                        found = true;
+                        break;
+                    }
+                }
+                
+                // If no match found, the table is not closed
+                // Return s.a as a prefix to add to S to make it closed
+                if (!found) {
+                    return Optional.of(sa);
+                }
+            }
+        }
+        // Table is closed
         return Optional.empty();
     }
 
@@ -66,7 +94,41 @@ public class ObservationTable implements DistinguishingSequenceGenerator, Access
      *         with something usefull to extend the observation table with.
      */
     public Optional<Word<String>> checkForConsistent() {
-        // TODO implement the consistency check.
+        // For each pair of rows in S with the same signature,
+        // check that their extensions with each symbol also have the same signatures
+        for (int i = 0; i < S.size(); i++) {
+            for (int j = i + 1; j < S.size(); j++) {
+                Word<String> si = S.get(i);
+                Word<String> sj = S.get(j);
+                
+                // Get signatures of si and sj
+                ArrayList<String> siRow = table.get(si);
+                String siKey = rowToKey(siRow);
+                ArrayList<String> sjRow = table.get(sj);
+                String sjKey = rowToKey(sjRow);
+                
+                // If the signatures match, check extensions with each symbol
+                if (siKey.equals(sjKey)) {
+                    for (String symbol : inputSymbols) {
+                        Word<String> sia = si.append(symbol);
+                        Word<String> sja = sj.append(symbol);
+                        
+                        // Get signatures of si.a and sj.a
+                        ArrayList<String> siaRow = table.get(sia);
+                        String siaKey = rowToKey(siaRow);
+                        ArrayList<String> sjaRow = table.get(sja);
+                        String sjaKey = rowToKey(sjaRow);
+                        
+                        // If extensions don't match, table is inconsistent
+                        // Add the distinguishing suffix to E
+                        if (!siaKey.equals(sjaKey)) {
+                            return Optional.of(new Word<>(symbol));
+                        }
+                    }
+                }
+            }
+        }
+        // Table is consistent
         return Optional.empty();
     }
 
