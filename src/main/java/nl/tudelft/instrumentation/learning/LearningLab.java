@@ -20,21 +20,49 @@ public class LearningLab {
         equivalenceChecker = new RandomWalkEquivalenceChecker(sul, LearningTracker.inputSymbols, 100, 1000);
         // equivalenceChecker = new WMethodEquivalenceChecker(sul, LearningTracker.inputSymbols, 1, observationTable, observationTable);
 
-        observationTable.print();
-        MealyMachine hypothesis = observationTable.generateHypothesis();
-        hypothesis.writeToDot("hypothesis.dot");
-
-        // Place here your code to learn a model of the RERS problem.
-        // Implement the checks for consistent and closed in the observation table.
-        // Use the observation table and the equivalence checker to implement the L* learning algorithm.
+        // L* main learning loop
         while (!isFinished) {
-            // Do things!
-            try {
-                System.out.println("Woohoo, looping!");
-                System.exit(1);
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            // Step 1: Make the observation table closed and consistent
+            Optional<Word<String>> unclosed = observationTable.checkForClosed();
+            while (unclosed.isPresent()) {
+                observationTable.addToS(unclosed.get());
+                unclosed = observationTable.checkForClosed();
+            }
+
+            Optional<Word<String>> inconsistency = observationTable.checkForConsistent();
+            while (inconsistency.isPresent()) {
+                observationTable.addToE(inconsistency.get());
+                // After adding to E, table might become not closed again
+                unclosed = observationTable.checkForClosed();
+                while (unclosed.isPresent()) {
+                    observationTable.addToS(unclosed.get());
+                    unclosed = observationTable.checkForClosed();
+                }
+                inconsistency = observationTable.checkForConsistent();
+            }
+
+            // Step 2: Generate hypothesis and print it
+            observationTable.print();
+            MealyMachine hypothesis = observationTable.generateHypothesis();
+            hypothesis.writeToDot("hypothesis.dot");
+
+            // Step 3: Check equivalence
+            Optional<Word<String>> counterexample = equivalenceChecker.verify(hypothesis);
+
+            if (counterexample.isPresent()) {
+                // Step 4: Process counterexample — add all prefixes to S
+                System.out.printf("Counterexample found: %s\n", counterexample.get());
+                Word<String> ce = counterexample.get();
+                List<String> symbols = ce.asList();
+                Word<String> prefix = new Word<>();
+                for (String symbol : symbols) {
+                    prefix = prefix.append(symbol);
+                    observationTable.addToS(prefix);
+                }
+            } else {
+                // No counterexample found — learning is done
+                System.out.println("No counterexample found. Learning complete.");
+                isFinished = true;
             }
         }
     }
