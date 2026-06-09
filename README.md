@@ -1,70 +1,70 @@
-# ASTRE26 - Lab 2: Concolic Execution
+# ASTRE26 - Lab 4: Model Learning
+
 Amy van der Meijden (5301513) and Jimmy Oei (6540031)
 
-# Manually build and run the tool 
-To build the project, make sure you have navigated to the root of this project and run the following Maven command:
-
-`mvn clean package`
-
-To instrument a given Java file, use the following command:
-
-`java -cp target/aistr.jar nl.tudelft.instrumentation.Main --type=*TypeOfInstrumentation* --file=*PathToJavaFile* > *OutputPath*`
-
-Where `*PathToJavaFile*` is the path to the Java file to instrument, `*OutputPath*` is the file (file name and path) where you want to save the instrumented Java file. The `*TypeOfInstrumentation*` is the type of instrumentation that you want to do. You can choose between the following options: `line`, `branch`, `fuzzing`, `concolic`, `patching`, and `learning`.
-Note that the flags `--file` and `--type` are required for instrumenting a Java file.
-
-## Task 1 - Run the concolic execution
-
-The script to run the experiments for the concolic execution is:
+## Building
 
 ```bash
-# all six problems, 5 minutes per problem (default)
-bash scripts/run_concolic.sh
-
-# subset
-PROBLEMS="11 17" bash scripts/run_concolic.sh
-
-# custom Z3 location (folder containing libz3java.{so,dylib})
-Z3_LIB=/path/to/z3/bin bash scripts/run_concolic.sh
+mvn -DskipTests package
 ```
 
-For every problem the script will:
-1. Instrument `RERS2020Buggy/Problem<N>.java` with `--type=concolic`
-   into `instrumented/Problem<N>.java`.
-2. Compile the instrumented file against the Z3 jar.
-3. Run it. `ConcolicExecutionLab.run()` enforces a 5-minute budget and
-   exits cleanly, writing:
-   - `logs/Problem<N>_concolic.csv` (`time_ms,unique_errors`)
-   - `logs/Problem<N>_concolic.log` (full stdout/stderr)
+This produces `target/aistr.jar`.
 
-## Convergence graphs (concolic vs AFL)
+## Running all experiments
 
-The Lab 1 AFL output already includes a `crashes/` directory per
-problem. We turn it into a convergence timeline by replaying every
-crash file through the corresponding AFL binary, using the `time:<ms>`
-field embedded in each crash filename as the relative timestamp.
+The script instruments, compiles, and runs all problems for both our L\*
+implementation and LearnLib TTT:
 
 ```bash
-# 1. build AFL convergence CSVs from the existing afl/<N>/findings/default
-python3 scripts/build_afl_timelines.py
-
-# 2. produce the comparison plots
-python3 scripts/plot_convergence.py
+bash scripts/run_learning.sh
 ```
 
-Outputs in `report/`:
-- `Problem<N>_convergence.png` - one plot per problem with both curves.
-- `concolic_vs_afl_convergence.png` - 2x3 grid (used in the report).
-- `concolic_vs_afl_bar.png` - final-count bar chart (used in the report).
+This will:
+1. Build the project
+2. Instrument Problems 1, 2, 4, 7 and ProblemPin with `--type=learning`
+3. Run **our L\*** on each problem (w=3 for RERS, w=4 for ProblemPin)
+4. Run **LearnLib TTT** on each problem
 
-## Task 2 - KLEE
+## Output format
 
-`scripts/run_klee.sh` then compiles each file to LLVM bitcode
-with `clang -emit-llvm` and runs KLEE on it.
+Each problem produces an `output.log` and a set of DOT files in its results folder.
+
+### L\* output.log
+
+One line per iteration showing the number of states discovered, cumulative
+membership queries, and elapsed time. A final summary line when learning
+completes:
+
+```
+ITERATION 1 | states=28 | queries=2810 | time_ms=89
+ITERATION 2 | states=31 | queries=16194 | time_ms=249
+...
+DONE | final_states=35 | total_queries=889405 | total_time_ms=8814
+```
+
+### TTT output.log
+
+LearnLib's built-in profiling output, including number of rounds, total
+membership queries, and learning/equivalence check time split:
+
+```
+Done running
+Learning [ms]: 60
+Searching for counterexample [ms]: 44813
+learning rounds [#]: 21
+membership queries [queries]: 4691435
+States: 35
+```
+
+### DOT files
+
+Each iteration produces a `hypothesis-iter-<N>.dot` file. The final model
+is also saved as `hypothesis-final.dot`.
+
+## Converting DOT files to images
+
+To convert a single DOT file to PNG:
 
 ```bash
-bash scripts/run_klee.sh
+dot -Tpng hypothesis-final.dot -o hypothesis-final.png
 ```
-
-Per-problem outputs land in `klee/<N>/`:
-`Problem<N>.bc`, `klee-out/`, `klee_full.log`, `klee_summary.txt`.
