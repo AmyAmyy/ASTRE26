@@ -1,0 +1,54 @@
+RESULTS HillClimber
+Total traces run:              326510
+Total unique branches visited: 403
+Triggered error codes (22): [Invalid input: error_70, Invalid input: error_90, Invalid input: error_74, Invalid input: error_30, Invalid input: error_52, Invalid input: error_72, Invalid input: error_71, Invalid input: error_82, Invalid input: error_34, Invalid input: error_23, Invalid input: error_10, Invalid input: error_87, Invalid input: error_31, Invalid input: error_75, Invalid input: error_49, Invalid input: error_16, Invalid input: error_37, Invalid input: error_48, Invalid input: error_35, Invalid input: error_68, Invalid input: error_1, Invalid input: error_3]
+Best single-trace branch count: 200
+Best trace: [C, I, H, C, C, C, E, F, A, C, E, B, J, D, B, D, I, I]
+--- Error traces ---
+  Invalid input: error_3: [I, C, C, C, E, F, G, E, B, J, D, B, D, I, I]
+  Invalid input: error_49: [C, I, C, C, C, E, F, G, E, B, J, D, B, D, I, I]
+  Invalid input: error_1: [I, C, C, C, E, F, A, E, B, J, D, B, D, I, I]
+  Invalid input: error_70: [A, I, C, C, C, E, F, G, E, B, J, D, B, D, I, I]
+  Invalid input: error_35: [H, C, E, G, B, J, D, B, D, I]
+  Invalid input: error_31: [C, E, I, B, J, D, B, I]
+  Invalid input: error_37: [C, E, I, B, I]
+  Invalid input: error_34: [C, I, H, J, B, I]
+  Invalid input: error_90: [C, C, I, H, B, I]
+  Invalid input: error_74: [C, E, I, H, B, G, I]
+  Invalid input: error_23: [C, C, C, E, F, D, G, E, H, J, D, B, D, I, I]
+  Invalid input: error_71: [C, C, D, E, F, A, E, B, J, D, B, D, I, I]
+  Invalid input: error_48: [C, C, D, E, F, G, E, B, J, D, F, D, I, I]
+  Invalid input: error_75: [H, C, H, G, E, B, J, B, D, F, I, I]
+  Invalid input: error_16: [H, C, H, G, F, B, J, B, D, I, I]
+  Invalid input: error_10: [C, D, E, G, J, B, J, H]
+  Invalid input: error_68: [H, H, F, H, G, E, C, J, B, I]
+  Invalid input: error_87: [A, E, I, H, B, C, I]
+  Invalid input: error_30: [H, H, G, H, G, F, C, J, B, D, I, I]
+  Invalid input: error_82: [H, H, G, H, F, G, F, C, J, B, F, D, I, I]
+  Invalid input: error_52: [H, H, G, H, G, G, B, D, I]
+  Invalid input: error_72: [H, H, G, H, F, G, F, C, J, B, F, A, D, I, I]
+--- Error discovery timeline ---
+time_ms,unique_errors
+17,1
+117,2
+126,3
+171,4
+704,5
+740,6
+1250,7
+1293,8
+3039,9
+3121,10
+4890,11
+5925,12
+5955,13
+17071,14
+17095,15
+17686,16
+24515,17
+29639,18
+45446,19
+67862,20
+74511,21
+146477,22
+=================================================

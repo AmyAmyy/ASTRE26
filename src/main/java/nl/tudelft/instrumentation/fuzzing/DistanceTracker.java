@@ -14,7 +14,7 @@ public class DistanceTracker {
     static CallableTraceRunner<Void> problem;
     static String[] inputSymbols;
     // Longest a single testcase is allowed to run
-    static final int timeoutMS = 1000;
+    static final int timeoutMS = 200;
 
     /**
      * Converts a boolean to a MyVar object
@@ -88,7 +88,7 @@ public class DistanceTracker {
      * @param line_nr the line number of the if-statement.
      */
     public static void myIf(MyVar condition, boolean value, int line_nr){
-        System.out.println("Found a new branch");
+        // System.out.println("Found a new branch");
         FuzzingLab.encounteredNewBranch(condition, value, line_nr);
     }
 
@@ -124,17 +124,15 @@ public class DistanceTracker {
             handler.cancel(true);
         }, timeoutMS, TimeUnit.MILLISECONDS);
 
-        // Wait for it to be completed
         try {
             handler.get();
         } catch (CancellationException e) {
-            System.out.println("TIMEOUT!");
-            System.exit(-1);
+            System.out.println("TIMEOUT - skipping trace");
+            // Don't exit! Just return so fuzzing continues.
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            System.exit(-1);
+            // Same here — consider just returning instead of exiting
         }
-
     }
 
 }

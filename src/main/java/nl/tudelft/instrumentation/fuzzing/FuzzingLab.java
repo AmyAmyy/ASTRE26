@@ -8,124 +8,118 @@ import java.util.*;
 public class FuzzingLab {
         static Random r = new Random();
         static List<String> currentTrace;
-        static int traceLength = 10;
+        static int traceLength = 15;
         static boolean isFinished = false;
-        static final int K = 1; // small positive constant for branch distance formulas
-        static final int MAX_TRACE_LENGTH = 10;
+        static final int K = 1;
+        static final int MAX_TRACE_LENGTH = 20;
         static final int MIN_TRACE_LENGTH = 5;
 
         static final boolean useHillClimber = true;
         static final boolean runExperiments = false;
 
         // --- Hill Climbing ---
-        static int nrMutations = 50; 
+        static int nrMutations = 50;
         static List<String> bestTraceSoFar = null;
         static float bestDistanceSoFar = Float.MAX_VALUE;
 
         // --- Branch distance accumulator (reset per trace) ---
         static float currentTraceBranchDistance = 0;
 
-        // --- Experiment unique branch tracking ---
-        // A unique branch = (line_nr, value): both sides of every if are tracked separately.
-        static Set<String> allUniqueBranches    = new HashSet<>(); // all branches seen across the whole session
-        static Set<String> currentTraceUniqueBranches = new HashSet<>(); // branches seen in the current trace
+        // --- Unique branch tracking ---
+        static Set<String> allUniqueBranches = new HashSet<>();
+        static Set<String> currentTraceUniqueBranches = new HashSet<>();
 
-        // -- Error code tracking --
+        // --- Error tracking ---
         static Set<String> triggeredErrors = new HashSet<>();
-        static Map<String, List<String>> errorTraces = new LinkedHashMap<>(); // error_code -> trace that first triggered it
+        static Map<String, List<String>> errorTraces = new LinkedHashMap<>();
+        static List<long[]> errorDiscoveryTimeline = new ArrayList<>();
 
         // --- Best-trace tracking ---
-        static List<String> bestTrace = null;          // trace that saw the most unique branches in one run
+        static List<String> bestTrace = null;
         static int bestTraceUniqueBranchCount = 0;
 
-        // --- Experiment timing ---
-        static final long TIMEOUT_MS = 5 * 60 * 1000L; // 5 minutes
+        // --- Pool of traces that previously discovered new branches ---
+        static List<List<String>> interestingTraces = new ArrayList<>();
+        static final int MAX_POOL_SIZE = 20;
+
+        // --- Timing ---
+        static final long TIMEOUT_MS = 5 * 60 * 1000L;
         static long startTime;
         static int totalTraces = 0;
 
-        static void initialize(String[] inputSymbols){
+        static void initialize(String[] inputSymbols) {
                 currentTrace = generateRandomTrace(inputSymbols);
-                startTime    = System.currentTimeMillis();
+                startTime = System.currentTimeMillis();
         }
 
-        /**
-         * Called by DistanceTracker.myIf for every if-statement encountered during a run.
-         * Records the branch as visited and accumulates its distance.
-         */
         static void encounteredNewBranch(MyVar condition, boolean value, int line_nr) {
-                // Track this (line, side) pair as a unique branch
                 String branchId = line_nr + "_" + value;
+                String oppositeBranchId = line_nr + "_" + !value;
                 allUniqueBranches.add(branchId);
                 currentTraceUniqueBranches.add(branchId);
 
-                // Accumulate branch distance for this trace
-                float d = computeBranchDistance(condition);
-                currentTraceBranchDistance += d;
+                // Only contribute distance if the opposite side is not yet covered
+                if (!allUniqueBranches.contains(oppositeBranchId)) {
+                        // Compute distance to reach the opposite (uncovered) outcome
+                        float d = computeBranchDistance(condition, !value);
+                        currentTraceBranchDistance += d;
+                }
         }
 
-        /**
-         * Recursively compute the normalized branch distance in [0, 1) for making
-         * the given condition evaluate to true, using the concrete values stored in
-         * the MyVar tree.
-         *
-         * Formulas (from lecture slides):
-         *   a           : 0 if true, 1 otherwise
-         *   !p1         : 1 - D(p1)
-         *   a == b      : |a - b|         (then normalized)
-         *   a != b      : 0 if a != b, 1 otherwise
-         *   a <  b      : 0 if a < b,  a - b + K otherwise  (then normalized)
-         *   a <= b      : 0 if a <= b, a - b     otherwise
-         *   a >  b      : 0 if a > b,  b - a + K otherwise
-         *   a >= b      : 0 if a >= b, b - a     otherwise
-         *   p1 && p2    : D(p1) + D(p2)
-         *   p1 || p2    : min(D(p1), D(p2))
-         *   p1 XOR p2   : min(D(p1) + (1 - D(p2)), (1 - D(p1)) + D(p2))
-         */
         static float computeBranchDistance(MyVar condition) {
+                return computeBranchDistance(condition, true);
+        }
+
+        static float computeBranchDistance(MyVar condition, boolean desiredOutcome) {
                 switch (condition.type) {
                         case BOOL:
-                                // a : d = 0 if a is true, 1 otherwise
-                                return normalize(condition.value ? 0 : 1);
+                                return normalize(condition.value == desiredOutcome ? 0 : 1);
 
                         case INT:
-                                // treat nonzero as true
-                                return normalize(condition.int_value != 0 ? 0 : 1);
+                                return normalize((condition.int_value != 0) == desiredOutcome ? 0 : 1);
 
                         case STRING:
-                                // treat non-empty string as true
-                                return normalize(!condition.str_value.isEmpty() ? 0 : 1);
+                                return normalize((!condition.str_value.isEmpty()) == desiredOutcome ? 0 : 1);
 
                         case UNARY:
                                 if (condition.operator.equals("!")) {
-                                        // !p1 : D = 1 - D(p1)
-                                        return 1.0f - computeBranchDistance(condition.left);
+                                        return computeBranchDistance(condition.left, !desiredOutcome);
                                 }
                                 return 0.0f;
 
                         case BINARY: {
                                 String op = condition.operator;
 
-                                // Logical operators: combine already-normalized sub-distances
                                 if (op.equals("&&")) {
-                                        // p1 && p2 : D = D(p1) + D(p2)
-                                        return computeBranchDistance(condition.left)
-                                                + computeBranchDistance(condition.right);
+                                        if (desiredOutcome) {
+                                                return computeBranchDistance(condition.left, true)
+                                                        + computeBranchDistance(condition.right, true);
+                                        }
+                                        return Math.min(
+                                                computeBranchDistance(condition.left, false),
+                                                computeBranchDistance(condition.right, false));
                                 }
                                 if (op.equals("||")) {
-                                        // p1 || p2 : D = min(D(p1), D(p2))
-                                        return Math.min(
-                                                computeBranchDistance(condition.left),
-                                                computeBranchDistance(condition.right));
+                                        if (desiredOutcome) {
+                                                return Math.min(
+                                                        computeBranchDistance(condition.left, true),
+                                                        computeBranchDistance(condition.right, true));
+                                        }
+                                        return computeBranchDistance(condition.left, false)
+                                                + computeBranchDistance(condition.right, false);
                                 }
                                 if (op.equals("^")) {
-                                        // XOR: D = min(D(p1) + (1-D(p2)), (1-D(p1)) + D(p2))
-                                        float dp1 = computeBranchDistance(condition.left);
-                                        float dp2 = computeBranchDistance(condition.right);
-                                        return Math.min(dp1 + (1.0f - dp2), (1.0f - dp1) + dp2);
+                                        float leftTrue  = computeBranchDistance(condition.left, true);
+                                        float leftFalse = computeBranchDistance(condition.left, false);
+                                        float rightTrue  = computeBranchDistance(condition.right, true);
+                                        float rightFalse = computeBranchDistance(condition.right, false);
+                                        if (desiredOutcome) {
+                                                return Math.min(leftTrue + rightFalse, leftFalse + rightTrue);
+                                        }
+                                        return Math.min(leftTrue + rightTrue, leftFalse + rightFalse);
                                 }
 
-                                // Comparison operators: compute raw distance, then normalize
-                                return normalize(comparisonDistance(condition));
+                                return normalize(comparisonDistance(condition, desiredOutcome));
                         }
 
                         default:
@@ -133,23 +127,17 @@ public class FuzzingLab {
                 }
         }
 
-        /**
-         * Compute the raw (unnormalized) distance for a binary comparison operator.
-         * Handles both numeric and string operands.
-         */
-        static int comparisonDistance(MyVar condition) {
+        static int comparisonDistance(MyVar condition, boolean desiredOutcome) {
                 MyVar left  = condition.left;
                 MyVar right = condition.right;
-                String op   = condition.operator;
+                String op   = desiredOutcome ? condition.operator : negateOperator(condition.operator);
 
-                // --- String comparison ---
                 if (left.type == TypeEnum.STRING || right.type == TypeEnum.STRING) {
                         String ls = left.type  == TypeEnum.STRING ? left.str_value  : String.valueOf(left.int_value);
                         String rs = right.type == TypeEnum.STRING ? right.str_value : String.valueOf(right.int_value);
 
                         if (op.equals("==")) {
                                 if (ls.equals(rs)) return 0;
-                                // Character-level distance (RERS inputs are typically single chars)
                                 int dist = Math.abs(ls.length() - rs.length());
                                 int len  = Math.min(ls.length(), rs.length());
                                 for (int i = 0; i < len; i++) {
@@ -158,10 +146,9 @@ public class FuzzingLab {
                                 return dist;
                         }
                         if (op.equals("!=")) return ls.equals(rs) ? 1 : 0;
-                        return 0; // <, <=, >, >= not meaningful for arbitrary strings
+                        return 0;
                 }
 
-                // --- Numeric comparison ---
                 int lv = getIntValue(left);
                 int rv = getIntValue(right);
 
@@ -176,17 +163,24 @@ public class FuzzingLab {
                 }
         }
 
-        /** Extract an integer value from a leaf MyVar node. */
+        static String negateOperator(String op) {
+                switch (op) {
+                        case "==": return "!=";
+                        case "!=": return "==";
+                        case "<":  return ">=";
+                        case "<=": return ">";
+                        case ">":  return "<=";
+                        case ">=": return "<";
+                        default:   return op;
+                }
+        }
+
         static int getIntValue(MyVar m) {
                 if (m.type == TypeEnum.INT)  return m.int_value;
                 if (m.type == TypeEnum.BOOL) return m.value ? 1 : 0;
                 return 0;
         }
 
-        /**
-         * Normalize a raw distance d to the range [0, 1).
-         * D = d / (d + 1)
-         */
         static float normalize(int d) {
                 return (float) d / (d + 1);
         }
@@ -195,7 +189,6 @@ public class FuzzingLab {
                 List<String> mutated = new ArrayList<>(trace);
 
                 if (mutated.isEmpty()) {
-                        // If empty somehow, recover with random trace
                         return generateRandomTrace(inputSymbols);
                 }
 
@@ -208,28 +201,27 @@ public class FuzzingLab {
                         mutationType = r.nextInt(2) == 0 ? 0 : 2; // change or delete only
                 }
 
-                // Single-symbol alphabet: can't do a meaningful change
                 if (inputSymbols.length <= 1 && mutationType == 0) {
                         mutationType = 1;
                 }
 
                 switch (mutationType) {
-                        case 0: // Change: replace symbol at a random index with a DIFFERENT symbol
+                        case 0: // Change
                                 int changeIdx = r.nextInt(mutated.size());
                                 String current = mutated.get(changeIdx);
                                 String newSym = inputSymbols[r.nextInt(inputSymbols.length)];
-                                while (newSym.equals(current)) {
+                                while (newSym.equals(current) && inputSymbols.length > 1) {
                                         newSym = inputSymbols[r.nextInt(inputSymbols.length)];
                                 }
                                 mutated.set(changeIdx, newSym);
                                 break;
 
-                        case 1: // Add: insert a random symbol at a random position
+                        case 1: // Add
                                 int addIdx = r.nextInt(mutated.size() + 1);
                                 mutated.add(addIdx, inputSymbols[r.nextInt(inputSymbols.length)]);
                                 break;
 
-                        case 2: // Delete: remove symbol at a random index
+                        case 2: // Delete
                                 mutated.remove(r.nextInt(mutated.size()));
                                 break;
                 }
@@ -237,31 +229,13 @@ public class FuzzingLab {
                 return mutated;
         }
 
-        /**
-         * Method for fuzzing new inputs for a program.
-         * @param inputSymbols the inputSymbols to fuzz from.
-         * @return a fuzzed sequence
-         */
-        static List<String> fuzz(String[] inputSymbols, List<String> inputTrace){
-                /*
-                 * Add here your code for fuzzing a new sequence for the RERS problem.
-                 * You can guide your fuzzer to fuzz "smart" input sequences to cover
-                 * more branches. Right now we just generate a complete random sequence
-                 * using the given input symbols. Please change it to your own code.
-                 */
-
+        static List<String> fuzz(String[] inputSymbols, List<String> inputTrace) {
                 if (inputTrace == null) {
                         return generateRandomTrace(inputSymbols);
                 }
-                
                 return mutate(inputSymbols, inputTrace);
         }
 
-        /**
-         * Generate a random trace from an array of symbols.
-         * @param symbols the symbols from which a trace should be generated from.
-         * @return a random trace that is generated from the given symbols.
-         */
         static List<String> generateRandomTrace(String[] symbols) {
                 ArrayList<String> trace = new ArrayList<>();
                 for (int i = 0; i < traceLength; i++) {
@@ -270,15 +244,20 @@ public class FuzzingLab {
                 return trace;
         }
 
-        /**
-         * Execute the current trace and updates the total traces executed and
-         * the best trace of unique branch counts
-         */
         static void executeCurrentTrace() {
+                int prevTotal = allUniqueBranches.size();
                 currentTraceBranchDistance = 0;
                 currentTraceUniqueBranches = new HashSet<>();
                 DistanceTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
                 totalTraces++;
+
+                // Save to pool if this trace found new branches
+                if (allUniqueBranches.size() > prevTotal) {
+                        if (interestingTraces.size() >= MAX_POOL_SIZE) {
+                                interestingTraces.remove(r.nextInt(interestingTraces.size()));
+                        }
+                        interestingTraces.add(new ArrayList<>(currentTrace));
+                }
 
                 if (currentTraceUniqueBranches.size() > bestTraceUniqueBranchCount) {
                         bestTraceUniqueBranchCount = currentTraceUniqueBranches.size();
@@ -302,7 +281,13 @@ public class FuzzingLab {
                                 System.out.println("  " + entry.getKey() + ": " + entry.getValue());
                         }
                 }
+                System.out.println("--- Error discovery timeline ---");
+                System.out.println("time_ms,unique_errors");
+                for (long[] point : errorDiscoveryTimeline) {
+                        System.out.println(point[0] + "," + point[1]);
+                }
                 System.out.println("=================================================");
+                System.out.flush();
         }
 
         static void runHillClimber() {
@@ -310,18 +295,23 @@ public class FuzzingLab {
                 int noImprovementCount = 0;
 
                 while (!isFinished && System.currentTimeMillis() - startTime < TIMEOUT_MS) {
-                        // Reset or start fresh
                         if (bestTraceSoFar == null) {
-                                currentTrace = generateRandomTrace(DistanceTracker.inputSymbols);
+                                // Restart from pool if available, otherwise random
+                                if (!interestingTraces.isEmpty()) {
+                                        currentTrace = new ArrayList<>(
+                                                interestingTraces.get(r.nextInt(interestingTraces.size())));
+                                } else {
+                                        currentTrace = generateRandomTrace(DistanceTracker.inputSymbols);
+                                }
                                 executeCurrentTrace();
                                 bestTraceSoFar = new ArrayList<>(currentTrace);
                                 bestDistanceSoFar = currentTraceBranchDistance;
                                 noImprovementCount = 0;
-                                continue; // start climbing from this base
+                                continue;
                         }
 
                         List<String> bestMutation = null;
-                        float bestMutationDistance = Float.MAX_VALUE; // <-- key fix: start fresh
+                        float bestMutationDistance = Float.MAX_VALUE;
 
                         for (int i = 0; i < nrMutations; i++) {
                                 currentTrace = fuzz(DistanceTracker.inputSymbols, bestTraceSoFar);
@@ -339,8 +329,7 @@ public class FuzzingLab {
                                 noImprovementCount = 0;
                         } else {
                                 noImprovementCount++;
-                                // Only reset after N consecutive failures, not immediately
-                                if (noImprovementCount >= 3) {
+                                if (noImprovementCount >= 10) { // increased from 3
                                         bestTraceSoFar = null;
                                         bestDistanceSoFar = Float.MAX_VALUE;
                                         noImprovementCount = 0;
@@ -362,45 +351,48 @@ public class FuzzingLab {
         static void run() {
                 if (runExperiments) {
                         runSimpleFuzzer();
-                        
-                        // Reset for next experiment
+
                         currentTrace = null;
                         allUniqueBranches.clear();
                         triggeredErrors.clear();
                         errorTraces.clear();
+                        errorDiscoveryTimeline.clear();
                         totalTraces = 0;
                         bestTrace = null;
                         bestTraceUniqueBranchCount = 0;
                         bestTraceSoFar = null;
                         bestDistanceSoFar = Float.MAX_VALUE;
+                        interestingTraces.clear();
 
                         runHillClimber();
-                }
-                else {
+                } else {
                         if (useHillClimber) {
                                 runHillClimber();
-                        }
-                        else {
+                        } else {
                                 runSimpleFuzzer();
                         }
                 }
 
+                System.out.flush();
                 System.exit(0);
         }
 
-        /**
-         * Method that is used for catching the output from standard out.
-         * You should write your own logic here.
-         * @param out the string that has been outputted in the standard out.
-         */
-        public static void output(String out){
+        public static void output(String out) {
                 System.out.println(out);
                 if (out.contains("error_")) {
                         String error = out.trim();
                         if (triggeredErrors.add(error)) {
-                                // First time seeing this error - save the trace
                                 errorTraces.put(error, new ArrayList<>(currentTrace));
+                                errorDiscoveryTimeline.add(new long[]{
+                                        System.currentTimeMillis() - startTime,
+                                        triggeredErrors.size()
+                                });
                         }
                 }
         }
 }
+
+// The three changes from the previous message are all applied here. To summarise what changed and why:
+// traceLength 10→15, MAX_TRACE_LENGTH 10→20 — RERS problems often require longer input sequences to reach deep states and trigger errors. Short traces can't even reach some parts of the state machine.
+// Pool-based restarts — when bestTraceSoFar resets to null, it now picks a random trace from interestingTraces (traces that previously found new branches) instead of always going fully random. This means restarts still have some useful structure rather than starting from scratch every time.
+// noImprovementCount threshold 3→10 — resetting after only 3 failed rounds was too aggressive. The hill climber was abandoning promising regions before they had a fair chance to improve.

@@ -1,0 +1,40 @@
+Problem 15
+[New best] trace=[H, F, A, N, A, O, K, C, M, N] unique_branches=120 total_all=120
+[New best] trace=[H, F, A, N, A, L, K, C, M, N] unique_branches=153 total_all=153
+[New best] trace=[L, F, A, N, A, O, K, C, M, N] unique_branches=170 total_all=171
+[New best] trace=[H, I, A, N, A, O, K, C, M, N] unique_branches=189 total_all=256
+[New best] trace=[I, E, H, B, J, G, L, K, F] unique_branches=193 total_all=389
+[New best] trace=[I, E, H, B, L, J, G, L, K, F] unique_branches=218 total_all=424
+[New best] trace=[D, M, N, E, N, L, O, K, C, K] unique_branches=220 total_all=779
+[New best] trace=[J, I, H, E, L, J, F, D, E] unique_branches=221 total_all=879
+[New best] trace=[K, I, H, L, I, G, B, C, C, L] unique_branches=222 total_all=967
+[New best] trace=[D, N, A, N, L, K, O, L, F, I] unique_branches=231 total_all=1199
+[New best] trace=[D, N, I, C, G, B, M, O, L, I] unique_branches=247 total_all=1636
+RESULTS HillClimber
+Total traces run:              474434
+Total unique branches visited: 1645
+Triggered error codes (9): [Invalid input: error_27, Invalid input: error_38, Invalid input: error_74, Invalid input: error_72, Invalid input: error_94, Invalid input: error_33, Invalid input: error_44, Invalid input: error_21, Invalid input: error_87]
+Best single-trace branch count: 247
+Best trace: [D, N, I, C, G, B, M, O, L, I]
+--- Error traces ---
+  Invalid input: error_72: [D, N, N, E, G, O, F, C, D, N]
+  Invalid input: error_94: [O, D, B, F, J, K, C, M, C]
+  Invalid input: error_21: [D, B, O, F, L, N, N, J, A]
+  Invalid input: error_87: [D, B, H, D, J, A, B, A, D, N]
+  Invalid input: error_27: [D, F, F, B, A, D, L, I, G, J]
+  Invalid input: error_33: [D, I, B, K, B, A, I, H, D, G]
+  Invalid input: error_44: [D, B, F, G, N, H, F, I]
+  Invalid input: error_38: [D, K, N, E, N, N, F, F, E]
+  Invalid input: error_74: [E, N, A, D, N, N, B, F, I, H]
+--- Error discovery timeline ---
+time_ms,unique_errors
+19565,1
+44851,2
+96592,3
+100602,4
+174496,5
+208481,6
+238355,7
+276195,8
+297813,9
+=================================================

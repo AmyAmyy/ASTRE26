@@ -1,0 +1,37 @@
+RESULTS HillClimber
+Total traces run:              357648
+Total unique branches visited: 856
+Triggered error codes (14): [Invalid input: error_90, Invalid input: error_41, Invalid input: error_73, Invalid input: error_60, Invalid input: error_77, Invalid input: error_76, Invalid input: error_27, Invalid input: error_59, Invalid input: error_15, Invalid input: error_25, Invalid input: error_36, Invalid input: error_18, Invalid input: error_28, Invalid input: error_4]
+Best single-trace branch count: 249
+Best trace: [N, C, J, D, C, J, A, L, D, C, A, N, K]
+--- Error traces ---
+  Invalid input: error_41: [C, F, J, A, N, M, O, F, G, D, A, J, B, B]
+  Invalid input: error_77: [C, F, J, A, N, M, O, C, F, G, D, A, J, B, B]
+  Invalid input: error_18: [C, F, J, A, A, M, O, F, G, D, A, N, C, J, N, B]
+  Invalid input: error_25: [N, C, J, D, N, F, G, D, A, N, J, B, B]
+  Invalid input: error_73: [N, C, J, D, N, F, D, A, N]
+  Invalid input: error_28: [N, C, J, A, O, G, D, H, B]
+  Invalid input: error_76: [N, C, J, D, N, L, D, L, A, N]
+  Invalid input: error_59: [N, C, J, D, N, N, F, D, L, A, N]
+  Invalid input: error_15: [N, C, J, D, C, F, A, G, L, A, N]
+  Invalid input: error_60: [N, C, J, D, C, I, A, G, L, N]
+  Invalid input: error_27: [N, C, J, F, G, D, C, A, E, N, J, B, H]
+  Invalid input: error_36: [N, C, J, F, G, D, C, N, J, O, L, D, M]
+  Invalid input: error_4: [N, C, J, F, G, D, C, N, J, L, F, D, M]
+  Invalid input: error_90: [N, C, J, F, G, D, C, D, N, E, L, L, D, M]
+--- Error discovery timeline ---
+time_ms,unique_errors
+247,1
+317,2
+6223,3
+17991,4
+18165,5
+18679,6
+26336,7
+26345,8
+45991,9
+54893,10
+65414,11
+83341,12
+84046,13
+99518,14
