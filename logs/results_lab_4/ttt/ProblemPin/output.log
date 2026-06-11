@@ -1,0 +1,26 @@
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 1
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE Z E R O ENTER
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 2
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_COUNTEREXAMPLE Z E R O ENTER E R O ENTER
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Starting round 3
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Learning
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_MODEL de.learnlib.algorithms.ttt.mealy.TTTHypothesisMealy@79b4d0f
+[main] INFO de.learnlib.util.Experiment -  LEARNLIB_PHASE Searching for counterexample
+Done running
+-------------------------------------------------------
+Learning [ms]: 21, (0.021 s)
+Searching for counterexample [ms]: 36490, (36.49 s)
+
+learning rounds [#]: 3
+membership queries [queries]: 2760938
+States: 6
+Sigma: 10
+
+Model: 
+-------------------------------------------------------

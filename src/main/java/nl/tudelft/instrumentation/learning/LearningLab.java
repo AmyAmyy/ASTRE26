@@ -1,6 +1,7 @@
 package nl.tudelft.instrumentation.learning;
 
 import java.util.*;
+import java.io.File;
 
 /**
  * You should write your own solution using this class.
@@ -9,24 +10,36 @@ public class LearningLab {
     static Random r = new Random();
     static int traceLength = 10;
     static boolean isFinished = false;
-    static int wMethodDepth = 4;
+    // W-method depth: pass via -Dw=<value>, default 3
+    static int wMethodDepth = Integer.parseInt(System.getProperty("w", "3"));
+    // Output directory for dot files: pass via -DoutputDir=<path>, default "."
+    static String outputDir = System.getProperty("outputDir", ".");
 
     static ObservationTable observationTable;
     static EquivalenceChecker equivalenceChecker;
 
     static void run() {
 
+        // If "learnlib" system property is set, run LearnLib instead
+        if (System.getProperty("learnlib") != null) {
+            LearnLibRunner llr = new LearnLibRunner();
+            llr.start(wMethodDepth);
+            System.exit(0);
+        }
+
+        // Ensure output directory exists
+        new File(outputDir).mkdirs();
+
         SystemUnderLearn sul = new RersSUL();
         observationTable = new ObservationTable(LearningTracker.inputSymbols, sul);
         equivalenceChecker = new WMethodEquivalenceChecker(sul, LearningTracker.inputSymbols, wMethodDepth, observationTable, observationTable);
-        // equivalenceChecker = new RandomWalkEquivalenceChecker(sul, LearningTracker.inputSymbols, 100, 1000);
 
         int iteration = 1;
+        long startTime = System.currentTimeMillis();
 
         // L* main learning loop
         while (!isFinished) {
 
-            // Step 1: Make the observation table closed and consistent
             Optional<Word<String>> unclosed = observationTable.checkForClosed();
             while (unclosed.isPresent()) {
                 observationTable.addToS(unclosed.get());
@@ -45,18 +58,18 @@ public class LearningLab {
                 inconsistency = observationTable.checkForConsistent();
             }
 
-            // Step 2: Generate hypothesis and write DOT (only a single output line per iteration)
+            // Generate hypothesis and write DOT
             MealyMachine hypothesis = observationTable.generateHypothesis();
             int stateCount = hypothesis.getStates().length;
-            String dotFile = String.format("hypothesis-iter-%02d.dot", iteration);
+            String dotFile = outputDir + "/hypothesis-iter-" + String.format("%02d", iteration) + ".dot";
             hypothesis.writeToDot(dotFile);
-            System.out.printf("%% Generated hypothesis iteration %d with %d states (%s)\n", iteration, stateCount, dotFile);
+            long elapsed = System.currentTimeMillis() - startTime;
+            System.out.printf("ITERATION %d | states=%d | queries=%d | time_ms=%d\n",
+                    iteration, stateCount, LearningTracker.membershipQueries, elapsed);
 
-            // Step 3: Check equivalence
             Optional<Word<String>> counterexample = equivalenceChecker.verify(hypothesis);
 
             if (counterexample.isPresent()) {
-                // Step 4: Process counterexample - add all prefixes to S (no extra printing)
                 Word<String> ce = counterexample.get();
                 List<String> symbols = ce.asList();
                 Word<String> prefix = new Word<>();
@@ -67,8 +80,13 @@ public class LearningLab {
                 iteration++;
             } else {
                 // No counterexample found - learning is done
-                System.out.printf("%% No counterexample found. Learning complete.\n");
+                long totalTime = System.currentTimeMillis() - startTime;
+                System.out.printf("DONE | final_states=%d | total_queries=%d | total_time_ms=%d\n",
+                        stateCount, LearningTracker.membershipQueries, totalTime);
+                // Write final hypothesis
+                hypothesis.writeToDot(outputDir + "/hypothesis-final.dot");
                 isFinished = true;
+                System.exit(0);
             }
         }
     }
