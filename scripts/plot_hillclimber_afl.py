@@ -4,6 +4,8 @@ import os
 
 PROBLEMS = [11, 12, 13, 14, 15, 17]
 DATA_DIR = "../logs/results_lab1_v2"
+AFL_DIR = "../logs"
+OUT_DIR = "../logs/results_lab1_v2"
 
 for problem in PROBLEMS:
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -22,8 +24,23 @@ for problem in PROBLEMS:
             marker="o",
             markersize=3,
             linewidth=1.5,
-            label=f"v{version}",
+            label=f"HillClimber v{version}",
         )
+
+    afl_file = os.path.join(AFL_DIR, f"Problem{problem}_afl.csv")
+    if os.path.exists(afl_file):
+        df_afl = pd.read_csv(afl_file)
+        ax.plot(
+            df_afl["time_ms"] / 1000,
+            df_afl["unique_errors"],
+            marker="s",
+            markersize=3,
+            linewidth=1.5,
+            linestyle="--",
+            label="AFL",
+        )
+    else:
+        print(f"Warning: {afl_file} not found, AFL series skipped.")
 
     ax.set_title(f"Problem {problem} — Unique Errors Over Time")
     ax.set_xlabel("Time (s)")
@@ -31,7 +48,7 @@ for problem in PROBLEMS:
     ax.legend()
     ax.grid(True, linestyle="--", alpha=0.5)
 
-    out_name = f"Problem{problem}_plot.png"
+    out_name = os.path.join(OUT_DIR, f"Problem{problem}_plot.png")
     fig.savefig(out_name, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved {out_name}")
