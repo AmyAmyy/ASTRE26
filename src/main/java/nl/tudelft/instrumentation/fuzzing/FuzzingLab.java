@@ -1,12 +1,16 @@
 package nl.tudelft.instrumentation.fuzzing;
 
 import java.util.*;
+import java.io.*;
 
 /**
  * You should write your own solution using this class.
  */
 public class FuzzingLab {
-        static Random r = new Random();
+        // Seed from -Dseed=N system property (for reproducible, independent runs)
+        static final long seed = Long.parseLong(System.getProperty("seed",
+                String.valueOf(System.nanoTime() % 1_000_000L)));
+        static Random r = new Random(seed);
         static List<String> currentTrace;
         static int traceLength = 15;
         static boolean isFinished = false;
@@ -14,7 +18,8 @@ public class FuzzingLab {
         static final int MAX_TRACE_LENGTH = 20;
         static final int MIN_TRACE_LENGTH = 5;
 
-        static final boolean useHillClimber = true;
+        // Mode from -Dmode=random|hillclimber  (default: hillclimber, preserves old behaviour)
+        static final boolean useHillClimber = !"random".equals(System.getProperty("mode", "hillclimber"));
         static final boolean runExperiments = false;
 
         // --- Hill Climbing ---
@@ -34,6 +39,9 @@ public class FuzzingLab {
         static Map<String, List<String>> errorTraces = new LinkedHashMap<>();
         static List<long[]> errorDiscoveryTimeline = new ArrayList<>();
 
+        // --- Branch discovery timeline (parallel to errorDiscoveryTimeline) ---
+        static List<long[]> branchDiscoveryTimeline = new ArrayList<>();
+
         // --- Best-trace tracking ---
         static List<String> bestTrace = null;
         static int bestTraceUniqueBranchCount = 0;
@@ -43,9 +51,14 @@ public class FuzzingLab {
         static final int MAX_POOL_SIZE = 20;
 
         // --- Timing ---
-        static final long TIMEOUT_MS = 5 * 60 * 1000L;
+        // Allow -DtimeoutMs=N to override the budget (e.g. for quick smoke-tests)
+        static final long TIMEOUT_MS = Long.parseLong(
+                System.getProperty("timeoutMs", String.valueOf(5 * 60 * 1000L)));
         static long startTime;
         static int totalTraces = 0;
+
+        // --- Shutdown-hook guard (prevents double-write) ---
+        static volatile boolean csvWritten = false;
 
         static void initialize(String[] inputSymbols) {
                 currentTrace = generateRandomTrace(inputSymbols);
@@ -55,8 +68,16 @@ public class FuzzingLab {
         static void encounteredNewBranch(MyVar condition, boolean value, int line_nr) {
                 String branchId = line_nr + "_" + value;
                 String oppositeBranchId = line_nr + "_" + !value;
-                allUniqueBranches.add(branchId);
+                boolean isNew = allUniqueBranches.add(branchId);
                 currentTraceUniqueBranches.add(branchId);
+
+                // Record timeline entry whenever a branch is visited for the first time
+                if (isNew) {
+                        branchDiscoveryTimeline.add(new long[]{
+                                System.currentTimeMillis() - startTime,
+                                allUniqueBranches.size()
+                        });
+                }
 
                 // Only contribute distance if the opposite side is not yet covered
                 if (!allUniqueBranches.contains(oppositeBranchId)) {
@@ -288,6 +309,57 @@ public class FuzzingLab {
                 }
                 System.out.println("=================================================");
                 System.out.flush();
+
+                // --- Write CSV to logs/task1/<Problem>_<mode>_seed<N>.csv ---
+                writeCsv(fuzzerName);
+        }
+
+        static void writeCsv(String fuzzerName) {
+                if (csvWritten) return;          // prevent double-write from shutdown hook
+                csvWritten = true;
+
+                // Determine problem name from the tracker
+                String problemName = "unknown";
+                try {
+                        if (DistanceTracker.problem != null) {
+                                problemName = DistanceTracker.problem.getClass().getSimpleName();
+                        }
+                } catch (Exception ignored) { }
+
+                // Map fuzzer name to a short mode string
+                String mode = "HillClimber".equals(fuzzerName) ? "hillclimber" : "random";
+
+                File dir = new File("logs/task1");
+                dir.mkdirs();
+                File f = new File(dir, problemName + "_" + mode + "_seed" + seed + ".csv");
+
+                // Merge error and branch timelines into a single sorted sequence
+                // Each event row: {time_ms, errors, branches}
+                List<long[]> events = new ArrayList<>();
+                for (long[] e : errorDiscoveryTimeline)    events.add(new long[]{e[0],  e[1], -1});
+                for (long[] b : branchDiscoveryTimeline)   events.add(new long[]{b[0], -1, b[1]});
+                events.sort(Comparator.comparingLong(x -> x[0]));
+
+                long finalTime = System.currentTimeMillis() - startTime;
+
+                try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
+                        pw.println("time_ms,unique_errors,unique_branches");
+                        pw.println("0,0,0");
+
+                        long curErrors = 0, curBranches = 0;
+                        for (long[] ev : events) {
+                                if (ev[1] >= 0) curErrors   = ev[1];
+                                if (ev[2] >= 0) curBranches = ev[2];
+                                pw.println(ev[0] + "," + curErrors + "," + curBranches);
+                        }
+                        // Final state
+                        pw.println(finalTime + "," + triggeredErrors.size() + "," + allUniqueBranches.size());
+                } catch (IOException e) {
+                        System.err.println("[writeCsv] failed to write " + f + ": " + e.getMessage());
+                }
+                System.out.println("Wrote " + f.getPath()
+                        + " (errors=" + triggeredErrors.size()
+                        + " branches=" + allUniqueBranches.size() + ")");
         }
 
         static void runHillClimber() {
@@ -349,6 +421,15 @@ public class FuzzingLab {
         }
 
         static void run() {
+                // Register a JVM shutdown hook so the CSV is written even when the
+                // process receives SIGTERM from an external timeout wrapper.
+                String shutdownMode = useHillClimber ? "HillClimber" : "SimpleFuzzer";
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                        if (!csvWritten && startTime != 0) {
+                                writeCsv(shutdownMode);
+                        }
+                }));
+
                 if (runExperiments) {
                         runSimpleFuzzer();
 
@@ -357,6 +438,7 @@ public class FuzzingLab {
                         triggeredErrors.clear();
                         errorTraces.clear();
                         errorDiscoveryTimeline.clear();
+                        branchDiscoveryTimeline.clear();
                         totalTraces = 0;
                         bestTrace = null;
                         bestTraceUniqueBranchCount = 0;

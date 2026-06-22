@@ -13,7 +13,10 @@ import com.microsoft.z3.*;
  */
 public class ConcolicExecutionLab {
 
-    static Random r = new Random();
+    // Seed from -Dseed=N for reproducible independent runs
+    static final long seed = Long.parseLong(System.getProperty("seed",
+            String.valueOf(System.nanoTime() % 1_000_000L)));
+    static Random r = new Random(seed);
     static Boolean isFinished = false;
     static List<String> currentTrace;
     static int traceLength = 10;
@@ -28,6 +31,7 @@ public class ConcolicExecutionLab {
 
     private static Set<String> triggeredErrors = new HashSet<>();
     private static List<long[]> errorTimeline = new ArrayList<>(); // {time_ms, unique_error_count}
+    private static List<long[]> branchTimeline = new ArrayList<>(); // {time_ms, unique_branch_count}
     private static long startTime;
     private static final long TIMEOUT_MS = 5 * 60 * 1000L;
 
@@ -144,6 +148,11 @@ public class ConcolicExecutionLab {
         String key = line_nr + ":" + value;
         if (!visitedBranches.contains(key)) {
             visitedBranches.add(key);
+            // Record first time we cover this (line, side) pair
+            branchTimeline.add(new long[]{
+                System.currentTimeMillis() - startTime,
+                visitedBranches.size()
+            });
             currentBranchKey = line_nr + ":" + (!value);
             sat = false;
             PathTracker.solve(opposite, false);
@@ -213,7 +222,14 @@ public class ConcolicExecutionLab {
         return trace;
     }
 
+    static volatile boolean logWritten = false;
+
     static void run() {
+        // Shutdown hook: write CSV even if killed externally by a timeout wrapper
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            if (!logWritten && startTime != 0) writeLog();
+        }));
+
         initialize(PathTracker.inputSymbols);
         PathTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
         // Place here your code to guide your fuzzer with its search using Concolic Execution.
@@ -233,14 +249,18 @@ public class ConcolicExecutionLab {
         writeLog();
         System.exit(0);
     }
-
     static void writeLog() {
+        if (logWritten) return;
+        logWritten = true;
+
         String name = PathTracker.problem != null
                 ? PathTracker.problem.getClass().getSimpleName() : "unknown";
+
+        // --- legacy file (backward-compatible, errors only) ---
         File dir = new File("logs");
         if (!dir.exists()) dir.mkdirs();
-        File f = new File(dir, name + "_concolic.csv");
-        try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
+        File legacy = new File(dir, name + "_concolic.csv");
+        try (PrintWriter pw = new PrintWriter(new FileWriter(legacy))) {
             pw.println("time_ms,unique_errors");
             pw.println("0,0");
             for (long[] row : errorTimeline) {
@@ -250,7 +270,36 @@ public class ConcolicExecutionLab {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Wrote " + f.getPath() + " (" + triggeredErrors.size() + " unique errors)");
+
+        // --- task1 file (errors + branches, seed-based name) ---
+        File dir1 = new File("logs/task1");
+        dir1.mkdirs();
+        File f = new File(dir1, name + "_concolic_seed" + seed + ".csv");
+
+        // Merge error and branch timelines into one sorted sequence
+        List<long[]> events = new ArrayList<>();
+        for (long[] e : errorTimeline)  events.add(new long[]{e[0],  e[1], -1});
+        for (long[] b : branchTimeline) events.add(new long[]{b[0], -1, b[1]});
+        events.sort(Comparator.comparingLong(x -> x[0]));
+
+        long finalTime = System.currentTimeMillis() - startTime;
+        try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
+            pw.println("time_ms,unique_errors,unique_branches");
+            pw.println("0,0,0");
+            long curErrors = 0, curBranches = 0;
+            for (long[] ev : events) {
+                if (ev[1] >= 0) curErrors   = ev[1];
+                if (ev[2] >= 0) curBranches = ev[2];
+                pw.println(ev[0] + "," + curErrors + "," + curBranches);
+            }
+            pw.println(finalTime + "," + triggeredErrors.size() + "," + visitedBranches.size());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Wrote " + f.getPath()
+                + " (errors=" + triggeredErrors.size()
+                + " branches=" + visitedBranches.size() + ")");
     }
 
     public static void output(String out){

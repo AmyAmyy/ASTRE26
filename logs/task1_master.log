@@ -1,0 +1,10 @@
+
+===========================================================
+ Problem 11
+===========================================================
+  [instrument --type=fuzzing] Problem11
+  [compile] Problem11
+  [skip] logs/task1/Problem11_random_seed1.csv already exists
+  [run] random seed=2  →  logs/task1/Problem11_random_seed2.csv
+    exit=0  log=logs/task1/Problem11_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem11_random_seed3.csv

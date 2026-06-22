@@ -1,0 +1,76 @@
+[1;92m[+] [0mEnabled environment variable AFL_SKIP_CPUFREQ with value 1[0m
+[1;92m[+] [0mEnabled environment variable AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES with value 1[0m
+[1;94m[*] [0mSpinning up the fork server...[0m
+[1;92m[+] [0mAll right - new fork server model v1 is up.[0m
+[1;94m[*] [0mTarget map size: 1714[0m
+[0;36mafl-fuzz++4.40c[0m based on afl by Michal Zalewski and a large online community
+[1;92m[+] [0mAFL++ is maintained by Marc "van Hauser" Heuse, Dominik Maier, Andrea Fioraldi and Heiko "hexcoder" Eißfeldt[0m
+[1;92m[+] [0mAFL++ is open source, get it at https://github.com/AFLplusplus/AFLplusplus[0m
+[1;92m[+] [0mNOTE: AFL++ >= v3 has changed defaults and behaviours - see README.md[0m
+[1;92m[+] [0mRunning with fixed seed: 1[0m
+[1;92m[+] [0mNo -M/-S set, autoconfiguring for "-S default"[0m
+[1;94m[*] [0mGetting to work...[0m
+[1;92m[+] [0mUsing exploration-based constant power schedule (EXPLORE)[0m
+[1;92m[+] [0mEnabled testcache with 50 MB[0m
+[1;92m[+] [0mGenerating fuzz data with a length of min=1 max=1048576[0m
+[1;92m[+] [0mFrameShift status: enabled (10% overhead configured)[0m
+[1;92m[+] [0mLooks like we're not running on a tty, so I'll be a bit less verbose.[0m
+[1;92m[+] [0mYou have 10 CPU cores and 70 runnable tasks (utilization: 700%).[0m
+[1;93m[!] [1;97mWARNING: [0mSystem under apparent load, performance may be spotty.[0m
+[1;94m[*] [0mSetting up output directories...[0m
+[1;94m[*] [0mValidating target binary...[0m
+[1;94m[*] [0mScanning './afl/11/tests'...[0m
+[1;94m[*] [0mCreating hard links for all input files...[0m
+[1;92m[+] [0mLoaded a total of 10 seeds.[0m
+[1;94m[*] [0mNo auto-generated dictionary tokens to reuse.[0m
+[1;94m[*] [0mAttempting dry run with 'id:000000,time:0,execs:0,orig:1.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 2ae302b5b62bcc4e
+[0m[1;94m[*] [0mAttempting dry run with 'id:000001,time:0,execs:0,orig:10.txt'...[0m
+[1;90m    len = 3, map size = 317, exec speed = 999 us, hash = 2ae302b5b62bcc4e
+[0m[1;93m[!] [1;97mWARNING: [0mNo new instrumentation output, test case may be useless.[0m
+[1;94m[*] [0mAttempting dry run with 'id:000002,time:0,execs:0,orig:2.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 2ed6f6e751d19118
+[0m[1;94m[*] [0mAttempting dry run with 'id:000003,time:0,execs:0,orig:3.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 2ae302b5b62bcc4e
+[0m[1;93m[!] [1;97mWARNING: [0mNo new instrumentation output, test case may be useless.[0m
+[1;94m[*] [0mAttempting dry run with 'id:000004,time:0,execs:0,orig:4.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 2ae302b5b62bcc4e
+[0m[1;93m[!] [1;97mWARNING: [0mNo new instrumentation output, test case may be useless.[0m
+[1;94m[*] [0mAttempting dry run with 'id:000005,time:0,execs:0,orig:5.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 97ff22e18af53cdf
+[0m[1;94m[*] [0mAttempting dry run with 'id:000006,time:0,execs:0,orig:6.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = dabe7463f6bb3abf
+[0m[1;94m[*] [0mAttempting dry run with 'id:000007,time:0,execs:0,orig:7.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 2ae302b5b62bcc4e
+[0m[1;93m[!] [1;97mWARNING: [0mNo new instrumentation output, test case may be useless.[0m
+[1;94m[*] [0mAttempting dry run with 'id:000008,time:0,execs:0,orig:8.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 2ae302b5b62bcc4e
+[0m[1;93m[!] [1;97mWARNING: [0mNo new instrumentation output, test case may be useless.[0m
+[1;94m[*] [0mAttempting dry run with 'id:000009,time:0,execs:0,orig:9.txt'...[0m
+[1;90m    len = 2, map size = 317, exec speed = 999 us, hash = 2ae302b5b62bcc4e
+[0m[1;93m[!] [1;97mWARNING: [0mNo new instrumentation output, test case may be useless.[0m
+[1;92m[+] [0mAll test cases processed.[0m
+[1;93m[!] [1;97mWARNING: [0m[1;91mSome test cases look useless. Consider using a smaller set.[0m
+[1;92m[+] [0mHere are some useful stats:
+
+[1;90m    Test case count : [0m3 favored, 0 variable, 6 ignored, 10 total
+[1;90m       Bitmap range : [0m317 to 317 bits (average: 317.00 bits)
+[1;90m        Exec timing : [0m999 to 999 us (average: 999 us)
+[0m
+[1;94m[*] [0mNo -t option specified, so I'll use an exec timeout of 20 ms.[0m
+[1;92m[+] [0mAll set and ready to roll![0m
+[1;94m[*] [0mFuzzing test case #2 (10 total, 0 crashes saved[0m, state: started :-), mode=explore, perf_score=100, weight=1, favorite=1, was_fuzzed=0, exec_us=999, hits=0, map=317, ascii=0, run_time=0:00:00:00, cvg=20.13%) FS (t=0:00:00:00 (0.00%), st=0, avg=0 ms, found=0/0)...[0m
+[1;94m[*] [0mFuzzing test case #5 (13 total, 0 crashes saved[0m, state: started :-), mode=explore, perf_score=100, weight=1, favorite=1, was_fuzzed=0, exec_us=999, hits=0, map=317, ascii=0, run_time=0:00:00:01, cvg=22.11%) FS (t=0:00:00:00 (9.32%), st=2, avg=100 ms, found=0/1)...[0m
+[1;94m[*] [0mFuzzing test case #6 (15 total, 0 crashes saved[0m, state: started :-), mode=explore, perf_score=100, weight=1, favorite=1, was_fuzzed=0, exec_us=999, hits=0, map=317, ascii=0, run_time=0:00:00:02, cvg=25.03%) FS (t=0:00:00:00 (5.16%), st=4, avg=54 ms, found=0/2)...[0m
+[1;94m[*] [0mFuzzing test case #11 (15 total, 0 crashes saved[0m, state: started :-), mode=explore, perf_score=25, weight=3, favorite=1, was_fuzzed=0, exec_us=19, hits=0, map=3, ascii=0, run_time=0:00:00:02, cvg=25.03%) FS (t=0:00:00:00 (5.08%), st=6, avg=39 ms, found=0/3)...[0m
+[1;94m[*] [0mFuzzing test case #10 (15 total, 0 crashes saved[0m, state: started :-), mode=explore, perf_score=25, weight=2, favorite=1, was_fuzzed=0, exec_us=19, hits=0, map=2, ascii=0, run_time=0:00:00:02, cvg=25.03%) FS (t=0:00:00:00 (5.16%), st=8, avg=30 ms, found=0/4)...[0m
+[1;94m[*] [0mFuzzing test case #12 (15 total, 0 crashes saved[0m, state: started :-), mode=explore, perf_score=100, weight=2, favorite=1, was_fuzzed=0, exec_us=19, hits=0, map=351, ascii=0, run_time=0:00:00:02, cvg=25.03%) FS (t=0:00:00:00 (5.15%), st=10, avg=25 ms, found=0/5)...[0m
+[?25h[1;91m
+
++++ Testing aborted programmatically +++
+[0m[1;93m[!] [0mTime limit was reached
+[1;94m[*] [0mStatistics: 25 new corpus items found, 30.11% coverage achieved, 3 crashes saved, 0 timeouts saved, total runtime 0 days, 0 hrs, 0 min, 15 sec[0m
+[1;94m[*] [0mWriting logs/task2/Problem11_afl_seed1/default/fastresume.bin ...[0m
+[1;92m[+] [0mfastresume.bin successfully written with 12907 bytes.[0m
+[1;92m[+] [0mWe're done here. Have a nice day!
+[0m

@@ -1,0 +1,26 @@
+
+======================================================================
+  Unique Reachability Errors  –  Mean ± Std (5 independent runs per cell)
+======================================================================
+               Random Fuzzer       Hill Climber Concolic Execution
+Problem                                                           
+Problem11  14.5 ± 0.7  (n=2)  13.0 ± 0.0  (n=2)         1.0  (n=1)
+Problem12                  —                  —                  —
+Problem13                  —                  —                  —
+Problem14                  —                  —                  —
+Problem15                  —                  —                  —
+Problem17                  —                  —                  —
+
+
+======================================================================
+  Unique Branches Covered     –  Mean ± Std (5 independent runs per cell)
+======================================================================
+                Random Fuzzer        Hill Climber Concolic Execution
+Problem                                                             
+Problem11  280.5 ± 0.7  (n=2)  273.5 ± 3.5  (n=2)       131.0  (n=1)
+Problem12                   —                   —                  —
+Problem13                   —                   —                  —
+Problem14                   —                   —                  —
+Problem15                   —                   —                  —
+Problem17                   —                   —                  —
+

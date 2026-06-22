@@ -1,0 +1,19 @@
+Problem,Technique,Runs,Mean,Std,Min,Max
+Problem11,Random Fuzzer,2,280.5,0.71,280,281
+Problem11,Hill Climber,2,273.5,3.54,271,276
+Problem11,Concolic Execution,1,131.0,,131,131
+Problem12,Random Fuzzer,0,,,,
+Problem12,Hill Climber,0,,,,
+Problem12,Concolic Execution,0,,,,
+Problem13,Random Fuzzer,0,,,,
+Problem13,Hill Climber,0,,,,
+Problem13,Concolic Execution,0,,,,
+Problem14,Random Fuzzer,0,,,,
+Problem14,Hill Climber,0,,,,
+Problem14,Concolic Execution,0,,,,
+Problem15,Random Fuzzer,0,,,,
+Problem15,Hill Climber,0,,,,
+Problem15,Concolic Execution,0,,,,
+Problem17,Random Fuzzer,0,,,,
+Problem17,Hill Climber,0,,,,
+Problem17,Concolic Execution,0,,,,
