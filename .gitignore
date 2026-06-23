@@ -42,3 +42,5 @@ afl/**/findings/
 afl/**/*.dSYM/
 
 klee/*/klee-out/
+
+logs/task1

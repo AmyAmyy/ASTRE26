@@ -2,9 +2,325 @@
 ===========================================================
  Problem 11
 ===========================================================
-  [instrument --type=fuzzing] Problem11
-  [compile] Problem11
-  [skip] logs/task1/Problem11_random_seed1.csv already exists
+  [compile --type=fuzzing] Problem11
+  [run] random seed=1  →  logs/task1/Problem11_random_seed1.csv
+    exit=0  log=logs/task1/Problem11_random_seed1.log
   [run] random seed=2  →  logs/task1/Problem11_random_seed2.csv
     exit=0  log=logs/task1/Problem11_random_seed2.log
   [run] random seed=3  →  logs/task1/Problem11_random_seed3.csv
+    exit=0  log=logs/task1/Problem11_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem11_random_seed4.csv
+    exit=0  log=logs/task1/Problem11_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem11_random_seed5.csv
+    exit=0  log=logs/task1/Problem11_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem11_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem11_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem11_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem11_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem11_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem11_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem11_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem11_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem11_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem11_hillclimber_seed5.log
+  [compile --type=concolic] Problem11
+  [run] concolic seed=1  →  logs/task1/Problem11_concolic_seed1.csv
+    exit=0  log=logs/task1/Problem11_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem11_concolic_seed2.csv
+    exit=0  log=logs/task1/Problem11_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem11_concolic_seed3.csv
+    exit=0  log=logs/task1/Problem11_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem11_concolic_seed4.csv
+    exit=0  log=logs/task1/Problem11_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem11_concolic_seed5.csv
+    exit=0  log=logs/task1/Problem11_concolic_seed5.log
+
+===========================================================
+ Problem 12
+===========================================================
+  [ready] Problem12  fuzzing
+  [run] random seed=1  →  logs/task1/Problem12_random_seed1.csv
+    exit=0  log=logs/task1/Problem12_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem12_random_seed2.csv
+    exit=0  log=logs/task1/Problem12_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem12_random_seed3.csv
+    exit=0  log=logs/task1/Problem12_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem12_random_seed4.csv
+    exit=0  log=logs/task1/Problem12_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem12_random_seed5.csv
+    exit=0  log=logs/task1/Problem12_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem12_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem12_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem12_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem12_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem12_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem12_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem12_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem12_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem12_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem12_hillclimber_seed5.log
+  [ready] Problem12  concolic
+  [run] concolic seed=1  →  logs/task1/Problem12_concolic_seed1.csv
+    exit=0  log=logs/task1/Problem12_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem12_concolic_seed2.csv
+    exit=0  log=logs/task1/Problem12_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem12_concolic_seed3.csv
+    exit=0  log=logs/task1/Problem12_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem12_concolic_seed4.csv
+    exit=0  log=logs/task1/Problem12_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem12_concolic_seed5.csv
+    exit=0  log=logs/task1/Problem12_concolic_seed5.log
+
+===========================================================
+ Problem 13
+===========================================================
+  [ready] Problem13  fuzzing
+  [run] random seed=1  →  logs/task1/Problem13_random_seed1.csv
+    exit=0  log=logs/task1/Problem13_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem13_random_seed2.csv
+    exit=0  log=logs/task1/Problem13_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem13_random_seed3.csv
+    exit=0  log=logs/task1/Problem13_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem13_random_seed4.csv
+    exit=0  log=logs/task1/Problem13_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem13_random_seed5.csv
+    exit=0  log=logs/task1/Problem13_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem13_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem13_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem13_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem13_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem13_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem13_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem13_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem13_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem13_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem13_hillclimber_seed5.log
+  [ready] Problem13  concolic
+  [run] concolic seed=1  →  logs/task1/Problem13_concolic_seed1.csv
+    exit=0  log=logs/task1/Problem13_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem13_concolic_seed2.csv
+    exit=0  log=logs/task1/Problem13_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem13_concolic_seed3.csv
+    exit=0  log=logs/task1/Problem13_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem13_concolic_seed4.csv
+    exit=0  log=logs/task1/Problem13_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem13_concolic_seed5.csv
+    exit=0  log=logs/task1/Problem13_concolic_seed5.log
+
+===========================================================
+ Problem 14
+===========================================================
+  [ready] Problem14  fuzzing
+  [run] random seed=1  →  logs/task1/Problem14_random_seed1.csv
+    exit=0  log=logs/task1/Problem14_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem14_random_seed2.csv
+    exit=0  log=logs/task1/Problem14_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem14_random_seed3.csv
+    exit=0  log=logs/task1/Problem14_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem14_random_seed4.csv
+    exit=0  log=logs/task1/Problem14_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem14_random_seed5.csv
+    exit=0  log=logs/task1/Problem14_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem14_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem14_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem14_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem14_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem14_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem14_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem14_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem14_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem14_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem14_hillclimber_seed5.log
+  [ready] Problem14  concolic
+  [run] concolic seed=1  →  logs/task1/Problem14_concolic_seed1.csv
+    exit=0  log=logs/task1/Problem14_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem14_concolic_seed2.csv
+    exit=0  log=logs/task1/Problem14_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem14_concolic_seed3.csv
+    exit=0  log=logs/task1/Problem14_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem14_concolic_seed4.csv
+    exit=0  log=logs/task1/Problem14_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem14_concolic_seed5.csv
+    exit=0  log=logs/task1/Problem14_concolic_seed5.log
+
+===========================================================
+ Problem 15
+===========================================================
+  [ready] Problem15  fuzzing
+  [run] random seed=1  →  logs/task1/Problem15_random_seed1.csv
+    exit=0  log=logs/task1/Problem15_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem15_random_seed2.csv
+    exit=0  log=logs/task1/Problem15_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem15_random_seed3.csv
+    exit=0  log=logs/task1/Problem15_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem15_random_seed4.csv
+    exit=0  log=logs/task1/Problem15_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem15_random_seed5.csv
+    exit=0  log=logs/task1/Problem15_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem15_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem15_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem15_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem15_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem15_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem15_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem15_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem15_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem15_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem15_hillclimber_seed5.log
+  [ready] Problem15  concolic
+  [run] concolic seed=1  →  logs/task1/Problem15_concolic_seed1.csv
+    exit=0  log=logs/task1/Problem15_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem15_concolic_seed2.csv
+    exit=0  log=logs/task1/Problem15_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem15_concolic_seed3.csv
+    exit=0  log=logs/task1/Problem15_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem15_concolic_seed4.csv
+    exit=0  log=logs/task1/Problem15_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem15_concolic_seed5.csv
+    exit=0  log=logs/task1/Problem15_concolic_seed5.log
+
+===========================================================
+ Problem 16
+===========================================================
+  [ready] Problem16  fuzzing
+  [run] random seed=1  →  logs/task1/Problem16_random_seed1.csv
+    exit=0  log=logs/task1/Problem16_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem16_random_seed2.csv
+    exit=0  log=logs/task1/Problem16_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem16_random_seed3.csv
+    exit=0  log=logs/task1/Problem16_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem16_random_seed4.csv
+    exit=0  log=logs/task1/Problem16_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem16_random_seed5.csv
+    exit=0  log=logs/task1/Problem16_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem16_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem16_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem16_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem16_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem16_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem16_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem16_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem16_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem16_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem16_hillclimber_seed5.log
+  [compile --type=concolic] Problem16
+instrumented/concolic/Problem16.java:99656: error: code too large
+    private void calculateOutputm207(String input, MyVar my_input) {
+                 ^
+instrumented/concolic/Problem16.java:151591: error: code too large
+    private void calculateOutputm313(String input, MyVar my_input) {
+                 ^
+2 errors
+  [ERROR] compile failed
+  [ERROR] concolic setup failed for Problem16 — skipping concolic runs
+
+===========================================================
+ Problem 17
+===========================================================
+  [ready] Problem17  fuzzing
+  [run] random seed=1  →  logs/task1/Problem17_random_seed1.csv
+    exit=0  log=logs/task1/Problem17_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem17_random_seed2.csv
+    exit=0  log=logs/task1/Problem17_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem17_random_seed3.csv
+    exit=0  log=logs/task1/Problem17_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem17_random_seed4.csv
+    exit=0  log=logs/task1/Problem17_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem17_random_seed5.csv
+    exit=0  log=logs/task1/Problem17_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem17_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem17_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem17_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem17_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem17_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem17_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem17_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem17_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem17_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem17_hillclimber_seed5.log
+  [ready] Problem17  concolic
+  [run] concolic seed=1  →  logs/task1/Problem17_concolic_seed1.csv
+    exit=0  log=logs/task1/Problem17_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem17_concolic_seed2.csv
+    exit=0  log=logs/task1/Problem17_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem17_concolic_seed3.csv
+    exit=0  log=logs/task1/Problem17_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem17_concolic_seed4.csv
+    exit=0  log=logs/task1/Problem17_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem17_concolic_seed5.csv
+    exit=0  log=logs/task1/Problem17_concolic_seed5.log
+
+===========================================================
+ Problem 18
+===========================================================
+  [ready] Problem18  fuzzing
+  [run] random seed=1  →  logs/task1/Problem18_random_seed1.csv
+    exit=0  log=logs/task1/Problem18_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem18_random_seed2.csv
+    exit=0  log=logs/task1/Problem18_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem18_random_seed3.csv
+    exit=0  log=logs/task1/Problem18_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem18_random_seed4.csv
+    exit=0  log=logs/task1/Problem18_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem18_random_seed5.csv
+    exit=0  log=logs/task1/Problem18_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem18_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem18_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem18_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem18_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem18_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem18_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem18_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem18_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem18_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem18_hillclimber_seed5.log
+  [ready] Problem18  concolic
+  [run] concolic seed=1  →  logs/task1/Problem18_concolic_seed1.csv
+    exit=0  log=logs/task1/Problem18_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem18_concolic_seed2.csv
+    exit=0  log=logs/task1/Problem18_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem18_concolic_seed3.csv
+    exit=0  log=logs/task1/Problem18_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem18_concolic_seed4.csv
+    exit=0  log=logs/task1/Problem18_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem18_concolic_seed5.csv
+    exit=0  log=logs/task1/Problem18_concolic_seed5.log
+
+===========================================================
+ Problem 19
+===========================================================
+  [ready] Problem19  fuzzing
+  [run] random seed=1  →  logs/task1/Problem19_random_seed1.csv
+    exit=0  log=logs/task1/Problem19_random_seed1.log
+  [run] random seed=2  →  logs/task1/Problem19_random_seed2.csv
+    exit=0  log=logs/task1/Problem19_random_seed2.log
+  [run] random seed=3  →  logs/task1/Problem19_random_seed3.csv
+    exit=0  log=logs/task1/Problem19_random_seed3.log
+  [run] random seed=4  →  logs/task1/Problem19_random_seed4.csv
+    exit=0  log=logs/task1/Problem19_random_seed4.log
+  [run] random seed=5  →  logs/task1/Problem19_random_seed5.csv
+    exit=0  log=logs/task1/Problem19_random_seed5.log
+  [run] hillclimber seed=1  →  logs/task1/Problem19_hillclimber_seed1.csv
+    exit=0  log=logs/task1/Problem19_hillclimber_seed1.log
+  [run] hillclimber seed=2  →  logs/task1/Problem19_hillclimber_seed2.csv
+    exit=0  log=logs/task1/Problem19_hillclimber_seed2.log
+  [run] hillclimber seed=3  →  logs/task1/Problem19_hillclimber_seed3.csv
+    exit=0  log=logs/task1/Problem19_hillclimber_seed3.log
+  [run] hillclimber seed=4  →  logs/task1/Problem19_hillclimber_seed4.csv
+    exit=0  log=logs/task1/Problem19_hillclimber_seed4.log
+  [run] hillclimber seed=5  →  logs/task1/Problem19_hillclimber_seed5.csv
+    exit=0  log=logs/task1/Problem19_hillclimber_seed5.log
+  [compile --type=concolic] Problem19
+  [run] concolic seed=1  →  logs/task1/Problem19_concolic_seed1.csv
+    exit=1  log=logs/task1/Problem19_concolic_seed1.log
+  [run] concolic seed=2  →  logs/task1/Problem19_concolic_seed2.csv
+    exit=1  log=logs/task1/Problem19_concolic_seed2.log
+  [run] concolic seed=3  →  logs/task1/Problem19_concolic_seed3.csv
+    exit=1  log=logs/task1/Problem19_concolic_seed3.log
+  [run] concolic seed=4  →  logs/task1/Problem19_concolic_seed4.csv
+    exit=1  log=logs/task1/Problem19_concolic_seed4.log
+  [run] concolic seed=5  →  logs/task1/Problem19_concolic_seed5.csv
+    exit=1  log=logs/task1/Problem19_concolic_seed5.log
+
+Done. CSVs in logs/task1/
+Run: python3 scripts/analyze_task1.py   to generate plots and tables.
