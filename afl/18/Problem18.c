@@ -3,7 +3,10 @@
 #include <math.h>
 #include <stdlib.h>
 
-    extern void __VERIFIER_error(int);
+    void __VERIFIER_error(int i) {
+    fprintf(stderr, "error_%d ", i);
+    assert(0);
+}
 
 	// inputs
 	int inputs[] = {13,2,6,1,14,16,9,10,19,20,7,5,8,11,3,4,17,18,12,15};
@@ -127840,7 +127843,8 @@ int main()
     {
         // read input
         int input;
-        scanf("%d", &input);        
+        int ret = scanf("%d", &input);
+        if (ret != 1) return 0;
         // operate eca engine
         if((input != 13) && (input != 2) && (input != 6) && (input != 1) && (input != 14) && (input != 16) && (input != 9) && (input != 10) && (input != 19) && (input != 20) && (input != 7) && (input != 5) && (input != 8) && (input != 11) && (input != 3) && (input != 4) && (input != 17) && (input != 18) && (input != 12) && (input != 15))
           return -2;

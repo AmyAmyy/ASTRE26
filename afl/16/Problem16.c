@@ -3,7 +3,10 @@
 #include <math.h>
 #include <stdlib.h>
 
-    extern void __VERIFIER_error(int);
+    void __VERIFIER_error(int i) {
+    fprintf(stderr, "error_%d ", i);
+    assert(0);
+}
 
 	// inputs
 	int inputs[] = {10,4,6,9,13,11,7,15,3,2,1,5,14,8,12};

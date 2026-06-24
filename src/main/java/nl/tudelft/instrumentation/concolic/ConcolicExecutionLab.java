@@ -312,7 +312,6 @@ public class ConcolicExecutionLab {
             long t = System.currentTimeMillis() - startTime;
             errorTimeline.add(new long[]{t, triggeredErrors.size()});
             System.out.printf("[%.1fs] %s (total %d)%n", t/1000.0, err, triggeredErrors.size());
-            writeLog();
         }
     }
 

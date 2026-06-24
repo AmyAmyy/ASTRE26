@@ -1,0 +1,18 @@
+[info] AFL compiler: afl-clang-fast
+[info] afl-fuzz:     /opt/homebrew/bin/afl-fuzz
+[info] added Xcode toolchain to PATH: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+
+===========================================================
+ Problem 11
+===========================================================
+  [compile afl ] Problem11  (cached)
+  [compile plain] Problem11  (cached)
+  [run] afl seed=1  (300s)  →  logs/task2/Problem11_afl_seed1
+    exit=0  log=logs/task2/Problem11_afl_seed1.log
+  [process] extracting errors and coverage  →  logs/task2/Problem11_afl_seed1.csv
+[OK] logs/task2/Problem11_afl_seed1.csv  (48 rows, 8 errors, 659 branches)
+  [run] afl seed=2  (300s)  →  logs/task2/Problem11_afl_seed2
+    exit=0  log=logs/task2/Problem11_afl_seed2.log
+  [process] extracting errors and coverage  →  logs/task2/Problem11_afl_seed2.csv
+[OK] logs/task2/Problem11_afl_seed2.csv  (48 rows, 18 errors, 1096 branches)
+  [run] afl seed=3  (300s)  →  logs/task2/Problem11_afl_seed3

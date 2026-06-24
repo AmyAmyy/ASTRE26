@@ -14,6 +14,15 @@ Problem14,Concolic Execution,5,152.6,8.88,141,166
 Problem15,Random Fuzzer,5,2116.0,0.0,2116,2116
 Problem15,Hill Climber,5,2011.2,61.15,1908,2064
 Problem15,Concolic Execution,5,804.6,177.15,529,989
+Problem16,Random Fuzzer,5,2171.4,14.64,2151,2189
+Problem16,Hill Climber,5,2137.0,66.26,2028,2193
+Problem16,Concolic Execution,0,,,,
 Problem17,Random Fuzzer,5,4995.6,10.9,4982,5010
 Problem17,Hill Climber,5,4546.8,154.12,4286,4667
 Problem17,Concolic Execution,5,215.2,70.81,156,325
+Problem18,Random Fuzzer,5,2986.0,88.27,2850,3064
+Problem18,Hill Climber,5,3031.6,457.22,2315,3497
+Problem18,Concolic Execution,5,1343.0,428.24,893,1809
+Problem19,Random Fuzzer,5,5531.8,13.35,5515,5548
+Problem19,Hill Climber,5,3946.0,179.55,3746,4113
+Problem19,Concolic Execution,0,,,,

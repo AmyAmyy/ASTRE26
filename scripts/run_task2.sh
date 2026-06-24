@@ -132,12 +132,13 @@ for N in $PROBLEMS; do
         AFL_SKIP_CPUFREQ=1 \
         AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=1 \
         AFL_MAP_SIZE=65536 \
-        run_with_timeout $((DURATION + 10)) \
+        run_with_timeout $((DURATION + 30)) \
             afl-fuzz \
                 -s "$S" \
                 -i "$TESTS_DIR" \
                 -o "$OUT_DIR" \
                 -V "$DURATION" \
+                -t 5000 \
                 -- "$AFL_BIN" \
             > "$LOG" 2>&1
         echo "    exit=$?  log=$LOG"

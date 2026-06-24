@@ -30,7 +30,8 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 
 # ── Configuration ────────────────────────────────────────────────────────────
-PROBLEMS   = ["Problem11", "Problem12", "Problem13", "Problem14", "Problem15", "Problem17"]
+PROBLEMS   = ["Problem11", "Problem12", "Problem13", "Problem14", "Problem15",
+              "Problem16", "Problem17", "Problem18", "Problem19"]
 TECHNIQUES = ["random", "hillclimber", "concolic"]
 
 COLORS  = {"random": "#1f77b4", "hillclimber": "#ff7f0e", "concolic": "#2ca02c"}
@@ -256,23 +257,23 @@ def main():
     print("\nGenerating convergence plots …")
     make_convergence_figure(
         data, "unique_errors", "Unique Errors",
-        "Task 1 – Error convergence over time (mean ± std, 5 runs)",
+        "Error convergence over time (mean ± std, 5 runs)",
         os.path.join(args.outdir, "task1_errors_convergence.png"), grid)
 
     make_convergence_figure(
         data, "unique_branches", "Unique Branches",
-        "Task 1 – Branch coverage over time (mean ± std, 5 runs)",
+        "Branch coverage over time (mean ± std, 5 runs)",
         os.path.join(args.outdir, "task1_branches_convergence.png"), grid)
 
     print("Generating bar charts …")
     make_bar_chart(
         data, "unique_errors", "Unique Errors (mean ± std)",
-        "Task 1 – Final unique errors per technique",
+        "Final unique errors per technique",
         os.path.join(args.outdir, "task1_errors_bar.png"))
 
     make_bar_chart(
         data, "unique_branches", "Unique Branches (mean ± std)",
-        "Task 1 – Final unique branches per technique",
+        "Final unique branches per technique",
         os.path.join(args.outdir, "task1_branches_bar.png"))
 
     print("Building summary tables …")
@@ -293,7 +294,6 @@ def main():
     with contextlib.redirect_stdout(buf):
         print_table(df_err, "Unique Reachability Errors  –  Mean ± Std (5 independent runs per cell)")
         print_table(df_br,  "Unique Branches Covered     –  Mean ± Std (5 independent runs per cell)")
-
     summary_text = buf.getvalue()
     print(summary_text)
     with open(txt_path, "w") as fh:
