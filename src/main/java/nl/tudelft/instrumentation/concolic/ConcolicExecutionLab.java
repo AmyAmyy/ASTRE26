@@ -35,8 +35,19 @@ public class ConcolicExecutionLab {
     private static long startTime;
     private static final long TIMEOUT_MS = 5 * 60 * 1000L;
 
-    private static List<List<String>> goodSuffixes = new ArrayList<>();
-    private static final int MAX_SUFFIX_POOL = 20;
+    // Coverage-guided concrete seeding.
+    // Pool of ordered trace fragments that previously increased branch coverage.
+    // These fragments are reused (in order) as seeds for future fuzzed traces.
+    private static List<List<String>> goodFragments = new ArrayList<>();
+    private static final int MAX_FRAGMENT_POOL = 30;
+    // Length of the solver-derived prefix of the current trace (the part pulled
+    // from traceQueue, before any padding). Used to attribute new coverage to the
+    // ordered prefix that actually reached it, rather than to the random padding.
+    private static int currentPrefixLength = 0;
+    // Ablation knob: probability of seeding from a good fragment instead of padding
+    // randomly. Set -DreuseProb=0.0 to disable the improvement (= base concolic).
+    private static final double REUSE_PROB =
+            Double.parseDouble(System.getProperty("reuseProb", "0.7"));
 
     static void initialize(String[] inputSymbols){
         // Initialise a random trace from the input symbols of the problem.
@@ -44,15 +55,24 @@ public class ConcolicExecutionLab {
         startTime = System.currentTimeMillis();
     }
 
-    // Call this at the end of each iteration in run(), 
-    // after PathTracker.runNextFuzzedSequence(...)
+    // Called from run() after each fuzzed sequence. If the trace just executed
+    // increased branch coverage, remember the ordered solver-derived prefix (the
+    // part pulled from traceQueue, before padding) as a reusable seed fragment.
+    // The new coverage is reached by that prefix driving the program into a
+    // specific state; the random padding tail did not cause it, so we exclude it
+    // to avoid diluting the pool with symbols that contributed nothing.
     static void recordIfGood(List<String> trace, int branchesBefore) {
-        if (visitedBranches.size() > branchesBefore && trace.size() >= 3) {
-            // Save the second half of the trace as a reusable suffix
-            List<String> suffix = trace.subList(trace.size() / 2, trace.size());
-            goodSuffixes.add(new ArrayList<>(suffix));
-            if (goodSuffixes.size() > MAX_SUFFIX_POOL) {
-                goodSuffixes.remove(0); // keep pool fresh
+        if (visitedBranches.size() > branchesBefore) {
+            // Attribute coverage to the solver-derived prefix only. Fall back to
+            // the whole trace when there was no prefix (purely random trace).
+            int len = currentPrefixLength > 0
+                    ? Math.min(currentPrefixLength, trace.size())
+                    : trace.size();
+            if (len >= 2) {
+                goodFragments.add(new ArrayList<>(trace.subList(0, len)));
+                if (goodFragments.size() > MAX_FRAGMENT_POOL) {
+                    goodFragments.remove(0); // keep pool fresh, bound memory
+                }
             }
         }
     }
@@ -216,19 +236,30 @@ public class ConcolicExecutionLab {
          */
         if (!traceQueue.isEmpty()) {
             List<String> t = new ArrayList<>(traceQueue.pollFirst());
+            // Remember how much of this trace is the solver-derived prefix, so
+            // recordIfGood can credit new coverage to the prefix, not the padding.
+            currentPrefixLength = t.size();
+            // Pad the solver-derived prefix up to traceLength. Rather than padding
+            // with isolated random symbols, splice in an *ordered* fragment that
+            // previously increased coverage (coverage-guided concrete seeding).
             while (t.size() < traceLength) {
-                if (!goodSuffixes.isEmpty() && r.nextDouble() < 0.7) {
-                    // 70% chance: grab a symbol from a random good suffix
-                    List<String> suffix = goodSuffixes.get(r.nextInt(goodSuffixes.size()));
-                    t.add(suffix.get(r.nextInt(suffix.size())));
+                if (!goodFragments.isEmpty() && r.nextDouble() < REUSE_PROB) {
+                    List<String> frag = goodFragments.get(r.nextInt(goodFragments.size()));
+                    // Append from a random offset so we don't always reuse the same
+                    // alignment, but keep the relative order of the symbols intact.
+                    int start = r.nextInt(frag.size());
+                    for (int i = start; i < frag.size() && t.size() < traceLength; i++) {
+                        t.add(frag.get(i));
+                    }
                 } else {
-                    // 30% chance: still allow random to avoid getting stuck
+                    // Keep some random exploration to avoid getting stuck.
                     t.add(inputSymbols[r.nextInt(inputSymbols.length)]);
                 }
             }
             return t;
         }
-        
+
+        currentPrefixLength = 0; // purely random trace, no solver-derived prefix
         return generateRandomTrace(inputSymbols);
     }
 
@@ -260,7 +291,9 @@ public class ConcolicExecutionLab {
             iterations++;
             PathTracker.reset();
             currentTrace = fuzz(PathTracker.inputSymbols);
+            int branchesBefore = visitedBranches.size();
             PathTracker.runNextFuzzedSequence(currentTrace.toArray(new String[0]));
+            recordIfGood(currentTrace, branchesBefore);
 
             if (iterations % 200 == 0) {
                 System.out.printf("[concolic] iter=%d branches=%d sat=%d unsat=%d queued=%d errors=%d%n",
