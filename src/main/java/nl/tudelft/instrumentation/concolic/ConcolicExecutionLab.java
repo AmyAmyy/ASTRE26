@@ -35,10 +35,26 @@ public class ConcolicExecutionLab {
     private static long startTime;
     private static final long TIMEOUT_MS = 5 * 60 * 1000L;
 
+    private static List<List<String>> goodSuffixes = new ArrayList<>();
+    private static final int MAX_SUFFIX_POOL = 20;
+
     static void initialize(String[] inputSymbols){
         // Initialise a random trace from the input symbols of the problem.
         currentTrace = generateRandomTrace(inputSymbols);
         startTime = System.currentTimeMillis();
+    }
+
+    // Call this at the end of each iteration in run(), 
+    // after PathTracker.runNextFuzzedSequence(...)
+    static void recordIfGood(List<String> trace, int branchesBefore) {
+        if (visitedBranches.size() > branchesBefore && trace.size() >= 3) {
+            // Save the second half of the trace as a reusable suffix
+            List<String> suffix = trace.subList(trace.size() / 2, trace.size());
+            goodSuffixes.add(new ArrayList<>(suffix));
+            if (goodSuffixes.size() > MAX_SUFFIX_POOL) {
+                goodSuffixes.remove(0); // keep pool fresh
+            }
+        }
     }
 
     static MyVar createVar(String name, Expr value, Sort s){
@@ -201,7 +217,14 @@ public class ConcolicExecutionLab {
         if (!traceQueue.isEmpty()) {
             List<String> t = new ArrayList<>(traceQueue.pollFirst());
             while (t.size() < traceLength) {
-                t.add(inputSymbols[r.nextInt(inputSymbols.length)]);
+                if (!goodSuffixes.isEmpty() && r.nextDouble() < 0.7) {
+                    // 70% chance: grab a symbol from a random good suffix
+                    List<String> suffix = goodSuffixes.get(r.nextInt(goodSuffixes.size()));
+                    t.add(suffix.get(r.nextInt(suffix.size())));
+                } else {
+                    // 30% chance: still allow random to avoid getting stuck
+                    t.add(inputSymbols[r.nextInt(inputSymbols.length)]);
+                }
             }
             return t;
         }
