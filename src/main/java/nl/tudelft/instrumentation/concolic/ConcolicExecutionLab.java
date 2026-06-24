@@ -239,28 +239,45 @@ public class ConcolicExecutionLab {
             // Remember how much of this trace is the solver-derived prefix, so
             // recordIfGood can credit new coverage to the prefix, not the padding.
             currentPrefixLength = t.size();
-            // Pad the solver-derived prefix up to traceLength. Rather than padding
-            // with isolated random symbols, splice in an *ordered* fragment that
-            // previously increased coverage (coverage-guided concrete seeding).
-            while (t.size() < traceLength) {
-                if (!goodFragments.isEmpty() && r.nextDouble() < REUSE_PROB) {
-                    List<String> frag = goodFragments.get(r.nextInt(goodFragments.size()));
-                    // Append from a random offset so we don't always reuse the same
-                    // alignment, but keep the relative order of the symbols intact.
-                    int start = r.nextInt(frag.size());
-                    for (int i = start; i < frag.size() && t.size() < traceLength; i++) {
-                        t.add(frag.get(i));
-                    }
-                } else {
-                    // Keep some random exploration to avoid getting stuck.
-                    t.add(inputSymbols[r.nextInt(inputSymbols.length)]);
-                }
-            }
+            // Pad the solver-derived prefix up to traceLength using coverage-guided
+            // concrete seeding (ordered fragments that previously reached new
+            // branches), falling back to random exploration.
+            seedPad(t, inputSymbols);
             return t;
         }
 
-        currentPrefixLength = 0; // purely random trace, no solver-derived prefix
-        return generateRandomTrace(inputSymbols);
+        // Empty queue: the solver is not currently producing new satisfiable
+        // prefixes (the steady state once shallow branches are exhausted). Rather
+        // than reverting to a fully random trace, build one from the same
+        // coverage-increasing fragments (when available), so the improvement also
+        // drives this dominant code path. With reuseProb=0 (or an empty pool) this
+        // degrades exactly to the base random trace.
+        currentPrefixLength = 0; // no solver-derived prefix
+        if (goodFragments.isEmpty()) {
+            return generateRandomTrace(inputSymbols);
+        }
+        List<String> t = new ArrayList<>();
+        seedPad(t, inputSymbols);
+        return t;
+    }
+
+    // Pad trace t up to traceLength. With probability REUSE_PROB (and a non-empty
+    // pool) splice in an ordered fragment that previously increased coverage,
+    // appended from a random offset so we vary the alignment while keeping the
+    // relative symbol order intact; otherwise append a single random symbol to
+    // retain exploration. Shared by both fuzz() code paths.
+    static void seedPad(List<String> t, String[] inputSymbols) {
+        while (t.size() < traceLength) {
+            if (!goodFragments.isEmpty() && r.nextDouble() < REUSE_PROB) {
+                List<String> frag = goodFragments.get(r.nextInt(goodFragments.size()));
+                int start = r.nextInt(frag.size());
+                for (int i = start; i < frag.size() && t.size() < traceLength; i++) {
+                    t.add(frag.get(i));
+                }
+            } else {
+                t.add(inputSymbols[r.nextInt(inputSymbols.length)]);
+            }
+        }
     }
 
     /**
@@ -328,7 +345,9 @@ public class ConcolicExecutionLab {
         }
 
         // --- task1 file (errors + branches, seed-based name) ---
-        File dir1 = new File("logs/task1");
+        // Output dir defaults to logs/task1; override with -DoutDir=... (used by
+        // the Task 3 ablation to separate base/improved runs at the same seed).
+        File dir1 = new File(System.getProperty("outDir", "logs/task1"));
         dir1.mkdirs();
         File f = new File(dir1, name + "_concolic_seed" + seed + ".csv");
 

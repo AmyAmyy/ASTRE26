@@ -60,3 +60,59 @@
   [compile afl ] Problem13  (cached)
   [compile plain] Problem13  (cached)
   [run] afl seed=1  (300s)  →  logs/task2/Problem13_afl_seed1
+    exit=0  log=logs/task2/Problem13_afl_seed1.log
+  [process] extracting errors and coverage  →  logs/task2/Problem13_afl_seed1.csv
+[OK] logs/task2/Problem13_afl_seed1.csv  (48 rows, 22 errors, 3026 branches)
+  [run] afl seed=2  (300s)  →  logs/task2/Problem13_afl_seed2
+    exit=0  log=logs/task2/Problem13_afl_seed2.log
+  [process] extracting errors and coverage  →  logs/task2/Problem13_afl_seed2.csv
+[OK] logs/task2/Problem13_afl_seed2.csv  (48 rows, 22 errors, 3037 branches)
+  [run] afl seed=3  (300s)  →  logs/task2/Problem13_afl_seed3
+    exit=0  log=logs/task2/Problem13_afl_seed3.log
+  [process] extracting errors and coverage  →  logs/task2/Problem13_afl_seed3.csv
+[OK] logs/task2/Problem13_afl_seed3.csv  (48 rows, 22 errors, 3011 branches)
+  [run] afl seed=4  (300s)  →  logs/task2/Problem13_afl_seed4
+    exit=0  log=logs/task2/Problem13_afl_seed4.log
+  [process] extracting errors and coverage  →  logs/task2/Problem13_afl_seed4.csv
+[OK] logs/task2/Problem13_afl_seed4.csv  (48 rows, 20 errors, 3007 branches)
+  [run] afl seed=5  (300s)  →  logs/task2/Problem13_afl_seed5
+    exit=0  log=logs/task2/Problem13_afl_seed5.log
+  [process] extracting errors and coverage  →  logs/task2/Problem13_afl_seed5.csv
+[OK] logs/task2/Problem13_afl_seed5.csv  (48 rows, 22 errors, 3016 branches)
+
+===========================================================
+ Problem 14
+===========================================================
+  [compile afl ] Problem14  (cached)
+  [compile plain] Problem14  (cached)
+  [run] afl seed=1  (300s)  →  logs/task2/Problem14_afl_seed1
+    exit=0  log=logs/task2/Problem14_afl_seed1.log
+  [process] extracting errors and coverage  →  logs/task2/Problem14_afl_seed1.csv
+[OK] logs/task2/Problem14_afl_seed1.csv  (48 rows, 13 errors, 3088 branches)
+  [run] afl seed=2  (300s)  →  logs/task2/Problem14_afl_seed2
+    exit=0  log=logs/task2/Problem14_afl_seed2.log
+  [process] extracting errors and coverage  →  logs/task2/Problem14_afl_seed2.csv
+[OK] logs/task2/Problem14_afl_seed2.csv  (48 rows, 13 errors, 2584 branches)
+  [run] afl seed=3  (300s)  →  logs/task2/Problem14_afl_seed3
+    exit=0  log=logs/task2/Problem14_afl_seed3.log
+  [process] extracting errors and coverage  →  logs/task2/Problem14_afl_seed3.csv
+[OK] logs/task2/Problem14_afl_seed3.csv  (48 rows, 13 errors, 3872 branches)
+  [run] afl seed=4  (300s)  →  logs/task2/Problem14_afl_seed4
+    exit=0  log=logs/task2/Problem14_afl_seed4.log
+  [process] extracting errors and coverage  →  logs/task2/Problem14_afl_seed4.csv
+[OK] logs/task2/Problem14_afl_seed4.csv  (48 rows, 13 errors, 2868 branches)
+  [run] afl seed=5  (300s)  →  logs/task2/Problem14_afl_seed5
+    exit=0  log=logs/task2/Problem14_afl_seed5.log
+  [process] extracting errors and coverage  →  logs/task2/Problem14_afl_seed5.csv
+[OK] logs/task2/Problem14_afl_seed5.csv  (48 rows, 14 errors, 2825 branches)
+
+===========================================================
+ Problem 15
+===========================================================
+  [compile afl ] Problem15  (cached)
+  [compile plain] Problem15  (cached)
+  [run] afl seed=1  (300s)  →  logs/task2/Problem15_afl_seed1
+    exit=0  log=logs/task2/Problem15_afl_seed1.log
+  [process] extracting errors and coverage  →  logs/task2/Problem15_afl_seed1.csv
+[OK] logs/task2/Problem15_afl_seed1.csv  (48 rows, 23 errors, 19645 branches)
+  [run] afl seed=2  (300s)  →  logs/task2/Problem15_afl_seed2
