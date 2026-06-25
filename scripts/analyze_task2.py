@@ -20,12 +20,18 @@ CSV filename formats:
   T1  (logs/task1):  Problem<N>_<technique>_seed<S>.csv
 CSV columns (both): time_ms , unique_errors , unique_branches
 
-NOTE on units: for AFL "unique_branches" counts AFL edge coverage, which is not
-the same metric as the Java instrumentation's (line, side) branch pairs used by
-the Task 1 techniques. The branch plots/tables therefore compare *coverage
-growth trends*, not identical units; errors are directly comparable.
+UNITS: AFL's "unique_branches" must be counted in the SAME RERS (line, side)
+branch unit as the Task 1 techniques — not AFL's own edge-coverage map. This is
+done by scripts/remap_afl_branches.py, which replays every AFL input through the
+Task 1 instrumentation and rewrites logs/task2/Problem*_afl_seed*.csv.
+
+  ⚠ Run scripts/remap_afl_branches.py BEFORE this script whenever the AFL runs
+    change, otherwise the AFL branch bars/curves will be stale.
+
+Errors are already a common unit (a crash == a reachability error).
 
 Usage:
+  python3 scripts/remap_afl_branches.py    # first: AFL coverage -> RERS units
   python3 scripts/analyze_task2.py
   python3 scripts/analyze_task2.py --task1dir logs/task1 --task2dir logs/task2 --outdir report
 """

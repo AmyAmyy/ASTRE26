@@ -6,7 +6,7 @@ Problem11,AFL,5,12.2,5.31,8,18
 Problem12,Random Fuzzer,5,2.4,0.89,1,3
 Problem12,Hill Climber,5,12.8,0.45,12,13
 Problem12,Concolic Execution,5,1.6,1.52,0,3
-Problem12,AFL,5,12.6,0.89,12,14
+Problem12,AFL,5,12.8,1.3,12,15
 Problem13,Random Fuzzer,5,22.0,0.0,22,22
 Problem13,Hill Climber,5,22.0,0.0,22,22
 Problem13,Concolic Execution,5,22.0,0.0,22,22
@@ -22,7 +22,7 @@ Problem15,AFL,5,9.2,10.5,1,23
 Problem16,Random Fuzzer,5,10.0,1.0,9,11
 Problem16,Hill Climber,5,9.2,2.17,6,11
 Problem16,Concolic Execution,0,,,,
-Problem16,AFL,5,0.0,0.0,0,0
+Problem16,AFL,0,,,,
 Problem17,Random Fuzzer,5,30.0,0.0,30,30
 Problem17,Hill Climber,5,30.0,0.0,30,30
 Problem17,Concolic Execution,5,30.0,0.0,30,30
