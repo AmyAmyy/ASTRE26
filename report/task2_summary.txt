@@ -16,7 +16,7 @@ Problem19   4.2 ± 1.3  (n=5)   5.8 ± 2.9  (n=5)                  —   5.8 ± 
 
 
 ==========================================================================================
-  Unique Branches / Edges     –  Mean ± Std (5 runs/cell)
+  Unique Branches            –  Mean ± Std (5 runs/cell)
 ==========================================================================================
                   Random Fuzzer           Hill Climber     Concolic Execution                    AFL
 Problem                                                                                             
