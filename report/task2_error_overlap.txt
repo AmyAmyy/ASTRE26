@@ -1,0 +1,305 @@
+
+============================================================
+  Problem11
+============================================================
+  Random      :  18 errors
+  HillClimber :  18 errors
+  Concolic    :  18 errors
+  AFL         :  18 errors
+  Found by ALL active techniques: 18 ([0, 9, 13, 24, 26, 39, 42, 48, 52, 60, 62, 74, 75, 82, 91, 93, 94, 95])
+  Presence matrix (error : techniques):
+    error_0    RHCA
+    error_9    RHCA
+    error_13   RHCA
+    error_24   RHCA
+    error_26   RHCA
+    error_39   RHCA
+    error_42   RHCA
+    error_48   RHCA
+    error_52   RHCA
+    error_60   RHCA
+    error_62   RHCA
+    error_74   RHCA
+    error_75   RHCA
+    error_82   RHCA
+    error_91   RHCA
+    error_93   RHCA
+    error_94   RHCA
+    error_95   RHCA
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem12
+============================================================
+  Random      :   4 errors
+  HillClimber :  13 errors
+  Concolic    :   5 errors
+  AFL         :  16 errors
+  Found by ALL active techniques: 4 ([10, 37, 65, 79])
+  Only AFL: [6, 26, 56]
+  Presence matrix (error : techniques):
+    error_3    ·H·A
+    error_6    ···A
+    error_8    ·H·A
+    error_10   RHCA
+    error_25   ·H·A
+    error_26   ···A
+    error_28   ·H·A
+    error_37   RHCA
+    error_56   ···A
+    error_65   RHCA
+    error_71   ·H·A
+    error_73   ·H·A
+    error_74   ·HCA
+    error_76   ·H·A
+    error_77   ·H·A
+    error_79   RHCA
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem13
+============================================================
+  Random      :  22 errors
+  HillClimber :  22 errors
+  Concolic    :  22 errors
+  AFL         :  22 errors
+  Found by ALL active techniques: 22 ([1, 3, 10, 16, 23, 30, 31, 34, 35, 37, 48, 49, 52, 68, 70, 71, 72, 74, 75, 82, 87, 90])
+  Presence matrix (error : techniques):
+    error_1    RHCA
+    error_3    RHCA
+    error_10   RHCA
+    error_16   RHCA
+    error_23   RHCA
+    error_30   RHCA
+    error_31   RHCA
+    error_34   RHCA
+    error_35   RHCA
+    error_37   RHCA
+    error_48   RHCA
+    error_49   RHCA
+    error_52   RHCA
+    error_68   RHCA
+    error_70   RHCA
+    error_71   RHCA
+    error_72   RHCA
+    error_74   RHCA
+    error_75   RHCA
+    error_82   RHCA
+    error_87   RHCA
+    error_90   RHCA
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem14
+============================================================
+  Random      :  13 errors
+  HillClimber :  15 errors
+  Concolic    :  15 errors
+  AFL         :  14 errors
+  Found by ALL active techniques: 13 ([15, 18, 25, 27, 28, 36, 41, 59, 60, 73, 76, 77, 90])
+  Presence matrix (error : techniques):
+    error_4    ·HC·
+    error_15   RHCA
+    error_18   RHCA
+    error_25   RHCA
+    error_27   RHCA
+    error_28   RHCA
+    error_36   RHCA
+    error_41   RHCA
+    error_59   RHCA
+    error_60   RHCA
+    error_73   RHCA
+    error_76   RHCA
+    error_77   RHCA
+    error_90   RHCA
+    error_97   ·HCA
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem15
+============================================================
+  Random      :  39 errors
+  HillClimber :  39 errors
+  Concolic    :  33 errors
+  AFL         :  29 errors
+  Found by ALL active techniques: 24 ([4, 9, 16, 21, 25, 27, 28, 33, 35, 38, 46, 49, 64, 71, 72, 74, 78, 80, 82, 84, 88, 90, 93, 95])
+  Presence matrix (error : techniques):
+    error_4    RHCA
+    error_7    RH·A
+    error_8    RHC·
+    error_9    RHCA
+    error_12   RH··
+    error_15   RHC·
+    error_16   RHCA
+    error_20   RHC·
+    error_21   RHCA
+    error_24   RHC·
+    error_25   RHCA
+    error_27   RHCA
+    error_28   RHCA
+    error_31   RHC·
+    error_33   RHCA
+    error_34   RH·A
+    error_35   RHCA
+    error_38   RHCA
+    error_44   RHC·
+    error_46   RHCA
+    error_49   RHCA
+    error_54   RHC·
+    error_60   RH·A
+    error_64   RHCA
+    error_71   RHCA
+    error_72   RHCA
+    error_74   RHCA
+    error_76   RH·A
+    error_78   RHCA
+    error_80   RHCA
+    error_82   RHCA
+    error_84   RHCA
+    error_87   RH·A
+    error_88   RHCA
+    error_89   RHC·
+    error_90   RHCA
+    error_93   RHCA
+    error_94   RHC·
+    error_95   RHCA
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem16
+============================================================
+  Random      :  11 errors
+  HillClimber :  11 errors
+  Concolic    :   0 errors
+  AFL         :   0 errors
+  Found by ALL active techniques: 11 ([0, 16, 17, 22, 30, 31, 56, 61, 67, 71, 81])
+  Presence matrix (error : techniques):
+    error_0    RH··
+    error_16   RH··
+    error_17   RH··
+    error_22   RH··
+    error_30   RH··
+    error_31   RH··
+    error_56   RH··
+    error_61   RH··
+    error_67   RH··
+    error_71   RH··
+    error_81   RH··
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem17
+============================================================
+  Random      :  30 errors
+  HillClimber :  30 errors
+  Concolic    :  30 errors
+  AFL         :  27 errors
+  Found by ALL active techniques: 27 ([0, 2, 11, 19, 22, 23, 25, 31, 35, 37, 46, 50, 51, 53, 61, 66, 69, 72, 76, 78, 79, 85, 86, 95, 96, 97, 99])
+  Presence matrix (error : techniques):
+    error_0    RHCA
+    error_2    RHCA
+    error_11   RHCA
+    error_12   RHC·
+    error_19   RHCA
+    error_22   RHCA
+    error_23   RHCA
+    error_25   RHCA
+    error_31   RHCA
+    error_35   RHCA
+    error_37   RHCA
+    error_46   RHCA
+    error_50   RHCA
+    error_51   RHCA
+    error_53   RHCA
+    error_56   RHC·
+    error_61   RHCA
+    error_63   RHC·
+    error_66   RHCA
+    error_69   RHCA
+    error_72   RHCA
+    error_76   RHCA
+    error_78   RHCA
+    error_79   RHCA
+    error_85   RHCA
+    error_86   RHCA
+    error_95   RHCA
+    error_96   RHCA
+    error_97   RHCA
+    error_99   RHCA
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem18
+============================================================
+  Random      :   4 errors
+  HillClimber :  26 errors
+  Concolic    :   0 errors
+  AFL         :  20 errors
+  Found by ALL active techniques: 3 ([0, 53, 65])
+  Only Random: [62]
+  Only HillClimber: [5, 7, 19, 26, 30, 31, 48, 77]
+  Only AFL: [34, 79]
+  Presence matrix (error : techniques):
+    error_0    RH·A
+    error_1    ·H·A
+    error_5    ·H··
+    error_7    ·H··
+    error_12   ·H·A
+    error_14   ·H·A
+    error_19   ·H··
+    error_23   ·H·A
+    error_25   ·H·A
+    error_26   ·H··
+    error_29   ·H·A
+    error_30   ·H··
+    error_31   ·H··
+    error_34   ···A
+    error_48   ·H··
+    error_52   ·H·A
+    error_53   RH·A
+    error_62   R···
+    error_64   ·H·A
+    error_65   RH·A
+    error_66   ·H·A
+    error_71   ·H·A
+    error_72   ·H·A
+    error_73   ·H·A
+    error_77   ·H··
+    error_79   ···A
+    error_83   ·H·A
+    error_86   ·H·A
+    error_91   ·H·A
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  Problem19
+============================================================
+  Random      :  11 errors
+  HillClimber :  12 errors
+  Concolic    :   0 errors
+  AFL         :   9 errors
+  Found by ALL active techniques: 7 ([5, 7, 14, 37, 42, 55, 72])
+  Only Random: [88]
+  Presence matrix (error : techniques):
+    error_5    RH·A
+    error_7    RH·A
+    error_10   ·H·A
+    error_14   RH·A
+    error_15   RH··
+    error_24   RH··
+    error_37   RH·A
+    error_42   RH·A
+    error_45   ·H·A
+    error_55   RH·A
+    error_72   RH·A
+    error_79   RH··
+    error_88   R···
+  (columns: R=Random H=HillClimber C=Concolic A=AFL)
+
+============================================================
+  OVERALL (union over all problems)
+============================================================
+  Random      : 152 (problem,error) pairs,   2 found by no other technique
+  HillClimber : 186 (problem,error) pairs,   8 found by no other technique
+  Concolic    : 123 (problem,error) pairs,   0 found by no other technique
+  AFL         : 155 (problem,error) pairs,   5 found by no other technique

@@ -1,52 +1,49 @@
 #!/bin/bash
 # ============================================================
-# run_task3.sh  –  Task 3 improvement ablation (concolic)
+# run_task3.sh  –  Task 3 improvement ablation / sweep (concolic)
 #
-# Ablation of the coverage-guided concrete seeding improvement
-# in ConcolicExecutionLab. Runs the SAME concolic binary in two
-# configurations on each RERS problem, 5 independent seeds each,
-# 5-minute (300 s) wall-clock budget per run:
+# Runs the SAME concolic binary at one or more reuseProb values on each RERS
+# problem, 5 independent seeds each, 5-minute (300 s) budget per run. reuseProb
+# is the only knob that changes between runs (a clean ablation):
 #
-#   base      -DreuseProb=0.0   seeding disabled (= Task 1 concolic)
-#   improved  -DreuseProb=0.7   seeding enabled  (default)
+#   reuseProb=0.0   coverage-guided seeding disabled (= Task 1 base concolic)
+#   reuseProb=0.7   seeding enabled (the improvement, default value)
 #
-# Both configs use the identical instrumented/concolic build, so
-# the only difference is the reuseProb knob — a clean A/B ablation.
+# So "base" is simply reuseProb=0.0 and "improved" is reuseProb=0.7; the default
+# REUSE_PROBS below runs both, giving the required base-vs-improved comparison.
+# Add more values to get the sensitivity sweep for the report.
 #
-# Each run writes its own CSV directly (no post-hoc moving) via the
-# -DoutDir property, into a config-specific directory:
-#   logs/task3/<config>/Problem<N>_concolic_seed<S>.csv
+# Each run writes its CSV directly via the -DoutDir property, into a
+# per-probability directory:
+#   logs/task3/reuse<P>/Problem<N>_concolic_seed<S>.csv
 # with columns:  time_ms , unique_errors , unique_branches
 #
-# Uses the same problem set as Task 1. Pre-instrumented files are
-# expected at instrumented/concolic/ (run scripts/preinstrument.sh
-# first); falls back to instrumenting from source otherwise.
+# Pre-instrumented files are expected at instrumented/concolic/ (run
+# scripts/preinstrument.sh first); falls back to instrumenting from source.
 #
 # Usage:
-#   bash scripts/run_task3.sh
-#   PROBLEMS="11 12" bash scripts/run_task3.sh        # subset
-#   SEEDS="1 2 3" bash scripts/run_task3.sh           # custom seeds
-#   CONFIGS="improved" bash scripts/run_task3.sh      # one config only
-#   REUSE_PROB_IMPROVED=0.5 bash scripts/run_task3.sh # tune improved knob
+#   bash scripts/run_task3.sh                              # base + improved (0.0, 0.7)
+#   REUSE_PROBS="0.0 0.3 0.5 0.7 0.9" bash scripts/run_task3.sh   # full sweep
+#   PROBLEMS="15 17" bash scripts/run_task3.sh             # subset of problems
+#   SEEDS="1 2 3" bash scripts/run_task3.sh                # custom seeds
+#
+# Note: a full sweep is expensive. 5 probs x 9 problems x 5 seeds x 5 min ~= 31h,
+# so consider limiting PROBLEMS to a few representatives for the sweep.
 # ============================================================
 set -u
 
 # Same problems as Task 1 (see scripts/run_task1.sh).
 PROBLEMS=${PROBLEMS:-"11 12 13 14 15 16 17 18 19"}
 SEEDS=${SEEDS:-"1 2 3 4 5"}
-CONFIGS=${CONFIGS:-"base improved"}
+REUSE_PROBS=${REUSE_PROBS:-"0.0 0.5 0.7 0.9"}
 DATASET=${DATASET:-"./SeqReachabilityRers2020"}
 Z3_LIB=${Z3_LIB:-"."}              # folder containing libz3java.{dylib,so}
-
-# reuseProb value per config (base disables the improvement entirely)
-REUSE_PROB_BASE=${REUSE_PROB_BASE:-"0.0"}
-REUSE_PROB_IMPROVED=${REUSE_PROB_IMPROVED:-"0.7"}
 
 CP_CONC="target/aistr.jar:lib/com.microsoft.z3.jar:instrumented/concolic:."
 TIMEOUT_SECS=310                   # hard kill after 310 s (budget is 300 s inside JVM)
 
 mkdir -p instrumented/concolic
-for C in $CONFIGS; do mkdir -p "logs/task3/$C"; done
+for P in $REUSE_PROBS; do mkdir -p "logs/task3/reuse${P}"; done
 
 # ── Build once ──────────────────────────────────────────────
 if [ ! -f target/aistr.jar ]; then
@@ -103,14 +100,6 @@ ensure_ready() {
     return 0
 }
 
-reuse_prob_for() {
-    case "$1" in
-        base)     echo "$REUSE_PROB_BASE" ;;
-        improved) echo "$REUSE_PROB_IMPROVED" ;;
-        *)        echo "$REUSE_PROB_IMPROVED" ;;   # unknown config -> improved default
-    esac
-}
-
 # ════════════════════════════════════════════════════════════
 # Main loop
 # ════════════════════════════════════════════════════════════
@@ -125,9 +114,8 @@ for N in $PROBLEMS; do
         continue
     fi
 
-    for CFG in $CONFIGS; do
-        RP=$(reuse_prob_for "$CFG")
-        OUTDIR="logs/task3/${CFG}"
+    for RP in $REUSE_PROBS; do
+        OUTDIR="logs/task3/reuse${RP}"
 
         for S in $SEEDS; do
             OUT="$OUTDIR/Problem${N}_concolic_seed${S}.csv"
@@ -137,7 +125,7 @@ for N in $PROBLEMS; do
                 continue
             fi
 
-            echo "  [run] $CFG (reuseProb=$RP) seed=$S  →  $OUT"
+            echo "  [run] reuseProb=$RP seed=$S  →  $OUT"
             run_with_timeout "$TIMEOUT_SECS" \
                 java -Xmx4g \
                     -Djava.library.path="$Z3_LIB" \
@@ -159,7 +147,6 @@ for N in $PROBLEMS; do
 done
 
 echo ""
-echo "Done. Task 3 ablation CSVs in logs/task3/<config>/"
-echo "  base    = reuseProb=$REUSE_PROB_BASE  (improvement disabled)"
-echo "  improved= reuseProb=$REUSE_PROB_IMPROVED (improvement enabled)"
+echo "Done. Task 3 CSVs in logs/task3/reuse<P>/  (reuseProb in {$REUSE_PROBS})"
+echo "  reuseProb=0.0 is the base (improvement disabled); 0.7 is the improvement."
 echo "Run: python3 scripts/analyze_task3.py   to generate the table and plots."

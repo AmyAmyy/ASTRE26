@@ -2,27 +2,36 @@ Problem,Technique,Runs,Mean,Std,Min,Max
 Problem11,Random Fuzzer,5,306.0,0.0,306,306
 Problem11,Hill Climber,5,305.4,1.34,303,306
 Problem11,Concolic Execution,5,306.0,0.0,306,306
+Problem11,AFL,5,833.8,239.35,659,1096
 Problem12,Random Fuzzer,5,322.0,6.28,312,327
 Problem12,Hill Climber,5,399.0,2.24,395,400
 Problem12,Concolic Execution,5,273.4,38.66,228,321
+Problem12,AFL,5,3149.6,85.96,3025,3268
 Problem13,Random Fuzzer,5,403.0,0.0,403,403
 Problem13,Hill Climber,5,402.8,0.45,402,403
 Problem13,Concolic Execution,5,402.8,0.45,402,403
+Problem13,AFL,5,3019.4,12.14,3007,3037
 Problem14,Random Fuzzer,5,509.0,14.02,484,517
 Problem14,Hill Climber,5,1057.2,53.97,998,1140
 Problem14,Concolic Execution,5,522.8,277.44,285,885
+Problem14,AFL,5,3047.4,494.47,2584,3872
 Problem15,Random Fuzzer,5,2116.0,0.0,2116,2116
 Problem15,Hill Climber,5,2011.2,61.15,1908,2064
 Problem15,Concolic Execution,5,1788.6,29.09,1750,1815
+Problem15,AFL,5,13879.2,5448.14,7497,19645
 Problem16,Random Fuzzer,5,2171.4,14.64,2151,2189
 Problem16,Hill Climber,5,2137.0,66.26,2028,2193
 Problem16,Concolic Execution,0,,,,
+Problem16,AFL,5,0.0,0.0,0,0
 Problem17,Random Fuzzer,5,4995.6,10.9,4982,5010
 Problem17,Hill Climber,5,4546.8,154.12,4286,4667
 Problem17,Concolic Execution,5,4791.6,232.07,4548,5122
+Problem17,AFL,5,7716.2,844.28,6631,8370
 Problem18,Random Fuzzer,5,2986.0,88.27,2850,3064
 Problem18,Hill Climber,5,3031.6,457.22,2315,3497
 Problem18,Concolic Execution,5,1322.6,300.52,925,1716
+Problem18,AFL,5,30650.0,3532.4,26381,36026
 Problem19,Random Fuzzer,5,5531.8,13.35,5515,5548
 Problem19,Hill Climber,5,3946.0,179.55,3746,4113
 Problem19,Concolic Execution,0,,,,
+Problem19,AFL,5,18987.8,2621.87,16045,22032

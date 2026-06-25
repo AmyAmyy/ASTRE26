@@ -36,15 +36,41 @@ from collections import defaultdict
 PROBLEMS = ["Problem11", "Problem12", "Problem13", "Problem14", "Problem15",
             "Problem16", "Problem17", "Problem18", "Problem19"]
 
-# The ablation "techniques" are the two configs.
-CONFIGS = ["base", "improved"]
+# Configs are the reuseProb values, auto-discovered from logs/task3/reuse<P>/.
+# CONFIGS holds the directory names ("reuse0.0", "reuse0.7", …) sorted by P;
+# these are populated in main() once the input directory is known. reuseProb=0.0
+# is the base (improvement disabled); the highest probability is the improvement.
+CONFIGS = []
+LABELS  = {}   # cfg -> human label
+COLORS  = {}   # cfg -> colour
+PROBS   = {}   # cfg -> float probability
 
-COLORS  = {"base": "#1f77b4", "improved": "#2ca02c"}
-LABELS  = {"base": "Base (reuseProb=0)", "improved": "Improved (seeding)"}
-MARKERS = {"base": "o", "improved": "^"}
+# Colormap used to assign distinct colours across however many probs we sweep.
+_CMAP = plt.get_cmap("viridis")
+
+BASE_CFG = "reuse0.0"   # the base (reuseProb=0) directory name
 
 TIMEOUT_S   = 300          # budget per run (seconds)
 GRID_POINTS = 301          # evaluation grid: 0, 1, 2, …, 300 s
+
+
+def discover_configs(indir: str):
+    """Find logs/task3/reuse<P>/ dirs, populate CONFIGS/LABELS/COLORS/PROBS."""
+    global CONFIGS
+    found = []
+    if os.path.isdir(indir):
+        for d in os.listdir(indir):
+            m = re.match(r"^reuse([0-9]*\.?[0-9]+)$", d)
+            if m and os.path.isdir(os.path.join(indir, d)):
+                found.append((float(m.group(1)), d))
+    found.sort()  # by probability
+    CONFIGS = [d for _, d in found]
+    n = max(len(CONFIGS) - 1, 1)
+    for i, (p, d) in enumerate(found):
+        PROBS[d]  = p
+        LABELS[d] = ("Base (reuseProb=0)" if p == 0.0
+                     else f"reuseProb={p:g}")
+        COLORS[d] = _CMAP(i / n)
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
@@ -72,7 +98,7 @@ def final_value(df: pd.DataFrame, metric: str) -> float:
 def discover_runs(indir: str):
     """
     Return dict:  data[problem][config] = list of DataFrames (one per seed).
-    Reads logs/task3/<config>/Problem<N>_concolic_seed<S>.csv
+    Reads logs/task3/reuse<P>/Problem<N>_concolic_seed<S>.csv
     """
     pattern = re.compile(r"^(Problem\d+)_concolic_seed(\d+)\.csv$")
     data = defaultdict(lambda: defaultdict(list))
@@ -170,10 +196,12 @@ def build_summary(data, metric: str) -> pd.DataFrame:
 
 
 def print_table(df: pd.DataFrame, title: str):
-    """Pivot: Problem × {Base, Improved, Δ} for the given metric summary df."""
+    """Pivot: Problem × each reuseProb config, plus Δ of the best vs base."""
     print(f"\n{'=' * 78}")
     print(f"  {title}")
     print(f"{'=' * 78}")
+    # The "improvement" column for the delta is the highest reuseProb config.
+    best_cfg = CONFIGS[-1] if CONFIGS else None
     pivot_rows = []
     for prob in PROBLEMS:
         row = {"Problem": prob}
@@ -191,12 +219,12 @@ def print_table(df: pd.DataFrame, title: str):
                     row[LABELS[cfg]] = f"{r['Mean']:.1f}  (n={n})"
                 else:
                     row[LABELS[cfg]] = f"{r['Mean']:.1f} ± {r['Std']:.1f}  (n={n})"
-        # Improvement delta (improved − base)
-        if means.get("base") is not None and means.get("improved") is not None:
-            delta = means["improved"] - means["base"]
-            row["Δ (impr−base)"] = f"{delta:+.1f}"
-        else:
-            row["Δ (impr−base)"] = "—"
+        # Delta: best (highest-prob) config minus base, when both present.
+        if (best_cfg and best_cfg != BASE_CFG
+                and means.get(BASE_CFG) is not None
+                and means.get(best_cfg) is not None):
+            delta = means[best_cfg] - means[BASE_CFG]
+            row[f"Δ ({LABELS[best_cfg]}−base)"] = f"{delta:+.1f}"
         pivot_rows.append(row)
 
     pivot = pd.DataFrame(pivot_rows).set_index("Problem")
@@ -207,9 +235,9 @@ def print_table(df: pd.DataFrame, title: str):
 # ── Bar chart: final counts ───────────────────────────────────────────────────
 def make_bar_chart(data, metric: str, ylabel: str, title: str, outpath: str):
     n_prob = len(PROBLEMS)
-    n_cfg = len(CONFIGS)
+    n_cfg = max(len(CONFIGS), 1)
     x = np.arange(n_prob)
-    width = 0.38
+    width = 0.8 / n_cfg
 
     fig, ax = plt.subplots(figsize=(10, 5))
     for i, cfg in enumerate(CONFIGS):
@@ -244,10 +272,15 @@ def make_bar_chart(data, metric: str, ylabel: str, title: str, outpath: str):
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--indir",  default="logs/task3", help="root dir with base/ and improved/")
+    ap.add_argument("--indir",  default="logs/task3", help="root dir with reuse<P>/ subdirs")
     ap.add_argument("--outdir", default="report",     help="output dir for plots/tables")
     args = ap.parse_args()
 
+    discover_configs(args.indir)
+    if not CONFIGS:
+        print(f"[error] no reuse<P>/ directories found under {args.indir}")
+        return
+    print(f"Configs found: {', '.join(CONFIGS)}")
     print(f"Loading CSVs from: {args.indir}/{{{','.join(CONFIGS)}}}")
     data = discover_runs(args.indir)
 

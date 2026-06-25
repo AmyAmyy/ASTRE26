@@ -149,10 +149,13 @@ for N in $PROBLEMS; do
 
                 LOG="logs/task1/Problem${N}_concolic_seed${S}.log"
                 echo "  [run] concolic seed=$S  →  $OUT"
+                # Task 1 is the BASE concolic engine: disable the Task 3
+                # coverage-guided seeding improvement (reuseProb=0.0).
                 run_with_timeout "$TIMEOUT_SECS" \
                     java -Xmx4g \
                         -Djava.library.path="$Z3_LIB" \
                         -Dseed="$S" \
+                        -DreuseProb=0.0 \
                         -cp "$CP_CONC" \
                         "Problem$N" \
                     > "$LOG" 2>&1
