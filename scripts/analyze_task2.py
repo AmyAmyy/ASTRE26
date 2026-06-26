@@ -8,9 +8,9 @@ comparison (the Task 2 rubric asks to compare AFL *against* the Task 1
 techniques, not in isolation):
 
   report/task2_errors_convergence.png    unique errors over time (subplots)
-  report/task2_branches_convergence.png  unique branches/edges over time
+  report/task2_branches_convergence.png  unique branches over time
   report/task2_errors_bar.png            final unique errors per technique
-  report/task2_branches_bar.png          final unique branches/edges
+  report/task2_branches_bar.png          final unique branches
   report/task2_summary_errors.csv        mean ± std of final unique errors
   report/task2_summary_branches.csv      mean ± std of final unique branches
   report/task2_summary.txt               human-readable tables
@@ -20,12 +20,18 @@ CSV filename formats:
   T1  (logs/task1):  Problem<N>_<technique>_seed<S>.csv
 CSV columns (both): time_ms , unique_errors , unique_branches
 
-NOTE on units: for AFL "unique_branches" counts AFL edge coverage, which is not
-the same metric as the Java instrumentation's (line, side) branch pairs used by
-the Task 1 techniques. The branch plots/tables therefore compare *coverage
-growth trends*, not identical units; errors are directly comparable.
+UNITS: AFL's "unique_branches" must be counted in the SAME RERS (line, side)
+branch unit as the Task 1 techniques — not AFL's own edge-coverage map. This is
+done by scripts/remap_afl_branches.py, which replays every AFL input through the
+Task 1 instrumentation and rewrites logs/task2/Problem*_afl_seed*.csv.
+
+  ⚠ Run scripts/remap_afl_branches.py BEFORE this script whenever the AFL runs
+    change, otherwise the AFL branch bars/curves will be stale.
+
+Errors are already a common unit (a crash == a reachability error).
 
 Usage:
+  python3 scripts/remap_afl_branches.py    # first: AFL coverage -> RERS units
   python3 scripts/analyze_task2.py
   python3 scripts/analyze_task2.py --task1dir logs/task1 --task2dir logs/task2 --outdir report
 """
@@ -245,7 +251,7 @@ def main():
     make_convergence_figure(data, "unique_errors", "Unique Errors",
         "AFL vs Task 1 — error convergence (mean ± std)",
         os.path.join(args.outdir, "task2_errors_convergence.png"), grid)
-    make_convergence_figure(data, "unique_branches", "Unique Branches / Edges",
+    make_convergence_figure(data, "unique_branches", "Unique Branches",
         "AFL vs Task 1 — coverage over time (mean ± std)",
         os.path.join(args.outdir, "task2_branches_convergence.png"), grid)
 
@@ -253,7 +259,7 @@ def main():
     make_bar_chart(data, "unique_errors", "Unique Errors (mean ± std)",
         "Final unique errors per technique",
         os.path.join(args.outdir, "task2_errors_bar.png"))
-    make_bar_chart(data, "unique_branches", "Unique Branches / Edges (mean ± std)",
+    make_bar_chart(data, "unique_branches", "Unique Branches (mean ± std)",
         "Final coverage per technique",
         os.path.join(args.outdir, "task2_branches_bar.png"))
 
@@ -271,7 +277,7 @@ def main():
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
         print_table(df_err, "Unique Reachability Errors  –  Mean ± Std (5 runs/cell)")
-        print_table(df_br,  "Unique Branches / Edges     –  Mean ± Std (5 runs/cell)")
+        print_table(df_br,  "Unique Branches            –  Mean ± Std (5 runs/cell)")
     summary_text = buf.getvalue()
     print(summary_text)
     with open(txt_path, "w") as fh:
