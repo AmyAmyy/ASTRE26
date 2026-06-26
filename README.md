@@ -8,7 +8,7 @@ RERS reachability problems **11–19**:
 |--------------------|--------|------------------------------------------------|
 | Random fuzzer      | Task 1 | Java instrumentation (`--type=fuzzing`)        |
 | Hill climber       | Task 1 | Java instrumentation (`--type=fuzzing`)        |
-| Symbolic / concolic| Task 1 | Java instrumentation (`--type=concolic`) + Z3  |
+| Symbolic / concolic| Task 1+3 | Java instrumentation (`--type=concolic`) + Z3  |
 | AFL                | Task 2 | `afl-fuzz` on the C version of each problem    |
 
 > **All commands below are run from the repository root**, not from inside
