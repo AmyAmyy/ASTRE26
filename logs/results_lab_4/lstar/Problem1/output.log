@@ -1,6 +1,0 @@
-ITERATION 1 | states=28 | queries=2810 | time_ms=89
-ITERATION 2 | states=31 | queries=16194 | time_ms=249
-ITERATION 3 | states=33 | queries=23701 | time_ms=320
-ITERATION 4 | states=34 | queries=42624 | time_ms=492
-ITERATION 5 | states=35 | queries=89485 | time_ms=945
-DONE | final_states=35 | total_queries=889405 | total_time_ms=8814
