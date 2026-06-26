@@ -34,7 +34,7 @@ from collections import defaultdict
 # ── Configuration ────────────────────────────────────────────────────────────
 # Same problem set as Task 1.
 PROBLEMS = ["Problem11", "Problem12", "Problem13", "Problem14", "Problem15",
-            "Problem16", "Problem17", "Problem18", "Problem19"]
+            "Problem17"]
 
 # Configs are the reuseProb values, auto-discovered from logs/task3/reuse<P>/.
 # CONFIGS holds the directory names ("reuse0.0", "reuse0.7", …) sorted by P;
